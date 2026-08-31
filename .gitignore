@@ -1,0 +1,10 @@
+# windows / OS clutter
+Thumbs.db
+desktop.ini
+.DS_Store
+
+#Editor settings
+.vscode/
+
+#Dependencies, if we ever add build tooling
+node_modules/
