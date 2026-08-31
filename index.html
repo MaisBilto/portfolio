@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Mais Bilto - ServiceNow System Administrator</title>
+        <meta name="description" content="ServiceNow System Administrator portfolio - custom applications, workflow design, and platform configuration.">
+        <link rel="stylesheet" href="css/base.css">
+        <link rel="stylesheet" href="css/main.css">
+
+    </head>
+    <body>
+        <a class="skip-link" href="#main">Skip to content</a>
+        <header class="site-header">
+            <a class="logo" href="/">Mais Bilto</a>
+            <nav aria-label="Primary">
+                <ul>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#work">Work</a></li>
+                    <li><a href="#training">Training</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main id="main">
+            <section class="hero" aria-labelledby="hero-heading">
+                <h1 id="hero-heading">ServiceNow System Administrator</h1>
+                <p>Computer Science graduate building on the Now Platform - Custom applications, workflow design, and platform configuration.</p>
+                <a class="button" href="#work">View my work</a>
+            </section>
+
+            <section id="about" aria-labelledby="about-heading">
+                <h2 id="about-heading">About</h2>
+                <!-- <p>Placeholder - we write this later</p> -->
+            </section>
+
+            <section id="work" aria-labelledby="work-heading">
+                <h2 id="work-heading">Work</h2>
+                <article class="project-card">
+                    <h3>Infinity Loaner Program</h3>
+                    <!-- <p>Placeholder - one-paragraph summary of the build.</p> -->
+                     <a href="projects/infinity-loaner.html">Read the case study</a>
+                </article>
+            </section>
+
+            <section id="training" aria-labelledby="training-heading">
+                <h2 id="training-heading">Training</h2>
+                <ul>
+                    <li>ServiceNow &mdash; Associate AI System Administrator</li>
+                    <li>ServiceNow &mdash; Associate AI Technical Project Manager</li>
+                </ul>
+                <p>Currently preparing for the ServiceNow Certified System Administrator (CSA) exam.</p>
+            </section>
+
+            <section id="contact" aria-labelledby="contact-heading">
+                <h2 id="contact-heading">Contact</h2>
+                <p>Send me a message, or find me on <a href="https://www.linkedin.com/in/maisbilto" target="_blank" rel="noopener">LinkedIn<span class="visually-hidden"> (opens in a new tab)</span></a>.</p>
+                
+                <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+                    <input type="hidden" name="form-name" value="contact">
+                    <p class="visually-hidden">
+                        <label>Leave this field empty: <input name="bot-field"></label>
+                    </p>
+
+                    <div class="field">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+
+                    <div class="field">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+
+                    <div class="field">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="5" required></textarea>
+                    </div>
+                    <button class="button" type="submit">Send message</button>
+                </form>
+            </section>
+
+        </main>
+        <footer class="site-footer">
+            <p>&copy; 2026 Mais Bilto</p>
+        </footer>
+        
+        <script src="js/main.js"></script>
+    </body>
+</html>
