@@ -56,6 +56,9 @@
     /* the grid */
     --grid-size: 26px;
     --grid-line: rgba(148, 162, 179, 0.045);
+    
+    /* driven by js/main.js */
+    --scroll: 0;
 }
 
 /* ============================================
@@ -116,7 +119,6 @@ html {
 }
 
 body {
-  position: relative;
   background-color: var(--color-bg);
   color: var(--color-text);
   font-family: var(--font-body);
@@ -125,35 +127,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* grid — strongest at the top, gone by just past one screen */
-body::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background-image:
-    linear-gradient(var(--grid-line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-  background-size: var(--grid-size) var(--grid-size);
-  -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 30vh, transparent 60vh);
-  mask-image: linear-gradient(to bottom, #000 0, #000 30vh, transparent 60vh);
-}
 
-/* glow — begins where the grid ends */
-body::after {
-  content: "";
-  position: absolute;
-  inset-inline: 0;
-  top: 60vh;
-  bottom: 0;
-  z-index: -1;
-  pointer-events: none;
-  background-image:
-    radial-gradient(60vw 45vh at  8%  6%, rgba(251, 113, 133, 0.10), transparent 70%),
-    radial-gradient(55vw 40vh at 92% 32%, rgba(94, 234, 212, 0.06), transparent 68%),
-
-}
 
 h1,
 h2,
