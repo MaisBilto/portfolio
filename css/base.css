@@ -1,27 +1,42 @@
 /* ============================================
-   DESIGN TOKENS - light theme is the default
+   DESIGN TOKENS - dark only
    ============================================ */
 :root {
-    color-scheme: light;
-    /* colour */
-    --color-bg: #ffffff;
-    --color-surface: #f6f7f9;
-    --color-border: #e3e6ea;
-    --color-text: #16181d;
-    --color-muted: #5b6270;
-    --color-accent: #be123c;
-    --color-on-accent: #ffffff;
+    
+    color-scheme: dark;
+    /* surface */
+    --color-bg:        #0f1419;
+    --color-surface:   #161d25;
+    --color-surface-2: #1c242e;
+    --color-border:    #28323e;
+    --color-border-hi: #3a4756;
+
+    /* text */
+    --color-text:      #e4eaf1;
+    --color-muted:     #94a2b3;
+    --color-faint:     #7d8c9f;
+
+    /* accent */
+    --color-accent:    #fb7185;
+    --color-accent-hi: #fda4af;
+    --color-on-accent: #14181d;
+    --color-status:    #5eead4;
 
     /* typography */
     --font-display: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
-    --font-body: Inter, "Segoe UI", system-ui, sans-serif;
+    --font-body:    Inter, "Segoe UI", system-ui, sans-serif;
+    --font-mono:    "JetBrains Mono", ui-monospace, Consolas, monospace;
 
-    --text-sm: 0.875rem;
+    --text-xs:   0.72rem;
+    --text-sm:   0.875rem;
     --text-base: 1rem;
-    --text-lg: 1.25rem;
-    --text-xl: 1.5rem;
-    --text-2xl: 2rem;
-    --text-3xl: 2.75rem;
+    --text-lg:   1.25rem;
+    --text-xl:   1.5rem;
+    --text-2xl:  2rem;
+    --text-3xl:  2.75rem;
+    --text-4xl:  3.25rem;
+
+    --tracking-label: 0.14em;
 
     /* spacing */
     --space-1: 0.25rem;
@@ -33,36 +48,14 @@
     --space-7: 3rem;
     --space-8: 4rem;
 
-    /* misc */
-    --radius: 8px;
-    --measure: 65ch;
-}
+    /* form */
+    --radius:    10px;
+    --radius-sm: 5px;
+    --measure:   65ch;
 
-/* Dark tokens — applied when the OS prefers dark
-   AND the visitor hasn't explicitly chosen light */
-@media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-        color-scheme: dark;
-        --color-bg: #0e1117;
-        --color-surface: #161b22;
-        --color-border: #262d38;
-        --color-text: #e6e9ef;
-        --color-muted: #9aa3b2;
-        --color-accent: #fb7185;
-        --color-on-accent: #0e1117;
-    }
-}
-
-/* Dark tokens — applied when the visitor explicitly chose dark */
-:root[data-theme="dark"] {
-    color-scheme: dark;
-    --color-bg: #0e1117;
-    --color-surface: #161b22;
-    --color-border: #262d38;
-    --color-text: #e6e9ef;
-    --color-muted: #9aa3b2;
-    --color-accent: #fb7185;
-    --color-on-accent: #0e1117;
+    /* the grid */
+    --grid-size: 26px;
+    --grid-line: rgba(148, 162, 179, 0.045);
 }
 
 /* ============================================
@@ -116,19 +109,50 @@ select {
 }
 
 /* ============================================
-      BASE ELEMENTS
-      ============================================ */
+   BASE ELEMENTS
+   ============================================ */
 html {
     scroll-behavior: smooth;
 }
 
 body {
-    background: var(--color-bg);
-    color: var(--color-text);
-    font-family: var(--font-body);
-    font-size: var(--text-base);
-    line-height: 1.65;
-    -webkit-font-smoothing: antialiased;
+  position: relative;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* grid — strongest at the top, gone by just past one screen */
+body::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: var(--grid-size) var(--grid-size);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 30vh, transparent 60vh);
+  mask-image: linear-gradient(to bottom, #000 0, #000 30vh, transparent 60vh);
+}
+
+/* glow — begins where the grid ends */
+body::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  top: 60vh;
+  bottom: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    radial-gradient(60vw 45vh at  8%  6%, rgba(251, 113, 133, 0.10), transparent 70%),
+    radial-gradient(55vw 40vh at 92% 32%, rgba(94, 234, 212, 0.06), transparent 68%),
+
 }
 
 h1,

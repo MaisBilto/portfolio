@@ -7,7 +7,7 @@
         <meta name="description" content="ServiceNow System Administrator portfolio - custom applications, workflow design, and platform configuration.">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="css/base.css">
         <link rel="stylesheet" href="css/main.css">
 
@@ -15,78 +15,172 @@
     <body>
         <a class="skip-link" href="#main">Skip to content</a>
         <header class="site-header">
-            <a class="logo" href="/">Mais Bilto</a>
-            <nav aria-label="Primary">
-                <ul>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#work">Work</a></li>
-                    <li><a href="#training">Training</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </nav>
+        <a class="brand" href="/">
+            <svg class="brand-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 2.6 20.4 7.3v9.4L12 21.4 3.6 16.7V7.3z"/>
+            <circle cx="12" cy="12" r="3.1"/>
+            </svg>
+            <span>Mais Bilto</span>
+            <span class="brand-chip">SN</span>
+        </a>
+        <nav aria-label="Primary">
+            <ul class="nav-list">
+            <li><a href="#about">About</a></li>
+            <li><a href="#work">Work</a></li>
+            <li><a href="#training">Training</a></li>
+            <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
         </header>
 
         <main id="main">
             <section class="hero" aria-labelledby="hero-heading">
-                <h1 id="hero-heading">ServiceNow System Administrator</h1>
-                <p>Computer Science graduate building on the Now Platform - Custom applications, workflow design, and platform configuration.</p>
+            <div class="hero-body">
+                <p class="eyebrow">Now Platform</p>
+                <h1 id="hero-heading">Mais Bilto</h1>
+                <p class="hero-role">ServiceNow <b>System Administrator</b></p>
+                <p class="hero-line">I build and configure on the Now Platform — custom applications, workflow design, and the reporting that sits on top of them.</p>
+                <div class="hero-actions">
                 <a class="button" href="#work">View my work</a>
+                <a class="button button--ghost" href="#contact">Get in touch</a>
+                </div>
+            </div>
+
+            <div class="record">
+            <div class="record-head">
+                <span class="record-id">usr_profile · MAI0010001</span>
+                <span class="pill">Available</span>
+            </div>
+            <dl class="record-rows">
+                <div class="record-row"><dt>focus</dt><dd>ServiceNow administration</dd></div>
+                <div class="record-row"><dt>studying</dt><dd>CSA exam</dd></div>
+                <div class="record-row"><dt>background</dt><dd>CS · networking · security</dd></div>
+                <div class="record-row"><dt>instance</dt><dd>Personal developer instance</dd></div>
+            </dl>
+            </div>
             </section>
 
             <section id="about" aria-labelledby="about-heading">
-                <h2 id="about-heading">About</h2>
-                <!-- <p>Placeholder - we write this later</p> -->
+            <h2 id="about-heading">About</h2>
+
+            <p>I'm a Computer Science graduate from Princess Nourah University, working toward a ServiceNow System Administrator role. My background is in networking, cybersecurity and data analysis — useful preparation for platform work, where the job is understanding how pieces fit together rather than mastering any single screen.</p>
+
+            <p>Everything here is built on a personal developer instance: custom applications, form and workflow configuration, and the reporting that sits on top of them.</p>
+
+            <p class="label">What I build</p>
+
+            <ul class="caps">
+                <li class="cap">
+                <svg class="cap-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/>
+                </svg>
+                <h3>Data model</h3>
+                <p>Custom tables extending Task, fields, and relationships.</p>
+                </li>
+                <li class="cap">
+                <svg class="cap-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><path d="M10 6.5h4a2 2 0 0 1 2 2V14"/>
+                </svg>
+                <h3>Workflow</h3>
+                <p>Flow Designer, approvals, and notifications.</p>
+                </li>
+                <li class="cap">
+                <svg class="cap-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M9 9v11"/>
+                </svg>
+                <h3>Interfaces</h3>
+                <p>Forms, UI Policies, and UI Builder workspaces.</p>
+                </li>
+                <li class="cap">
+                <svg class="cap-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>
+                </svg>
+                <h3>Reporting</h3>
+                <p>Dashboards, metrics, and shared views.</p>
+                </li>
+            </ul>
             </section>
 
             <section id="work" aria-labelledby="work-heading">
-                <h2 id="work-heading">Work</h2>
-                <article class="project-card">
-                    <h3>Infinity Loaner Program</h3>
-                    <!-- <p>Placeholder - one-paragraph summary of the build.</p> -->
-                     <a href="projects/infinity-loaner.html">Read the case study</a>
-                </article>
+            <h2 id="work-heading">Work</h2>
+
+            <article class="project">
+                <div class="project-head">
+                <h3>Infinity Loaner Program</h3>
+                <span class="project-meta">u_loaner_request · extends Task</span>
+                </div>
+                <p>A loaner-equipment request application built on a custom table extending Task. Dependent fields and UI Policies keep the form honest, a UI Builder workspace gives fulfillers a queue to work from, templates and notifications handle the routine steps, and a shared dashboard reports on request volume and ageing.</p>
+                <ul class="tags">
+                <li>custom table</li>
+                <li>UI Policies</li>
+                <li>dependent fields</li>
+                <li>UI Builder</li>
+                <li>notifications</li>
+                <li>reporting</li>
+                </ul>
+                <a class="project-link" href="projects/infinity-loaner.html">Read the case study <span aria-hidden="true">&rarr;</span></a>
+            </article>
             </section>
 
             <section id="training" aria-labelledby="training-heading">
-                <h2 id="training-heading">Training</h2>
-                <ul>
-                    <li>ServiceNow &mdash; Associate AI System Administrator</li>
-                    <li>ServiceNow &mdash; Associate AI Technical Project Manager</li>
-                </ul>
-                <p>Currently preparing for the ServiceNow Certified System Administrator (CSA) exam.</p>
+            <h2 id="training-heading">Training</h2>
+            <ul class="track">
+                <li class="track-item">
+                <span class="track-name">Certified System Administrator (CSA)</span>
+                <span class="pill pill--pending">In progress</span>
+                </li>
+                <li class="track-item">
+                <span class="track-name">Associate AI System Administrator</span>
+                <span class="pill pill--done">Completed</span>
+                </li>
+                <li class="track-item">
+                <span class="track-name">Associate AI Technical Project Manager</span>
+                <span class="pill pill--done">Completed</span>
+                </li>
+            </ul>
             </section>
 
             <section id="contact" aria-labelledby="contact-heading">
-                <h2 id="contact-heading">Contact</h2>
-                <p>Send me a message, or find me on <a href="https://www.linkedin.com/in/maisbilto" target="_blank" rel="noopener">LinkedIn<span class="visually-hidden"> (opens in a new tab)</span></a>.</p>
-                
+            <h2 id="contact-heading">Contact</h2>
+            <div class="contact-grid">
+                <div>
+                <p>Send me a message and I'll reply. You can also find me on LinkedIn, or see what I'm building on GitHub.</p>
+                <ul class="links">
+                    <li><a href="https://www.linkedin.com/in/maisbilto" target="_blank" rel="noopener">linkedin.com/in/maisbilto<span class="visually-hidden"> (opens in a new tab)</span></a></li>
+                    <li><a href="https://github.com/MaisBilto" target="_blank" rel="noopener">github.com/MaisBilto<span class="visually-hidden"> (opens in a new tab)</span></a></li>
+                </ul>
+                </div>
+
                 <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
-                    <input type="hidden" name="form-name" value="contact">
-                    <p class="visually-hidden">
-                        <label>Leave this field empty: <input name="bot-field"></label>
-                    </p>
-
-                    <div class="field">
-                        <label for="name">Name</label>
-                        <input type="text" id="name" name="name" required>
-                    </div>
-
-                    <div class="field">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
-
-                    <div class="field">
-                        <label for="message">Message</label>
-                        <textarea id="message" name="message" rows="5" required></textarea>
-                    </div>
-                    <button class="button" type="submit">Send message</button>
+                <input type="hidden" name="form-name" value="contact">
+                <p class="visually-hidden">
+                    <label>Leave this field empty: <input name="bot-field"></label>
+                </p>
+                <div class="field">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="field">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="field">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" rows="5" required></textarea>
+                </div>
+                <button class="button" type="submit">Send message</button>
                 </form>
+            </div>
             </section>
 
         </main>
+
         <footer class="site-footer">
-            <p>&copy; 2026 Mais Bilto</p>
+        <p>&copy; 2026 Mais Bilto</p>
+        <ul class="footer-links">
+            <li><a href="https://www.linkedin.com/in/maisbilto" target="_blank" rel="noopener">LinkedIn</a></li>
+            <li><a href="https://github.com/MaisBilto" target="_blank" rel="noopener">GitHub</a></li>
+        </ul>
         </footer>
         
         <script src="js/main.js"></script>
