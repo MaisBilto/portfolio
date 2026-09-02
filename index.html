@@ -1,233 +1,373 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Mais Bilto - ServiceNow System Administrator</title>
-        <meta name="description" content="ServiceNow System Administrator portfolio - custom applications, workflow design, and platform configuration.">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="css/base.css">
-        <link rel="stylesheet" href="css/main.css">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mais Bilto — ServiceNow System Administrator</title>
+<meta name="description" content="Portfolio of Mais Bilto, a Computer Science graduate building toward a ServiceNow System Administrator role. ServiceNow builds, coursework and certificates.">
+<meta name="color-scheme" content="dark">
 
-    </head>
-    <body>
-    <div class="circuit" aria-hidden="true">
-    <svg viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
-        <g class="drift">
+<meta property="og:title" content="Mais Bilto — ServiceNow System Administrator">
+<meta property="og:description" content="ServiceNow builds, coursework and certificates.">
+<meta property="og:type" content="website">
 
-        <g class="glow" style="color:#5eead4">
-            <path class="trace" style="stroke:rgba(94,234,212,.26)" d="M-20 90 H 120 L 160 130 H 280 L 320 90 H 420"/>
-            <path class="pulse" style="stroke:#5eead4;animation-duration:7s" d="M-20 90 H 120 L 160 130 H 280 L 320 90 H 420"/>
-            <path class="trace" style="stroke:rgba(94,234,212,.20)" d="M-20 300 H 160 L 200 340 H 300 L 340 300 H 440"/>
-            <path class="pulse" style="stroke:#5eead4;animation-duration:11s;animation-delay:-4s" d="M-20 300 H 160 L 200 340 H 300 L 340 300 H 440"/>
-            <path class="trace" style="stroke:rgba(94,234,212,.16)" d="M-20 560 H 180 L 220 520 H 340"/>
-            <path class="pulse" style="stroke:#5eead4;animation-duration:15s;animation-delay:-9s" d="M-20 560 H 180 L 220 520 H 340"/>
-            <path class="trace" style="stroke:rgba(94,234,212,.14)" d="M160 130 V 300"/>
-            <path class="trace" style="stroke:rgba(94,234,212,.12)" d="M200 340 V 520"/>
-            <path class="trace" style="stroke:rgba(94,234,212,.14)" d="M-20 200 H 80 L 120 160 H 240"/>
-        </g>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
 
-        <g class="glow" style="color:#fb7185">
-            <path class="trace" style="stroke:rgba(251,113,133,.26)" d="M1220 140 H 1080 L 1040 180 H 920 L 880 140 H 790"/>
-            <path class="pulse" style="stroke:#fb7185;animation-duration:9s;animation-delay:-2s" d="M1220 140 H 1080 L 1040 180 H 920 L 880 140 H 790"/>
-            <path class="trace" style="stroke:rgba(251,113,133,.20)" d="M1220 380 H 1060 L 1020 420 H 900 L 860 380 H 770"/>
-            <path class="pulse" style="stroke:#fb7185;animation-duration:13s;animation-delay:-6s" d="M1220 380 H 1060 L 1020 420 H 900 L 860 380 H 770"/>
-            <path class="trace" style="stroke:rgba(251,113,133,.16)" d="M1220 640 H 1040 L 1000 600 H 880"/>
-            <path class="pulse" style="stroke:#fb7185;animation-duration:17s;animation-delay:-11s" d="M1220 640 H 1040 L 1000 600 H 880"/>
-            <path class="trace" style="stroke:rgba(251,113,133,.14)" d="M1040 180 V 380"/>
-            <path class="trace" style="stroke:rgba(251,113,133,.12)" d="M1020 420 V 600"/>
-        </g>
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+<a class="skip-link" href="#deck">Skip to content</a>
 
-        <g style="stroke:rgba(94,234,212,.6)">
-            <circle class="pad" style="--at:.02" cx="160" cy="130" r="3.6"/>
-            <circle class="pad" style="--at:.16" cx="320" cy="90"  r="3.6"/>
-            <circle class="pad" style="--at:.34" cx="200" cy="340" r="3.6"/>
-            <circle class="pad" style="--at:.56" cx="220" cy="520" r="3.6"/>
-            <circle class="pad" style="--at:.70" cx="120" cy="160" r="3.2"/>
-        </g>
-        <g style="stroke:rgba(251,113,133,.6)">
-            <circle class="pad" style="--at:.09" cx="1040" cy="180" r="3.6"/>
-            <circle class="pad" style="--at:.25" cx="880"  cy="140" r="3.6"/>
-            <circle class="pad" style="--at:.45" cx="1020" cy="420" r="3.6"/>
-            <circle class="pad" style="--at:.64" cx="1000" cy="600" r="3.6"/>
-        </g>
 
-        </g>
-    </svg>
+<!-- one corner, drawn once, mirrored four ways -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="corner" viewBox="0 0 190 150">
+    <path d="M190 14 H 50 L 14 50 V 150" fill="none" stroke="#5eead4" stroke-width="1.6"/>
+    <path d="M190 5 H 46 L 5 46 V 150" fill="none" stroke="rgba(94,234,212,.34)" stroke-width="1"/>
+    <path d="M31 31 L 20 20" stroke="rgba(94,234,212,.55)" stroke-width="1"/>
+    <path d="M14 74 H 5" stroke="rgba(94,234,212,.5)" stroke-width="1"/>
+    <path d="M14 92 H 5" stroke="rgba(94,234,212,.5)" stroke-width="1"/>
+    <path d="M108 14 V 5" stroke="rgba(94,234,212,.5)" stroke-width="1"/>
+    <path d="M120 14 V 5" stroke="rgba(94,234,212,.5)" stroke-width="1"/>
+    <rect x="10.5" y="46.5" width="7" height="7" fill="#060a0f" stroke="#5eead4" stroke-width="1.2"/>
+    <rect x="60" y="10.5" width="26" height="7" fill="#060a0f" stroke="rgba(94,234,212,.45)" stroke-width="1"/>
+    <path d="M14 118 H 32 L 40 126" fill="none" stroke="rgba(94,234,212,.4)" stroke-width="1"/>
+  </symbol>
+</svg>
+
+<div class="dots" aria-hidden="true">
+  <span class="dot" style="left:5.5%;top:16%;--d:8px;--t:5s;--dl:0s;--len:70px;--a:12deg"></span>
+  <span class="dot rose" style="left:11%;top:7%;--d:6px;--t:6.5s;--dl:-2s;--len:54px;--a:64deg"></span>
+  <span class="dot" style="left:27%;top:4.5%;--d:6px;--t:4.2s;--dl:-1s;--len:40px;--a:100deg"></span>
+  <span class="dot" style="left:52%;top:3%;--d:7px;--t:7s;--dl:-3.5s;--len:0px"></span>
+  <span class="dot" style="right:23%;top:5%;--d:6px;--t:5.6s;--dl:-1.5s;--len:46px;--a:118deg"></span>
+  <span class="dot rose" style="right:6%;top:13%;--d:8px;--t:4.8s;--dl:-2.5s;--len:66px;--a:196deg"></span>
+  <span class="dot" style="right:3.5%;top:44%;--d:7px;--t:6.2s;--dl:-4s;--len:58px;--a:186deg"></span>
+  <span class="dot" style="right:12%;bottom:8%;--d:6px;--t:5.2s;--dl:-0.5s;--len:52px;--a:236deg"></span>
+  <span class="dot" style="left:34%;bottom:4%;--d:7px;--t:6.8s;--dl:-3s;--len:44px;--a:288deg"></span>
+  <span class="dot rose" style="left:7%;bottom:17%;--d:6px;--t:4.4s;--dl:-1.8s;--len:60px;--a:330deg"></span>
+  <span class="dot" style="left:3%;top:58%;--d:7px;--t:5.9s;--dl:-2.2s;--len:56px;--a:6deg"></span>
+</div>
+
+<div class="stage">
+
+  <div class="frame">
+    <nav class="rail" aria-label="Sections">
+     <div class="fill">
+      <a href="#home" data-to="home" class="on" aria-label="Home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5.5 9.5V20h13V9.5"/></svg></a>
+      <a href="#about" data-to="about" aria-label="About"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c1.2-4 4-6 7.5-6s6.3 2 7.5 6"/></svg></a>
+      <a href="#work" data-to="work" aria-label="Work"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="1"/><path d="M9 7V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V7"/></svg></a>
+      <a href="#training" data-to="training" aria-label="Training"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4 3 8.5l9 4.5 9-4.5z"/><path d="M7 11v4.5c0 1.4 2.2 2.5 5 2.5s5-1.1 5-2.5V11"/></svg></a>
+      <a href="#contact" data-to="contact" aria-label="Contact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="m3.6 6.5 8.4 6 8.4-6"/></svg></a>
+     </div>
+    </nav>
+
+    <div class="prog" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i><b>SECTION</b></div>
+
+    <main class="deck hidescroll" id="deck">
+
+      <section class="card" id="home">
+        <span class="card-tag">SEC 00 · HOME</span>
+        <div class="card-inner hidescroll">
+          <div class="split">
+            <div>
+              <p class="eyebrow" data-anim style="--i:0">Now Platform</p>
+              <h1 data-anim style="--i:1">Mais Bilto</h1>
+              <p class="role" data-anim style="--i:2">ServiceNow <b>System Administrator</b></p>
+              <p class="lede" data-anim style="--i:3">I build and configure on the Now Platform — custom applications, workflow design, and the reporting that sits on top of them.</p>
+              <div class="acts" data-anim style="--i:4"><a class="btn" href="#work">View my work</a><a class="btn ghost" href="#contact">Get in touch</a></div>
+            </div>
+            <div class="panel" data-anim style="--i:5">
+              <dl class="fill" style="margin:0">
+                <div class="p-head"><span>USR_PROFILE · MAI0010001</span><span class="pill">AVAILABLE</span></div>
+                <div class="rrow"><dt>focus</dt><dd>ServiceNow administration</dd></div>
+                <div class="rrow"><dt>studying</dt><dd>CSA exam</dd></div>
+                <div class="rrow"><dt>background</dt><dd>CS · networking · security</dd></div>
+                <div class="rrow"><dt>instance</dt><dd>Personal developer instance</dd></div>
+              </dl>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card" id="about">
+        <span class="card-tag">SEC 01 · ABOUT</span>
+        <div class="card-inner hidescroll">
+          <div class="split">
+            <div>
+              <h2 data-anim style="--i:0">About</h2>
+              <p class="sub" data-anim style="--i:1">BACKGROUND &amp; CAPABILITY</p>
+              <div class="prose">
+                <p data-anim style="--i:2">I'm a Computer Science graduate from Princess Nourah University, working toward a ServiceNow System Administrator role. My background is in networking, cybersecurity and data analysis — useful preparation for platform work, where the job is understanding how pieces fit together rather than mastering any single screen. Everything here is built on a personal developer instance.</p>
+              </div>
+            </div>
+            <figure class="shot" data-anim style="--i:4">
+              <div class="fill">
+                <div class="shot-bar"><em>▸</em>DEV INSTANCE · LIST VIEW</div>
+                <div class="shot-body"><span><em>[ your screenshot ]</em>a list view from your PDI —<br>filters, columns, a few records</span></div>
+              </div>
+            </figure>
+          </div>
+          <div class="about-grid">
+            <div>
+              <p class="label" data-anim style="--i:5">What I build</p>
+              <ul class="caps">
+                <li data-anim style="--i:6"><div class="fill"><h3>Data model</h3><p>Custom tables extending Task, fields, and relationships.</p></div></li>
+                <li data-anim style="--i:7"><div class="fill"><h3>Workflow</h3><p>Flow Designer, approvals, and notifications.</p></div></li>
+                <li data-anim style="--i:8"><div class="fill"><h3>Interfaces</h3><p>Forms, UI Policies, and UI Builder workspaces.</p></div></li>
+                <li data-anim style="--i:9"><div class="fill"><h3>Reporting</h3><p>Dashboards, metrics, and shared views.</p></div></li>
+              </ul>
+            </div>
+            <div>
+              <p class="label" data-anim style="--i:5">Skills &amp; tools</p>
+              <ul class="skills" data-anim style="--i:6">
+            <li><span class="k">Languages</span><span class="v"><span>Python</span><span>SQL</span><span>JavaScript</span><span class="add">+ add yours</span></span></li>
+            <li><span class="k">Web</span><span class="v"><span>HTML</span><span>CSS</span></span></li>
+            <li><span class="k">Platform</span><span class="v"><span>ServiceNow</span><span>Flow Designer</span><span>UI Builder</span><span>UI Policies</span></span></li>
+            <li><span class="k">Data</span><span class="v"><span>Power BI</span><span>Excel</span></span></li>
+            <li><span class="k">Practice</span><span class="v"><span>Git</span><span>GitHub</span><span>VS Code</span></span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card" id="work">
+        <span class="card-tag">SEC 02 · WORK</span>
+        <div class="card-inner hidescroll">
+          <h2 data-anim style="--i:0">Work</h2>
+          <p class="sub" data-anim style="--i:1">4 BUILDS · 1 ACTIVE · 2 COMPLETE · 1 SCHEDULED</p>
+
+          <div class="grid3">
+
+            <div class="hc-wrap" data-status="active" data-progress="4" data-anim style="--i:2">
+              <article class="hc">
+                <span class="spark"></span>
+                <span class="edge2"></span>
+                <div class="fill">
+                  <div class="hc-thumb">
+                    <span class="scan"></span>
+                    <span>[ your screenshot ]<br>u_loaner_request · form view</span>
+                  </div>
+                  <div class="hc-body">
+                    <div class="hc-top"><span class="hc-id">PRJ 01</span><span class="pill">IN PROGRESS</span></div>
+                    <h3>Infinity Loaner Program</h3>
+                    <p class="meta">u_loaner_request · extends Task</p>
+                    <p>Loaner-equipment requests on a custom table — dependent fields, UI Policies and a fulfiller workspace.</p>
+                    <ul class="tags"><li>custom table</li><li>UI Policies</li><li>UI Builder</li></ul>
+                    <div class="segbar"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+                    <a class="more" href="#">Read the case study <b>▸</b></a>
+                  </div>
+                </div>
+              </article>
+            </div>
+
+            <div class="hc-wrap" data-status="complete" data-progress="6" data-anim style="--i:3">
+              <article class="hc v3">
+                <span class="spark"></span>
+                <span class="edge2"></span>
+                <div class="fill">
+                  <div class="hc-thumb">
+                    <span class="scan"></span>
+                    <span>[ your screenshot ]<br>MPMS · reporting view</span>
+                  </div>
+                  <div class="hc-body">
+                    <div class="hc-top"><span class="hc-id">PRJ 02</span><span class="pill">COMPLETE</span></div>
+                    <h3>MPMS</h3>
+                    <p class="meta">internship · CCIS, PNU</p>
+                    <p>A database system for running the Master&rsquo;s programme — reporting and statistical tracking of students and performance.</p>
+                    <ul class="tags"><li>database design</li><li>reporting</li><li>analytics</li></ul>
+                    <div class="segbar"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+                    <a class="more" href="#">Read the case study <b>▸</b></a>
+                  </div>
+                </div>
+              </article>
+            </div>
+
+            <div class="hc-wrap" data-status="complete" data-progress="6" data-anim style="--i:4">
+              <article class="hc v4">
+                <span class="spark"></span>
+                <span class="edge2"></span>
+                <div class="fill">
+                  <div class="hc-thumb">
+                    <span class="scan"></span>
+                    <span>[ your screenshot ]<br>KSA Tourism · destinations</span>
+                  </div>
+                  <div class="hc-body">
+                    <div class="hc-top"><span class="hc-id">PRJ 03</span><span class="pill">COMPLETE</span></div>
+                    <h3>KSA Tourism</h3>
+                    <p class="meta">graduation project · PNU</p>
+                    <p>An electronic tourist guide for visitors to Saudi Arabia — destination browsing with data-driven recommendations.</p>
+                    <ul class="tags"><li>web platform</li><li>UX</li><li>data</li></ul>
+                    <div class="segbar"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+                    <a class="more" href="#">Read the case study <b>▸</b></a>
+                  </div>
+                </div>
+              </article>
+            </div>
+
+            <div class="hc-wrap" data-status="scheduled" data-progress="0" data-anim style="--i:5">
+              <article class="hc v2">
+                <span class="spark"></span>
+                <span class="edge2"></span>
+                <div class="fill">
+                  <div class="hc-thumb">
+                    <span class="scan"></span>
+                    <span>[ screenshot once built ]</span>
+                  </div>
+                  <div class="hc-body">
+                    <div class="hc-top"><span class="hc-id">PRJ 04</span><span class="pill">SCHEDULED</span></div>
+                    <h3>Aurora Fleet Program</h3>
+                    <p class="meta">ServiceNow capstone · not yet started</p>
+                    <p>[ one line on what this build will do — from your capstone doc ]</p>
+                    <ul class="tags"><li>tbd</li><li>tbd</li></ul>
+                    <div class="segbar"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+                    <span class="soon">Planned</span>
+                  </div>
+                </div>
+              </article>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <section class="card" id="training">
+        <span class="card-tag">SEC 03 &middot; TRAINING</span>
+        <div class="card-inner hidescroll">
+          <h2 data-anim style="--i:0">Training</h2>
+          <p class="sub" data-anim style="--i:1">28 CERTIFICATES &middot; 4 TRACKS &middot; CSA EXAM IN PREPARATION</p>
+
+          <ul class="tracks">
+
+            <li class="tk-wrap" data-status="active" data-anim style="--i:3">
+              <article class="tk">
+                <span class="edge2"></span>
+                <div class="fill">
+                  <div class="tk-top"><span class="tk-id">TRK 01</span><span class="pill">IN PROGRESS</span></div>
+                  <h3>ServiceNow</h3>
+                  <ul class="crs"><li><span class="nm">Certified System Administrator (CSA)</span><span class="pv">exam prep</span><span class="st now"></span></li><li><span class="nm">Associate AI System Administrator</span><span class="pv">ServiceNow &middot; 2026</span><span class="st"></span></li><li><span class="nm">Associate AI Technical Project Manager</span><span class="pv">ServiceNow &middot; 2026</span><span class="st"></span></li><li><span class="nm">Micro-Certification: Welcome to ServiceNow</span><span class="pv">ServiceNow &middot; 2025</span><span class="st"></span></li></ul>
+                  <div class="certs"><span class="lbl">certificates</span><a class="cert" href="assets/img/certs/servicenow-welcome-micro.jpg" data-title="Micro-Certification: Welcome to ServiceNow &middot; Aug 2025"><img src="assets/img/certs/servicenow-welcome-micro.jpg" alt="ServiceNow micro-certification, Welcome to ServiceNow, August 2025" loading="lazy"></a><span class="cert"><span>[ cert ]</span></span><span class="cert"><span>[ cert ]</span></span></div>
+                </div>
+              </article>
+            </li>
+
+            <li class="tk-wrap" data-status="complete" data-anim style="--i:4">
+              <article class="tk">
+                <span class="edge2"></span>
+                <div class="fill">
+                  <div class="tk-top"><span class="tk-id">TRK 02</span><span class="pill">COMPLETED</span></div>
+                  <h3>Data &amp; Analytics</h3>
+                  <ul class="crs"><li><span class="nm">SQL and databases</span><span class="pv">Tuwaiq &middot; Experts Inst.</span><span class="st"></span></li><li><span class="nm">Python data stack &mdash; NumPy, Pandas, Matplotlib, Seaborn, EDA</span><span class="pv">Tuwaiq &middot; 5 courses, 12 hrs</span><span class="st"></span></li><li><span class="nm">Machine learning foundations</span><span class="pv">Tuwaiq &middot; DeepLearning.AI</span><span class="st"></span></li><li><span class="nm">Excel and Power BI</span><span class="pv">Emdad &middot; Experts Inst.</span><span class="st"></span></li></ul>
+                  <div class="certs"><span class="lbl">certificates</span><a class="cert" href="assets/img/certs/tuwaiq-sql-101.jpg" data-title="SQL 101 &mdash; Tuwaiq Academy &middot; 2 hrs &middot; 2024"><img src="assets/img/certs/tuwaiq-sql-101.jpg" alt="SQL 101 certificate of completion, Tuwaiq Academy, 2024" loading="lazy"></a><a class="cert" href="assets/img/certs/tuwaiq-sql-102.jpg" data-title="SQL 102 &mdash; Tuwaiq Academy &middot; 1 hr &middot; Oct 2024"><img src="assets/img/certs/tuwaiq-sql-102.jpg" alt="SQL 102 certificate of completion, Tuwaiq Academy, Oct 2024" loading="lazy"></a><a class="cert" href="assets/img/certs/tuwaiq-sql-103.jpg" data-title="SQL 103 &mdash; Tuwaiq Academy &middot; 2 hrs &middot; 2024"><img src="assets/img/certs/tuwaiq-sql-103.jpg" alt="SQL 103 certificate of completion, Tuwaiq Academy, 2024" loading="lazy"></a><a class="cert" href="assets/img/certs/experts-intro-sql.jpg" data-title="Introduction to SQL, 20 hours &mdash; Experts Training Institute" data-note="identity number redacted"><img src="assets/img/certs/experts-intro-sql.jpg" alt="Introduction to SQL certificate, Experts Training Institute" loading="lazy"></a><a class="cert" href="assets/img/certs/tuwaiq-numpy.jpg" data-title="Data analysis with NumPy &mdash; Tuwaiq Academy &middot; 3 hrs &middot; Oct 2024"><img src="assets/img/certs/tuwaiq-numpy.jpg" alt="Data analysis with NumPy certificate of completion, Tuwaiq Academy, Oct 2024" loading="lazy"></a><a class="cert" href="assets/img/certs/tuwaiq-pandas.jpg" data-title="Data analysis with Pandas &mdash; Tuwaiq Academy &middot; 2 hrs &middot; Nov 2024"><img src="assets/img/certs/tuwaiq-pandas.jpg" alt="Data analysis with Pandas certificate of completion, Tuwaiq Academy, Nov 2024" loading="lazy"></a><a class="cert" href="assets/img/certs/tuwaiq-matplotlib.jpg" data-title="Data visualisation with Matplotlib &mdash; Tuwaiq Academy &middot; 2 hrs &middot; Nov 2024"><img src="assets/img/certs/tuwaiq-matplotlib.jpg" alt="Data visualisation with Matplotlib certificate of completion, Tuwaiq Academy, Nov 2024" loading="lazy"></a><a class="cert" href="assets/img/certs/tuwaiq-seaborn.jpg" data-title="Data visualisation with Seaborn &mdash; Tuwaiq Academy &middot; 3 hrs &middot; Nov 2024"><img src="assets/img/certs/tuwaiq-seaborn.jpg" alt="Data visualisation with Seaborn certificate of completion, Tuwaiq Academy, Nov 2024" loading="lazy"></a><a class="cert" href="assets/img/certs/tuwaiq-eda.jpg" data-title="Exploratory data analysis (EDA) &mdash; Tuwaiq Academy &middot; 2 hrs &middot; Nov 2024"><img src="assets/img/certs/tuwaiq-eda.jpg" alt="Exploratory data analysis (EDA) certificate of completion, Tuwaiq Academy, Nov 2024" loading="lazy"></a><a class="cert" href="assets/img/certs/tuwaiq-ml-101.jpg" data-title="Machine Learning 101 &mdash; Tuwaiq Academy &middot; 2 hrs &middot; 2024"><img src="assets/img/certs/tuwaiq-ml-101.jpg" alt="Machine Learning 101 certificate of completion, Tuwaiq Academy, 2024" loading="lazy"></a><a class="cert" href="assets/img/certs/deeplearning-linear-algebra.jpg" data-title="Linear Algebra for Machine Learning and Data Science &mdash; DeepLearning.AI &middot; Dec 2025" data-verify="https://coursera.org/verify/XOO21MC4C697"><img src="assets/img/certs/deeplearning-linear-algebra.jpg" alt="Linear Algebra for Machine Learning and Data Science certificate, DeepLearning.AI, December 2025" loading="lazy"></a><a class="cert" href="assets/img/certs/emdad-excel-data-analysis.jpg" data-title="Data Analysis with Microsoft Excel, 30 hours &mdash; Emdad Al-Marifah" data-note="identity number redacted"><img src="assets/img/certs/emdad-excel-data-analysis.jpg" alt="Data analysis with Microsoft Excel certificate, Emdad Al-Marifah" loading="lazy"></a><a class="cert" href="assets/img/certs/emdad-powerbi.jpg" data-title="Data Analysis with Power BI, 20 hours &mdash; Emdad Al-Marifah" data-note="identity number redacted"><img src="assets/img/certs/emdad-powerbi.jpg" alt="Data analysis with Power BI certificate, Emdad Al-Marifah" loading="lazy"></a><a class="cert" href="assets/img/certs/experts-powerbi-excel.jpg" data-title="Power BI and Excel, 20 hours &mdash; Experts Training Institute" data-note="identity number redacted"><img src="assets/img/certs/experts-powerbi-excel.jpg" alt="Power BI and Excel certificate, Experts Training Institute" loading="lazy"></a></div>
+                </div>
+              </article>
+            </li>
+
+            <li class="tk-wrap" data-status="complete" data-anim style="--i:5">
+              <article class="tk">
+                <span class="edge2"></span>
+                <div class="fill">
+                  <div class="tk-top"><span class="tk-id">TRK 03</span><span class="pill">COMPLETED</span></div>
+                  <h3>Software Engineering</h3>
+                  <ul class="crs"><li><span class="nm">Python programming</span><span class="pv">Tuwaiq &middot; Experts &middot; Michigan</span><span class="st"></span></li><li><span class="nm">Design Patterns</span><span class="pv">Univ. of Alberta &middot; 2023</span><span class="st"></span></li><li><span class="nm">Design Principles</span><span class="pv">UC San Diego &middot; 2023</span><span class="st"></span></li><li><span class="nm">Version control with Git</span><span class="pv">Tuwaiq Academy &middot; 2024</span><span class="st"></span></li></ul>
+                  <div class="certs"><span class="lbl">certificates</span><a class="cert" href="assets/img/certs/tuwaiq-python-101.jpg" data-title="Python 101 &mdash; Tuwaiq Academy &middot; 2 hrs &middot; May 2024"><img src="assets/img/certs/tuwaiq-python-101.jpg" alt="Python 101 certificate of completion, Tuwaiq Academy, May 2024" loading="lazy"></a><a class="cert" href="assets/img/certs/tuwaiq-python-102.jpg" data-title="Python 102 &mdash; Tuwaiq Academy &middot; 3 hrs &middot; Jul 2024"><img src="assets/img/certs/tuwaiq-python-102.jpg" alt="Python 102 certificate of completion, Tuwaiq Academy, Jul 2024" loading="lazy"></a><a class="cert" href="assets/img/certs/tuwaiq-python-103.jpg" data-title="Python 103 &mdash; Tuwaiq Academy &middot; 3 hrs &middot; Sep 2024"><img src="assets/img/certs/tuwaiq-python-103.jpg" alt="Python 103 certificate of completion, Tuwaiq Academy, Sep 2024" loading="lazy"></a><a class="cert" href="assets/img/certs/tuwaiq-python-104.jpg" data-title="Python 104 &mdash; Tuwaiq Academy &middot; 1 hr &middot; Oct 2024"><img src="assets/img/certs/tuwaiq-python-104.jpg" alt="Python 104 certificate of completion, Tuwaiq Academy, Oct 2024" loading="lazy"></a><a class="cert" href="assets/img/certs/michigan-python-basics.jpg" data-title="Python Basics &mdash; University of Michigan &middot; Nov 2025" data-verify="https://coursera.org/verify/4CDJZG4QOWSE"><img src="assets/img/certs/michigan-python-basics.jpg" alt="Python Basics certificate, University of Michigan, November 2025" loading="lazy"></a><a class="cert" href="assets/img/certs/experts-python.jpg" data-title="Python Programming, 40 hours &mdash; Experts Training Institute" data-note="identity number redacted"><img src="assets/img/certs/experts-python.jpg" alt="Python Programming certificate, Experts Training Institute" loading="lazy"></a><a class="cert" href="assets/img/certs/alberta-design-patterns.jpg" data-title="Design Patterns &mdash; University of Alberta &middot; Jan 2023" data-verify="https://coursera.org/verify/N7XYZBL3B9BE"><img src="assets/img/certs/alberta-design-patterns.jpg" alt="Design Patterns certificate, University of Alberta, January 2023" loading="lazy"></a><a class="cert" href="assets/img/certs/ucsd-design-principles.jpg" data-title="Design Principles: an Introduction &mdash; UC San Diego &middot; Jan 2023" data-verify="https://coursera.org/verify/NU85SL5GM9AH"><img src="assets/img/certs/ucsd-design-principles.jpg" alt="Design Principles certificate, UC San Diego, January 2023" loading="lazy"></a><a class="cert" href="assets/img/certs/tuwaiq-git-101.jpg" data-title="Git 101 &mdash; Tuwaiq Academy &middot; 2 hrs &middot; Oct 2024"><img src="assets/img/certs/tuwaiq-git-101.jpg" alt="Git 101 certificate of completion, Tuwaiq Academy, Oct 2024" loading="lazy"></a></div>
+                </div>
+              </article>
+            </li>
+
+            <li class="tk-wrap" data-status="complete" data-anim style="--i:6">
+              <article class="tk">
+                <span class="edge2"></span>
+                <div class="fill">
+                  <div class="tk-top"><span class="tk-id">TRK 04</span><span class="pill">COMPLETED</span></div>
+                  <h3>Security &amp; Governance</h3>
+                  <ul class="crs"><li><span class="nm">Networking and Cybersecurity</span><span class="pv">BARQ Academy &middot; 2025</span><span class="st"></span></li><li><span class="nm">Software Security</span><span class="pv">Univ. of Maryland &middot; 2022</span><span class="st"></span></li><li><span class="nm">Introduction to cybersecurity</span><span class="pv">Tuwaiq Academy &middot; 2025</span><span class="st"></span></li><li><span class="nm">COBIT 5 Foundation</span><span class="pv">Experts Inst. &middot; 2025</span><span class="st"></span></li></ul>
+                  <div class="certs"><span class="lbl">certificates</span><a class="cert" href="assets/img/certs/barq-network-security.jpg" data-title="Network Fundamentals &amp; Security, 30 hours &mdash; BARQ Academy &middot; Oct 2025"><img src="assets/img/certs/barq-network-security.jpg" alt="Certificate of attendance, network fundamentals and security, BARQ Academy, October 2025" loading="lazy"></a><a class="cert" href="assets/img/certs/umd-software-security.jpg" data-title="Software Security &mdash; University of Maryland, College Park &middot; Nov 2022" data-verify="https://coursera.org/verify/HGNPZS8VYXL7"><img src="assets/img/certs/umd-software-security.jpg" alt="Software Security certificate, University of Maryland College Park, November 2022" loading="lazy"></a><a class="cert" href="assets/img/certs/tuwaiq-cybersecurity-intro.jpg" data-title="Introduction to Cybersecurity &mdash; Tuwaiq Academy &middot; 1 hr &middot; Feb 2025"><img src="assets/img/certs/tuwaiq-cybersecurity-intro.jpg" alt="Introduction to Cybersecurity certificate of completion, Tuwaiq Academy, Feb 2025" loading="lazy"></a><a class="cert" href="assets/img/certs/experts-cobit5.jpg" data-title="COBIT 5 Foundation, 16 hours &mdash; Experts Training Institute" data-note="identity number redacted"><img src="assets/img/certs/experts-cobit5.jpg" alt="COBIT 5 Foundation certificate, Experts Training Institute" loading="lazy"></a></div>
+                </div>
+              </article>
+            </li>
+
+          </ul>
+        </div>
+      </section>
+
+      <section class="card" id="contact">
+        <span class="card-tag">SEC 04 · CONTACT</span>
+        <div class="card-inner hidescroll">
+          <h2 data-anim style="--i:0">Contact</h2>
+          <p class="sub" data-anim style="--i:1">OPEN TO ROLES</p>
+          <div class="split">
+            <div data-anim style="--i:2">
+              <p>Send me a message and I'll reply. You can also find me on LinkedIn, or see what I'm building on GitHub.</p>
+              <ul class="links">
+                <li><a href="https://www.linkedin.com/in/maisbilto" target="_blank" rel="noopener">linkedin.com/in/maisbilto</a></li>
+                <li><a href="https://github.com/MaisBilto" target="_blank" rel="noopener">github.com/MaisBilto</a></li>
+              </ul>
+            </div>
+            <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field"
+                  data-anim style="--i:3">
+              <input type="hidden" name="form-name" value="contact">
+              <p class="visually-hidden">
+                <label>Leave this field empty: <input name="bot-field" tabindex="-1" autocomplete="off"></label>
+              </p>
+              <div class="field">
+                <label for="f-name">Name</label>
+                <input id="f-name" name="name" type="text" autocomplete="name" required>
+              </div>
+              <div class="field">
+                <label for="f-email">Email</label>
+                <input id="f-email" name="email" type="email" autocomplete="email" required>
+              </div>
+              <div class="field">
+                <label for="f-message">Message</label>
+                <textarea id="f-message" name="message" rows="4" required></textarea>
+              </div>
+              <button class="btn" type="submit">Send message</button>
+            </form>
+          </div>
+          <div class="foot" data-anim style="--i:4"><span>© 2026 MAIS BILTO</span><span>LINKEDIN · GITHUB</span></div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <div class="deco" aria-hidden="true">
+    <svg class="cnr tl" width="190" height="150"><use href="#corner"/></svg>
+    <svg class="cnr tr" width="190" height="150"><use href="#corner"/></svg>
+    <svg class="cnr bl" width="190" height="150"><use href="#corner"/></svg>
+    <svg class="cnr br" width="190" height="150"><use href="#corner"/></svg>
+
+    <span class="ln h t"></span><span class="ln h b"></span>
+    <span class="ln v l"></span><span class="ln v r"></span>
+    <span class="ln h t out"></span><span class="ln h b out"></span>
+    <span class="ln v l out"></span><span class="ln v r out"></span>
+
+    <span class="hatch a"></span><span class="hatch b"></span>
+    <span class="hatch c"></span><span class="hatch d"></span>
+
+    <div class="plate"><i></i>MAIS.BILTO // PORTFOLIO</div>
+  </div>
+
+</div>
+
+<dialog class="lb" id="lb" aria-label="Certificate">
+  <button class="lb-x" id="lb-x" aria-label="Close">&#10005;</button>
+  <button class="lb-nav prev" id="lb-prev" aria-label="Previous">&#10094;</button>
+  <button class="lb-nav next" id="lb-next" aria-label="Next">&#10095;</button>
+  <div class="lb-frame">
+    <div class="fill">
+      <img id="lb-img" alt="">
+      <div class="lb-meta"><span id="lb-title"></span><span class="lb-count" id="lb-count"></span><span id="lb-note" class="lb-note"></span><a id="lb-verify" target="_blank" rel="noopener">Verify &#9656;</a></div>
     </div>
-    
-        <a class="skip-link" href="#main">Skip to content</a>
-        <header class="site-header">
-        <a class="brand" href="/">
-            <svg class="brand-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true">
-            <path d="M12 2.6 20.4 7.3v9.4L12 21.4 3.6 16.7V7.3z"/>
-            <circle cx="12" cy="12" r="3.1"/>
-            </svg>
-            <span>Mais Bilto</span>
-            <span class="brand-chip">SN</span>
-        </a>
-        <nav aria-label="Primary">
-            <ul class="nav-list">
-            <li><a href="#about">About</a></li>
-            <li><a href="#work">Work</a></li>
-            <li><a href="#training">Training</a></li>
-            <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-        </header>
+  </div>
+</dialog>
 
-        <main id="main">
-            <section class="hero" aria-labelledby="hero-heading">
-            <div class="hero-body">
-                <p class="eyebrow">Now Platform</p>
-                <h1 id="hero-heading">Mais Bilto</h1>
-                <p class="hero-role">ServiceNow <b>System Administrator</b></p>
-                <p class="hero-line">I build and configure on the Now Platform — custom applications, workflow design, and the reporting that sits on top of them.</p>
-                <div class="hero-actions">
-                <a class="button" href="#work">View my work</a>
-                <a class="button button--ghost" href="#contact">Get in touch</a>
-                </div>
-            </div>
 
-            <div class="record">
-            <div class="record-head">
-                <span class="record-id">usr_profile · MAI0010001</span>
-                <span class="pill">Available</span>
-            </div>
-            <dl class="record-rows">
-                <div class="record-row"><dt>focus</dt><dd>ServiceNow administration</dd></div>
-                <div class="record-row"><dt>studying</dt><dd>CSA exam</dd></div>
-                <div class="record-row"><dt>background</dt><dd>CS · networking · security</dd></div>
-                <div class="record-row"><dt>instance</dt><dd>Personal developer instance</dd></div>
-            </dl>
-            </div>
-            </section>
-
-            <section id="about" aria-labelledby="about-heading">
-            <h2 id="about-heading">About</h2>
-
-            <p>I'm a Computer Science graduate from Princess Nourah University, working toward a ServiceNow System Administrator role. My background is in networking, cybersecurity and data analysis — useful preparation for platform work, where the job is understanding how pieces fit together rather than mastering any single screen.</p>
-
-            <p>Everything here is built on a personal developer instance: custom applications, form and workflow configuration, and the reporting that sits on top of them.</p>
-
-            <p class="label">What I build</p>
-
-            <ul class="caps">
-                <li class="cap">
-                <svg class="cap-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/>
-                </svg>
-                <h3>Data model</h3>
-                <p>Custom tables extending Task, fields, and relationships.</p>
-                </li>
-                <li class="cap">
-                <svg class="cap-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><path d="M10 6.5h4a2 2 0 0 1 2 2V14"/>
-                </svg>
-                <h3>Workflow</h3>
-                <p>Flow Designer, approvals, and notifications.</p>
-                </li>
-                <li class="cap">
-                <svg class="cap-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M9 9v11"/>
-                </svg>
-                <h3>Interfaces</h3>
-                <p>Forms, UI Policies, and UI Builder workspaces.</p>
-                </li>
-                <li class="cap">
-                <svg class="cap-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>
-                </svg>
-                <h3>Reporting</h3>
-                <p>Dashboards, metrics, and shared views.</p>
-                </li>
-            </ul>
-            </section>
-
-            <section id="work" aria-labelledby="work-heading">
-            <h2 id="work-heading">Work</h2>
-
-            <article class="project">
-                <div class="project-head">
-                <h3>Infinity Loaner Program</h3>
-                <span class="project-meta">u_loaner_request · extends Task</span>
-                </div>
-                <p>A loaner-equipment request application built on a custom table extending Task. Dependent fields and UI Policies keep the form honest, a UI Builder workspace gives fulfillers a queue to work from, templates and notifications handle the routine steps, and a shared dashboard reports on request volume and ageing.</p>
-                <ul class="tags">
-                <li>custom table</li>
-                <li>UI Policies</li>
-                <li>dependent fields</li>
-                <li>UI Builder</li>
-                <li>notifications</li>
-                <li>reporting</li>
-                </ul>
-                <a class="project-link" href="projects/infinity-loaner.html">Read the case study <span aria-hidden="true">&rarr;</span></a>
-            </article>
-            </section>
-
-            <section id="training" aria-labelledby="training-heading">
-            <h2 id="training-heading">Training</h2>
-            <ul class="track">
-                <li class="track-item">
-                <span class="track-name">Certified System Administrator (CSA)</span>
-                <span class="pill pill--pending">In progress</span>
-                </li>
-                <li class="track-item">
-                <span class="track-name">Associate AI System Administrator</span>
-                <span class="pill pill--done">Completed</span>
-                </li>
-                <li class="track-item">
-                <span class="track-name">Associate AI Technical Project Manager</span>
-                <span class="pill pill--done">Completed</span>
-                </li>
-            </ul>
-            </section>
-
-            <section id="contact" aria-labelledby="contact-heading">
-            <h2 id="contact-heading">Contact</h2>
-            <div class="contact-grid">
-                <div>
-                <p>Send me a message and I'll reply. You can also find me on LinkedIn, or see what I'm building on GitHub.</p>
-                <ul class="links">
-                    <li><a href="https://www.linkedin.com/in/maisbilto" target="_blank" rel="noopener">linkedin.com/in/maisbilto<span class="visually-hidden"> (opens in a new tab)</span></a></li>
-                    <li><a href="https://github.com/MaisBilto" target="_blank" rel="noopener">github.com/MaisBilto<span class="visually-hidden"> (opens in a new tab)</span></a></li>
-                </ul>
-                </div>
-
-                <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
-                <input type="hidden" name="form-name" value="contact">
-                <p class="visually-hidden">
-                    <label>Leave this field empty: <input name="bot-field"></label>
-                </p>
-                <div class="field">
-                    <label for="name">Name</label>
-                    <input type="text" id="name" name="name" required>
-                </div>
-                <div class="field">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-                <div class="field">
-                    <label for="message">Message</label>
-                    <textarea id="message" name="message" rows="5" required></textarea>
-                </div>
-                <button class="button" type="submit">Send message</button>
-                </form>
-            </div>
-            </section>
-
-        </main>
-
-        <footer class="site-footer">
-        <p>&copy; 2026 Mais Bilto</p>
-        <ul class="footer-links">
-            <li><a href="https://www.linkedin.com/in/maisbilto" target="_blank" rel="noopener">LinkedIn</a></li>
-            <li><a href="https://github.com/MaisBilto" target="_blank" rel="noopener">GitHub</a></li>
-        </ul>
-        </footer>
-        
-        <script src="js/main.js"></script>
-    </body>
+<script src="js/main.js" defer></script>
+</body>
 </html>

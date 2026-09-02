@@ -1,198 +1,39 @@
-/* ============================================
-   DESIGN TOKENS - dark only
-   ============================================ */
-:root {
-    
-    color-scheme: dark;
-    /* surface */
-    --color-bg:        #0f1419;
-    --color-surface:   #161d25;
-    --color-surface-2: #1c242e;
-    --color-border:    #28323e;
-    --color-border-hi: #3a4756;
+/* base.css — tokens, reset, base elements, utilities.
+   Everything sized in rem; html's font-size is the single scale knob. */
 
-    /* text */
-    --color-text:      #e4eaf1;
-    --color-muted:     #94a2b3;
-    --color-faint:     #7d8c9f;
+  *,*::before,*::after{box-sizing:border-box}
+  :root{
+    --bg:#060a0f;--panel:#0b1119;--panel2:#101a24;--line:#1f2c38;
+    --txt:#e4eaf1;--mut:#93a3b4;--faint:#6c7f92;
+    --hud:#5eead4;--hud-dim:rgba(94,234,212,.40);--hud-glow:rgba(94,234,212,.6);
+    --alert:#fb7185;--alert-dim:rgba(251,113,133,.45);
+    --scroll:0;--gap:2.4rem;--rail:4.1rem;--n:2.3rem;
+    --s3:.75rem;--s4:1rem;--s5:1.5rem;--s6:2rem;--s7:2.6rem;
+  }
+  html{scroll-behavior:smooth;
+    /* one knob: every rem in this sheet scales from the viewport.
+       width and height both contribute, so a short window shrinks too. */
+    font-size:clamp(13px, 1.15vh + 0.25vw + 1px, 22px)}
+  body{margin:0;height:100vh;height:100dvh;overflow:hidden;color:var(--txt);
+    font-family:Inter,"Segoe UI",system-ui,sans-serif;line-height:1.65;
+    background:
+      radial-gradient(115% 85% at 50% 42%, #0d1a26 0%, transparent 62%),
+      linear-gradient(180deg,#060a0f 0%,#04070a 100%)}
+  .hidescroll{scrollbar-width:none}
+  .hidescroll::-webkit-scrollbar{display:none}
 
-    /* accent */
-    --color-accent:    #fb7185;
-    --color-accent-hi: #fda4af;
-    --color-on-accent: #14181d;
-    --color-status:    #5eead4;
+  /* ---------- base elements ---------- */
+  img{max-width:100%;height:auto;display:block}
+  a{color:var(--hud);text-decoration:none}
+  a:hover{text-decoration:underline;text-underline-offset:3px}
+  button,input,textarea{font:inherit;color:inherit}
+  :focus-visible{outline:2px solid var(--hud);outline-offset:3px;border-radius:2px}
+  ::selection{background:var(--hud);color:var(--bg)}
 
-    /* typography */
-    --font-display: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
-    --font-body:    Inter, "Segoe UI", system-ui, sans-serif;
-    --font-mono:    "JetBrains Mono", ui-monospace, Consolas, monospace;
-
-    --text-xs:   0.72rem;
-    --text-sm:   0.875rem;
-    --text-base: 1rem;
-    --text-lg:   1.25rem;
-    --text-xl:   1.5rem;
-    --text-2xl:  2rem;
-    --text-3xl:  2.75rem;
-    --text-4xl:  3.25rem;
-
-    --tracking-label: 0.14em;
-
-    /* spacing */
-    --space-1: 0.25rem;
-    --space-2: 0.5rem;
-    --space-3: 0.75rem;
-    --space-4: 1rem;
-    --space-5: 1.5rem;
-    --space-6: 2rem;
-    --space-7: 3rem;
-    --space-8: 4rem;
-
-    /* form */
-    --radius:    10px;
-    --radius-sm: 5px;
-    --measure:   65ch;
-
-    /* the grid */
-    --grid-size: 26px;
-    --grid-line: rgba(148, 162, 179, 0.045);
-    
-    /* driven by js/main.js */
-    --scroll: 0;
-}
-
-/* ============================================
-   RESET
-   ============================================ */
-*,
-*::before,
-*::after {
-    box-sizing: border-box;
-}
-
-body,
-h1,
-h2,
-h3,
-p,
-ul,
-ol,
-figure {
-    margin: 0;
-}
-
-ul[class] {
-    list-style: none;
-    padding: 0;
-}
-
-img,
-svg {
-    max-width: 100%;
-    display: block;
-}
-
-input,
-button,
-textarea,
-select {
-    font: inherit;
-    color: inherit;
-}
-
-@media (prefers-reduced-motion: reduce) {
-
-    *,
-    *::before,
-    *::after {
-        animation-duration: 0.01ms !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
-    }
-}
-
-/* ============================================
-   BASE ELEMENTS
-   ============================================ */
-html {
-    scroll-behavior: smooth;
-}
-
-body {
-  background-color: var(--color-bg);
-  color: var(--color-text);
-  font-family: var(--font-body);
-  font-size: var(--text-base);
-  line-height: 1.65;
-  -webkit-font-smoothing: antialiased;
-}
-
-
-
-h1,
-h2,
-h3 {
-    font-family: var(--font-display);
-    line-height: 1.15;
-    letter-spacing: -0.02em;
-}
-
-h1 {
-    font-size: var(--text-3xl);
-    font-weight: 700;
-}
-
-h2 {
-    font-size: var(--text-2xl);
-    font-weight: 700;
-}
-
-h3 {
-    font-size: var(--text-lg);
-    font-weight: 500;
-}
-
-p {
-    max-width: var(--measure);
-}
-
-a {
-    color: var(--color-accent);
-    text-underline-offset: 3px;
-}
-
-:focus-visible {
-    outline: 2px solid var(--color-accent);
-    outline-offset: 2px;
-}
-
-/* ============================================
-      UTILITIES
-      ============================================ */
-.visually-hidden {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip-path: inset(50%);
-    white-space: nowrap;
-}
-
-.skip-link {
-    position: absolute;
-    top: var(--space-3);
-    left: var(--space-3);
-    z-index: 100;
-    padding: var(--space-2) var(--space-4);
-    background: var(--color-accent);
-    color: var(--color-on-accent);
-    border-radius: var(--radius);
-    text-decoration: none;
-    transform: translateY(-200%);
-}
-
-.skip-link:focus {
-    transform: translateY(0);
-}
+  /* ---------- utilities ---------- */
+  .visually-hidden{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;
+    overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
+  .skip-link{position:absolute;top:-100%;left:var(--s4);z-index:99;
+    padding:.6rem 1rem;background:var(--hud);color:var(--bg);
+    font-family:"JetBrains Mono",monospace;font-size:.72rem;letter-spacing:.1em}
+  .skip-link:focus{top:var(--s4);text-decoration:none}
