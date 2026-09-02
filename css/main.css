@@ -2,9 +2,9 @@
 
   /* ================= floating dots ================= */
   .dots{position:fixed;inset:0;z-index:0;pointer-events:none}
-  .dot{position:absolute;width:var(--d,7px);height:var(--d,7px);border-radius:50%;
+  /*.dot{position:absolute;width:var(--d,7px);height:var(--d,7px);border-radius:50%;
     background:var(--hud);box-shadow:0 0 8px 1px var(--hud-glow);
-    animation:breathe var(--t,4.5s) ease-in-out infinite;animation-delay:var(--dl,0s)}
+    animation:breathe var(--t,4.5s) ease-in-out infinite;animation-delay:var(--dl,0s)}*/
   .dot.rose{background:var(--alert);box-shadow:0 0 8px 1px var(--alert-dim)}
   /* connector line drawn from the dot toward the frame */
   .dot::after{content:"";position:absolute;left:50%;top:50%;height:1px;
@@ -74,7 +74,7 @@
   .rail a{display:grid;place-items:center;width:34px;height:34px;color:var(--faint);
     text-decoration:none;transition:color .18s,background-color .18s;
     clip-path:polygon(7px 0,100% 0,100% calc(100% - 7px),calc(100% - 7px) 100%,0 100%,0 7px)}
-  .rail a:hover{color:var(--txt);background:rgba(94,234,212,.08)}
+  .rail a:hover{color:var(--hover);background:var(--hover-wash)}
   .rail a.on{color:var(--alert);background:rgba(251,113,133,.14)}
   .rail svg{width:16px;height:16px}
 
@@ -120,10 +120,14 @@
     letter-spacing:.1em;text-transform:uppercase;font-weight:500;padding:.65rem 1.25rem;
     text-decoration:none;cursor:pointer;color:#07100f;background:var(--hud);border:0;
     clip-path:polygon(var(--n) 0,100% 0,100% calc(100% - var(--n)),calc(100% - var(--n)) 100%,0 100%,0 var(--n));
-    transition:filter .18s}
-  .btn:hover{filter:brightness(1.14)}
+    transition:background-color .18s,color .18s,box-shadow .18s}
+  .btn:hover{background:var(--hover);color:var(--on-hover);text-decoration:none}
+
+  /* the ghost button keeps the house colour on purpose: it is the one
+     control that should still read as teal when the pointer is on it */
   .btn.ghost{background:transparent;color:var(--hud);box-shadow:inset 0 0 0 1px var(--hud-dim)}
-  .btn.ghost:hover{background:rgba(94,234,212,.08)}
+  .btn.ghost:hover{background:rgba(94,234,212,.10);color:var(--hud);
+    box-shadow:inset 0 0 0 1px var(--hud);text-decoration:none}
   .split{display:grid;grid-template-columns:1fr .92fr;gap:var(--s7);align-items:center}
   .split.wide-right{grid-template-columns:.85fr 1.15fr}
   .panel{--n:14px;padding:1px;background:var(--hud-dim)}
@@ -150,7 +154,7 @@
   .caps li{--n:10px;padding:1px;background:var(--line);transition:background-color .2s}
   .caps li,.caps li > .fill{clip-path:polygon(var(--n) 0,100% 0,100% calc(100% - var(--n)),calc(100% - var(--n)) 100%,0 100%,0 var(--n))}
   .caps li > .fill{background:var(--panel2);padding:var(--s4);height:100%}
-  .caps li:hover{background:var(--hud-dim)}
+  .caps li:hover{background:var(--hover-dim)}
   .caps h3{margin:0 0 .25rem;font-family:"Space Grotesk",system-ui,sans-serif;font-size:.9rem}
   .caps p{font-size:.79rem;line-height:1.5}
   .meta{font-family:"JetBrains Mono",monospace;font-size:.68rem;color:var(--faint);
@@ -159,7 +163,7 @@
   .tags li{font-family:"JetBrains Mono",monospace;font-size:.66rem;color:var(--mut);
     padding:4px 9px;background:rgba(16,26,36,.9);box-shadow:inset 0 0 0 1px var(--line);
     clip-path:polygon(6px 0,100% 0,100% calc(100% - 6px),calc(100% - 6px) 100%,0 100%,0 6px)}
-  .more{color:var(--hud);text-decoration:none;font-family:"JetBrains Mono",monospace;
+  .more{color:var(--hud);text-decoration:none;transition:color .18s;font-family:"JetBrains Mono",monospace;
     font-size:.72rem;letter-spacing:.1em;text-transform:uppercase}
   .track{list-style:none;padding:0;margin:0}
   .track li{display:flex;justify-content:space-between;align-items:center;gap:var(--s3);
@@ -179,7 +183,7 @@
   .shot-body span em{font-style:normal;color:var(--hud);display:block;margin-bottom:.4rem;opacity:.85}
   .links{list-style:none;padding:0;margin:var(--s4) 0 0;display:flex;flex-direction:column;gap:.45rem}
   .links a{font-family:"JetBrains Mono",monospace;font-size:.8rem;color:var(--hud);text-decoration:none}
-  .links a:hover{text-decoration:underline;text-underline-offset:4px}
+  .links a:hover{color:var(--hover);text-decoration:underline;text-underline-offset:4px}
   .field{display:flex;flex-direction:column;gap:.45rem;margin-bottom:var(--s4)}
   .field span{font-family:"JetBrains Mono",monospace;font-size:.64rem;letter-spacing:.18em;
     text-transform:uppercase;color:var(--faint)}
@@ -194,9 +198,9 @@
 
   /* ================= project cards ================= */
   /* ---- ONE attribute drives every difference between states ---- */
-  .hc-wrap{--seg:var(--alert);--seg-glow:var(--alert-dim);--st:var(--line);--st-glow:transparent;--beam:.07;--thumb:.42;--lift:-2px}
-  .hc-wrap[data-status="active"]  {--st:var(--hud);    --st-glow:var(--hud-glow);        --beam:.26;--thumb:1;  --lift:-4px}
-  .hc-wrap[data-status="complete"]{--seg:var(--hud);--seg-glow:var(--hud-glow);--st:var(--hud-dim);--st-glow:rgba(94,234,212,.32);   --beam:.16;--thumb:.9; --lift:-3px}
+  .hc-wrap{--seg:var(--alert);--seg-glow:var(--alert-dim);--st:var(--line);--st-hi:var(--line-hi);--st-glow:transparent;--beam:.07;--thumb:.42;--lift:-2px}
+  .hc-wrap[data-status="active"]  {--st:var(--alert);  --st-hi:var(--alert-hi);--st-glow:var(--alert-dim);       --beam:.26;--thumb:1;  --lift:-4px}
+  .hc-wrap[data-status="complete"]{--seg:var(--hud);--seg-glow:var(--hud-glow);--st:var(--hud-dim);--st-hi:var(--hud);--st-glow:rgba(94,234,212,.32);   --beam:.16;--thumb:.9; --lift:-3px}
 
   .hc-wrap::after{background:radial-gradient(52% 100% at 50% 0%, var(--st-glow), transparent 74%);
     opacity:var(--beam)}
@@ -204,8 +208,10 @@
   .hc{background:var(--st)}
   .hc::after{background:var(--st);box-shadow:0 0 9px var(--st-glow)}
   .hc-thumb{opacity:var(--thumb)}
-  .hc-wrap:hover .hc{background:var(--hud);transform:translateY(var(--lift))}
-  .hc-wrap[data-status="scheduled"]:hover .hc{background:var(--hud-dim);filter:none}
+  /* rose now MEANS "in progress", so it can't double as the hover colour —
+     a hovered complete card would have read as active. Each card brightens
+     its own --st instead, which keeps the status legible while hovered. */
+  .hc-wrap:hover .hc{background:var(--st-hi);transform:translateY(var(--lift))}
   .hc-wrap[data-status="scheduled"] h3{color:var(--mut)}
 
   /* pill colour follows the status; the WORD stays in the html */
@@ -213,6 +219,8 @@
     box-shadow:inset 0 0 0 1px var(--alert-dim)}
   [data-status="scheduled"] .hc-top .pill{color:var(--faint);background:transparent;
     box-shadow:inset 0 0 0 1px var(--line)}
+  [data-status="active"] .tk-top .pill{color:var(--alert);background:rgba(251,113,133,.1);
+    box-shadow:inset 0 0 0 1px var(--alert-dim)}
   [data-status="complete"] .hc-top .pill{color:var(--hud);background:rgba(94,234,212,.1);
     box-shadow:inset 0 0 0 1px rgba(94,234,212,.32)}
 
@@ -248,8 +256,6 @@
   /* .hc-wrap[data-status="active"] .spark{display:block}  <- orbit variant, off */
   .hc > .fill{position:relative;z-index:1}
   /* base ring goes quieter on the active card so the travelling light reads */
-  .hc-wrap[data-status="active"]{--st:rgba(94,234,212,.28)}
-  .hc-wrap[data-status="active"]:hover .hc{background:rgba(94,234,212,.5)}
   @media (prefers-reduced-motion:reduce){.spark{display:none!important}}
 
 
@@ -263,15 +269,15 @@
 
   /* wrapper is unclipped, so the beam underneath can escape the card shape */
   .hc-wrap{position:relative;display:flex}
+  /* geometry only — the colour and opacity of the beam come from --st-glow and
+     --beam in the state block above. Repeating them here overrode the status. */
   .hc-wrap::after{content:"";position:absolute;left:14%;right:14%;bottom:-18px;height:28px;
-    background:radial-gradient(52% 100% at 50% 0%, var(--hud-glow), transparent 74%);
-    opacity:.26;transition:opacity .25s;pointer-events:none}
-  .hc-wrap:hover::after{opacity:.7}
+    transition:opacity .25s,background .25s;pointer-events:none}
 
-  .hc{position:relative;padding:1px;background:var(--hud-dim);flex:1;
+  /* likewise: no background here, or every card's border becomes the same colour */
+  .hc{position:relative;padding:1px;flex:1;
     transition:background-color .22s,transform .22s,filter .22s}
-  .hc-wrap:hover .hc{background:var(--hud);transform:translateY(-4px);
-    filter:drop-shadow(0 0 11px rgba(94,234,212,.3))}
+  .hc-wrap:hover .hc{filter:drop-shadow(0 0 11px var(--st-glow))}
   .hc,.hc > .fill{
     clip-path:polygon(18px 0,calc(100% - 32px) 0,100% 28px,100% 100%,32px 100%,0 calc(100% - 28px),0 18px)}
   .hc.v2,.hc.v2 > .fill{
@@ -315,17 +321,19 @@
     box-shadow:inset 0 0 0 1px var(--line);
     clip-path:polygon(5px 0,100% 0,100% calc(100% - 5px),calc(100% - 5px) 100%,0 100%,0 5px);
     transition:box-shadow .18s,color .18s}
-  .skills .v span:hover{color:var(--txt);box-shadow:inset 0 0 0 1px var(--hud-dim)}
+  .skills .v span:hover{color:var(--txt);box-shadow:inset 0 0 0 1px var(--hover-dim)}
   .skills .v span.add{color:var(--faint);opacity:.75;font-style:italic}
 
   .tracks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s5);
     list-style:none;padding:0;margin:var(--s5) 0 0;align-items:stretch}
-  .tk-wrap{position:relative;display:flex;--st:var(--hud-dim);--st-glow:rgba(94,234,212,.32)}
-  .tk-wrap[data-status="active"]{--st:var(--hud);--st-glow:var(--hud-glow)}
+  .tk-wrap{position:relative;display:flex;--st:var(--hud-dim);--st-hi:var(--hud);--st-glow:rgba(94,234,212,.32)}
+  /* the in-progress track is rose: the same "this one is live" signal the
+     in-progress project card gives with its pill and progress bar. */
+  .tk-wrap[data-status="active"]{--st:var(--alert);--st-hi:var(--alert-hi);--st-glow:var(--alert-dim)}
   .tk{position:relative;padding:1px;background:var(--st);flex:1;
     transition:background-color .22s,transform .22s,filter .22s}
-  .tk-wrap:hover .tk{background:var(--hud);transform:translateY(-3px);
-    filter:drop-shadow(0 0 10px rgba(94,234,212,.26))}
+  .tk-wrap:hover .tk{background:var(--st-hi);transform:translateY(-3px);
+    filter:drop-shadow(0 0 10px var(--st-glow))}
   .tk,.tk > .fill{clip-path:polygon(20px 0,100% 0,100% calc(100% - 20px),calc(100% - 20px) 100%,0 100%,0 20px)}
   .tk > .fill{background:var(--panel2);padding:.85rem 1rem 1rem;display:flex;flex-direction:column;
     gap:.45rem;height:100%}
@@ -365,18 +373,22 @@
     display:grid;place-items:center;transition:box-shadow .2s,transform .2s}
   .cert img{width:100%;height:100%;object-fit:cover;display:block;
     filter:grayscale(.2) brightness(.72) contrast(1.05);transition:filter .22s}
-  .cert:hover img{filter:none}
+  /*.cert:hover img{filter:none}*/
   .cert span{font-family:"JetBrains Mono",monospace;font-size:.44rem;letter-spacing:.08em;color:var(--faint)}
-  .tk-wrap:hover .cert{box-shadow:inset 0 0 0 1px var(--hud-dim)}
-  .cert:hover{transform:translateY(-2px);box-shadow:inset 0 0 0 1px var(--hud)}
+  .tk-wrap:hover .cert:not(.rest){box-shadow:inset 0 0 0 1px var(--hover-dim)}
+  .cert:not(.rest):hover{transform:translateY(-2px);box-shadow:inset 0 0 0 1px var(--hover)}
   .certs .cert:nth-of-type(n+6){display:none}
-  .cert.rest{display:grid;background:none;box-shadow:inset 0 0 0 1px var(--line);cursor:zoom-in}
-  .cert.rest b{font-family:"JetBrains Mono",monospace;font-size:.62rem;font-weight:400;color:var(--mut)}
-  .cert.rest:hover{box-shadow:inset 0 0 0 1px var(--hud);transform:translateY(-2px)}
+  /* the +N chip is deliberately inert — no hover state at all.
+     cursor:zoom-in is left as the only signal that it is clickable. */
+  .cert.rest{display:flex;flex-direction:row;align-items:center;justify-content:center;gap:0;
+    background:var(--line);box-shadow:inset 0 0 0 1px var(--line);cursor:zoom-in;color:var(--mut)}
+  .cert.rest svg{width:20px;height:20px;flex:none;margin-left:-3px}
+  .cert.rest b{font-family:"JetBrains Mono",monospace;font-size:.62rem;font-weight:500;
+    letter-spacing:.02em;line-height:1}
   .lb-nav{position:absolute;top:50%;transform:translateY(-50%);z-index:4;width:38px;height:56px;
     display:grid;place-items:center;border:1px solid var(--hud-dim);background:var(--panel);
     color:var(--hud);cursor:pointer;font-size:1rem;line-height:1}
-  .lb-nav:hover{background:var(--hud);color:var(--bg)}
+  .lb-nav:hover{background:var(--hover);color:var(--bg)}
   .lb-nav.prev{left:-19px} .lb-nav.next{right:-19px}
   .lb-nav[hidden],.lb-meta [hidden]{display:none}
   .lb-count{font-family:"JetBrains Mono",monospace;font-size:.6rem;letter-spacing:.12em;color:var(--faint)}
@@ -406,11 +418,12 @@
     border:1px solid var(--hud);background:var(--panel);color:var(--hud);
     font-size:.85rem;line-height:1;cursor:pointer;border-radius:50%;
     box-shadow:0 0 10px rgba(94,234,212,.35)}
-  .lb-x:hover{background:var(--hud);color:var(--bg)}
+  .lb-x:hover{background:var(--hover);color:var(--bg)}
 
   /* bright side tab */
-  .hc::after{content:"";position:absolute;width:4px;background:var(--hud);
-    box-shadow:0 0 9px var(--hud-glow);z-index:2;left:0;top:34%;height:24%;
+  /* geometry only — colour and glow come from --st / --st-glow above */
+  .hc::after{content:"";position:absolute;width:4px;
+    z-index:2;left:0;top:34%;height:24%;
     transition:height .25s,top .25s}
   .hc.v2::after{left:auto;right:0;top:22%;height:30%}
   .hc.v3::after{top:auto;bottom:16%;height:22%}
@@ -436,7 +449,7 @@
   .hc-thumb > span{font-family:"JetBrains Mono",monospace;font-size:.6rem;letter-spacing:.1em;
     color:var(--faint);text-align:center;line-height:1.85;z-index:1;padding:0 .6rem}
   .scan{position:absolute;left:0;right:0;height:2px;top:-8%;z-index:1;opacity:0;
-    background:linear-gradient(90deg,transparent,var(--hud),transparent)}
+    background:linear-gradient(90deg,transparent,var(--st-hi),transparent)}
   .hc-wrap:hover .scan{opacity:.7;animation:scanline 1.6s ease-in-out infinite}
   @keyframes scanline{from{top:-6%}to{top:104%}}
 
@@ -459,6 +472,7 @@
 
   .hc .more{margin-top:auto;padding-top:.6rem;font-size:.66rem;
     align-items:center;gap:.4rem}
+  .hc-wrap:hover .more{color:var(--st-hi)}
   .hc .more b{font-weight:400;transition:transform .22s}
   .hc-wrap:hover .more b{transform:translateX(4px)}
   .hc .soon{margin-top:auto;padding-top:.6rem;font-family:"JetBrains Mono",monospace;
@@ -471,7 +485,7 @@
 
   .topics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.5rem;list-style:none;padding:0;margin:0}
   .topic{--n:9px;padding:1px;background:var(--line);transition:background-color .2s}
-  .topic:hover{background:var(--hud-dim)}
+  .topic:hover{background:var(--hover-dim)}
   .topic,.topic > .fill{clip-path:polygon(var(--n) 0,100% 0,100% calc(100% - var(--n)),calc(100% - var(--n)) 100%,0 100%,0 var(--n))}
   .topic > .fill{background:var(--panel2);padding:.5rem .65rem;display:flex;align-items:center;gap:.5rem;height:100%}
   .topic .num{font-family:"JetBrains Mono",monospace;font-size:.58rem;color:var(--faint);letter-spacing:.08em}
@@ -509,15 +523,20 @@
   /* ---------- contact form ---------- */
   .field label{font-family:"JetBrains Mono",monospace;font-size:.64rem;letter-spacing:.18em;
     text-transform:uppercase;color:var(--faint)}
+  /* 2px, not 1px, on purpose. The page is laid out from a fluid rem scale, so
+     these boxes land on fractional device pixels; a 1px border then splits its
+     coverage across two rows and both come out dim — the edge looked missing at
+     some window sizes and fine at others. 2px always fully covers one device
+     pixel, whatever the offset. */
   .field input,.field textarea{--n:8px;display:block;width:100%;
     padding:.6rem .75rem;background:rgba(6,10,15,.9);color:var(--txt);
-    border:1px solid var(--line);border-radius:0;
+    border:2px solid var(--field-line);border-radius:0;
     clip-path:polygon(var(--n) 0,100% 0,100% calc(100% - var(--n)),calc(100% - var(--n)) 100%,0 100%,0 var(--n));
     transition:border-color .18s,box-shadow .18s}
   .field input{height:2.6rem}
   .field textarea{min-height:5.5rem;resize:vertical;line-height:1.5}
   .field input:focus,.field textarea:focus{outline:none;border-color:var(--hud);
-    box-shadow:0 0 0 1px var(--hud-dim)}
+    box-shadow:0 0 0 2px var(--hud-dim)}
   .field input:user-invalid,.field textarea:user-invalid{border-color:var(--alert)}
   .form-note{font-family:"JetBrains Mono",monospace;font-size:.6rem;letter-spacing:.1em;
     color:var(--faint);margin:0 0 var(--s4)}

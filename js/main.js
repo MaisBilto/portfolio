@@ -9,9 +9,6 @@
   root.classList.add('js-anim');
 
   function update() {
-    var max = deck.scrollHeight - deck.clientHeight;
-    root.style.setProperty('--scroll',
-      (max > 0 ? Math.min(1, Math.max(0, deck.scrollTop / max)) : 0).toFixed(4));
     markCurrent();
     queued = false;
   }
@@ -29,8 +26,9 @@
      in no guaranteed order, and the last one processed won. */
   var current = -1;
   function markCurrent() {
-    var i = Math.round(deck.scrollTop / deck.clientHeight);
-    i = Math.max(0, Math.min(cards.length - 1, i));
+    var h = deck.clientHeight;
+    if (!h || !cards.length) return;
+    var i = Math.max(0, Math.min(cards.length - 1, Math.round(deck.scrollTop / h)));
     if (i === current) return;
     current = i;
     var id = cards[i].id;
@@ -66,7 +64,7 @@
     var a = gallery[at], img = a.querySelector('img');
     lbImg.src = a.getAttribute('href');
     lbImg.alt = img ? img.alt : '';
-    lbTitle.innerHTML = a.dataset.title || '';
+    lbTitle.textContent = a.dataset.title || '';
     lbNote.textContent = a.dataset.note || '';  lbNote.hidden = !a.dataset.note;
     if (a.dataset.verify) { lbVerify.href = a.dataset.verify; lbVerify.hidden = false; }
     else { lbVerify.hidden = true; }
@@ -75,23 +73,32 @@
     document.getElementById('lb-prev').hidden = !many;
     document.getElementById('lb-next').hidden = !many;
   }
-  function open(strip, i) {
+  function openGallery(strip, i) {
     gallery = Array.prototype.slice.call(strip.querySelectorAll('a.cert'));
     show(i);
     if (!lb.open) lb.showModal();
   }
 
+  /* how many thumbnails a strip shows before it collapses into a +N chip.
+     MUST match `.certs .cert:nth-of-type(n+6)` in main.css — n+6 hides the 6th onward. */
+  var VISIBLE = 5;
+
   document.querySelectorAll('.certs').forEach(function (strip) {
     var shots = strip.querySelectorAll('a.cert');
     shots.forEach(function (a, i) {
-      a.addEventListener('click', function (ev) { ev.preventDefault(); open(strip, i); });
+      a.addEventListener('click', function (ev) { ev.preventDefault(); openGallery(strip, i); });
     });
-    if (shots.length > 5) {
+    if (shots.length > VISIBLE) {
       var chip = document.createElement('button');
       chip.className = 'cert rest';
-      chip.innerHTML = '<b>+' + (shots.length - 5) + '</b>';
+      chip.innerHTML =
+        '<b>+' + (shots.length - VISIBLE) + '</b>' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" ' +
+        'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+          '<use href="#rosette"/>' +
+        '</svg>';
       chip.setAttribute('aria-label', 'View all ' + shots.length + ' certificates');
-      chip.addEventListener('click', function () { open(strip, 5); });
+      chip.addEventListener('click', function () { openGallery(strip, VISIBLE); });
       strip.appendChild(chip);
     }
   });
