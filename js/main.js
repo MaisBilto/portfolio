@@ -12,31 +12,39 @@
     var max = deck.scrollHeight - deck.clientHeight;
     root.style.setProperty('--scroll',
       (max > 0 ? Math.min(1, Math.max(0, deck.scrollTop / max)) : 0).toFixed(4));
+    markCurrent();
     queued = false;
   }
   deck.addEventListener('scroll', function () {
     if (!queued) { queued = true; requestAnimationFrame(update); }
   }, { passive: true });
   addEventListener('resize', update);
-  update();
 
   var links = {};
   document.querySelectorAll('.rail a').forEach(function (a) { links[a.dataset.to] = a; });
 
+  /* Which section is current is a question about scroll position, and scroll
+     position has exactly one value. Deriving it from IntersectionObserver
+     entries was wrong: a fast scroll delivers several entries in one batch,
+     in no guaranteed order, and the last one processed won. */
+  var current = -1;
+  function markCurrent() {
+    var i = Math.round(deck.scrollTop / deck.clientHeight);
+    i = Math.max(0, Math.min(cards.length - 1, i));
+    if (i === current) return;
+    current = i;
+    var id = cards[i].id;
+    Object.keys(links).forEach(function (k) { links[k].classList.toggle('on', k === id); });
+    prog.forEach(function (t, n) { t.classList.toggle('on', n === i); });
+  }
+
+  /* the observer now does one job: run the entry animation when a card is on screen */
   var io = new IntersectionObserver(function (entries) {
-    entries.forEach(function (e) {
-      if (e.isIntersecting) {
-        e.target.classList.add('in');
-        Object.keys(links).forEach(function (k) { links[k].classList.remove('on'); });
-        if (links[e.target.id]) links[e.target.id].classList.add('on');
-        var i = cards.indexOf(e.target);
-        prog.forEach(function (t, n) { t.classList.toggle('on', n === i); });
-      } else {
-        e.target.classList.remove('in');
-      }
-    });
+    entries.forEach(function (e) { e.target.classList.toggle('in', e.isIntersecting); });
   }, { root: deck, threshold: 0.5 });
   cards.forEach(function (c) { io.observe(c); });
+
+  update();
 
   document.querySelectorAll('.rail a').forEach(function (a) {
     a.addEventListener('click', function (ev) {
