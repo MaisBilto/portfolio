@@ -96,6 +96,78 @@
   });
 
 
+
+  /* ---------- Work / Training sliders ---------- */
+  /* Below the mobile breakpoint these two rows become horizontal scrollers
+     (CSS does that part). This adds the control: a counter and prev/next.
+     Built here rather than written into index.html so the buttons cannot
+     exist unless the code that drives them loaded — a dead arrow is worse
+     than no arrow. Swiping still works with this script absent. */
+  var CHEV = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
+             'stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">';
+
+  function pad(v) { return (v < 10 ? '0' : '') + v; }
+
+  function slider(strip) {
+    if (!strip || !strip.children.length) return;
+    var n = strip.children.length, at = 0;
+
+    var bar   = document.createElement('div'); bar.className = 'sld-bar';
+    var count = document.createElement('span'); count.className = 'sld-count';
+    var prev  = document.createElement('button'); prev.className = 'sld-btn';
+    var next  = document.createElement('button'); next.className = 'sld-btn';
+    prev.type = next.type = 'button';
+    prev.setAttribute('aria-label', 'Previous');
+    next.setAttribute('aria-label', 'Next');
+    prev.innerHTML = CHEV + '<path d="M15 5l-7 7 7 7"/></svg>';
+    next.innerHTML = CHEV + '<path d="M9 5l7 7-7 7"/></svg>';
+    bar.appendChild(count); bar.appendChild(prev); bar.appendChild(next);
+    strip.parentNode.insertBefore(bar, strip.nextSibling);
+
+    function draw() {
+      count.innerHTML = '<b>' + pad(at + 1) + '</b> / ' + pad(n);
+      prev.disabled = at === 0;
+      next.disabled = at === n - 1;
+    }
+    function go(step) {
+      at = Math.max(0, Math.min(n - 1, at + step));
+      strip.children[at].scrollIntoView({
+        inline: 'center', block: 'nearest',
+        behavior: noMotion.matches ? 'auto' : 'smooth'
+      });
+      draw();
+    }
+    prev.addEventListener('click', function () { go(-1); });
+    next.addEventListener('click', function () { go(1); });
+
+    /* The counter is derived from where the strip actually IS, not from how
+       many times the buttons were pressed — otherwise a swipe desynchronises
+       it and the arrows start lying. Same reason the rail reads scroll
+       position instead of observer events. */
+    var settle;
+    strip.addEventListener('scroll', function () {
+      clearTimeout(settle);
+      settle = setTimeout(function () {
+        /* Client rects, not offsetLeft: offsetLeft is measured from the
+           offsetParent, which is not this strip, so mixing it with scrollLeft
+           puts the two numbers in different coordinate systems. */
+        var box = strip.getBoundingClientRect();
+        var mid = box.left + box.width / 2, best = 0, near = Infinity;
+        for (var i = 0; i < n; i++) {
+          var r = strip.children[i].getBoundingClientRect();
+          var d = Math.abs(r.left + r.width / 2 - mid);
+          if (d < near) { near = d; best = i; }
+        }
+        if (best !== at) { at = best; draw(); }
+      }, 90);
+    }, { passive: true });
+
+    draw();
+  }
+
+  slider(document.querySelector('#work .grid3'));
+  slider(document.querySelector('#training .tracks'));
+
   /* certificate lightbox — one gallery per track */
   var lb=document.getElementById('lb'), lbImg=document.getElementById('lb-img'),
       lbTitle=document.getElementById('lb-title'), lbVerify=document.getElementById('lb-verify'),

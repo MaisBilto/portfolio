@@ -511,14 +511,35 @@
      Work unreachable on an iPhone 14). So below this breakpoint the sections
      become ordinary stacked blocks and the page scrolls continuously.
      ───────────────────────────────────────────────────────────────────── */
+  /* ---------- slider control (mobile only; main.js builds it) ---------- */
+  /* Hidden above the breakpoint, where Work and Training are grids and there is
+     nothing to page through. It is built in JS rather than written into the
+     HTML so the buttons cannot exist without the code that makes them work. */
+  .sld-bar{display:none}
+  .sld-btn{--n:7px;display:grid;place-items:center;width:38px;height:38px;flex:none;
+    background:var(--panel2);color:var(--hud);cursor:pointer;border:0;padding:0;
+    box-shadow:inset 0 0 0 1px var(--hud-dim);
+    transition:color .18s,box-shadow .18s,background-color .18s;
+    clip-path:polygon(var(--n) 0,100% 0,100% calc(100% - var(--n)),calc(100% - var(--n)) 100%,0 100%,0 var(--n))}
+  .sld-btn:hover:not(:disabled){background:var(--hud);color:var(--on-hover)}
+  .sld-btn:disabled{color:var(--faint);box-shadow:inset 0 0 0 1px var(--line);
+    opacity:.55;cursor:default}
+  .sld-btn svg{width:17px;height:17px}
+  .sld-count{font-family:"JetBrains Mono",monospace;font-size:.66rem;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--faint);white-space:nowrap}
+  .sld-count b{color:var(--hud);font-weight:500}
+  @media (pointer:coarse){ .sld-btn{width:44px;height:44px} }
+
   @media (max-width:60rem), (max-height:30rem){
     :root{--rail:0px;--gap:12px;--n:22px}
     .rail{left:50%;top:auto;bottom:12px;translate:-50% 0}
     /* the rail floats over scrolling content now, so it needs to read as a layer
        above the page rather than text tangled with text */
-    .rail .fill{flex-direction:row;background:rgba(11,17,25,.92);
-      -webkit-backdrop-filter:blur(7px);backdrop-filter:blur(7px);
-      box-shadow:0 8px 26px rgba(3,6,10,.8)}
+    /* Solid, not translucent. Text sliding under a see-through bar reads as a
+       rendering fault; text disappearing behind a solid one reads as a bar. */
+    .rail .fill{flex-direction:row;background:var(--panel2);
+      box-shadow:0 10px 30px rgba(3,6,10,.9)}
+    .rail{bottom:calc(12px + env(safe-area-inset-bottom,0px))}   /* home indicator */
     .prog,.plate,.hatch,.dots{display:none}
 
     /* The DOCUMENT scrolls below this breakpoint, not an inner box.
@@ -538,7 +559,34 @@
        one section. Against a continuously scrolling page it stops being a frame
        and becomes an overlay — corner brackets landing mid-paragraph, chamfer
        diagonals cutting across sentences. The frame's own outline is enough. */
-    .deco{display:none}
+    /* The decoration stays, but it scrolls WITH the page. .stage is relative so
+       .deco spans the whole document rather than the viewport: the corner
+       brackets land at the very top and bottom of the page and the edge lines
+       run its full length. Pinned to the viewport they crossed paragraphs. */
+    .stage{position:relative}
+    .deco{inset:-10px}
+
+    /* Work and Training were 1868px and 1238px of vertical scrolling — four
+       near-identical cards each, read one after another. As horizontal sliders
+       they are one card tall and swiped instead. The card is 86% wide so the
+       next one always peeks: that sliver is the only thing that tells anyone
+       the row scrolls at all. */
+    #work .grid3,
+    #training .tracks{
+      display:flex;grid-template-columns:none;gap:var(--s4);
+      overflow-x:auto;overscroll-behavior-x:contain;
+      scroll-snap-type:x mandatory;
+      padding:2px 2px 14px;margin-inline:-2px;
+      scrollbar-width:none}
+    #work .grid3::-webkit-scrollbar,
+    #training .tracks::-webkit-scrollbar{display:none}
+    #work .grid3 > *,
+    #training .tracks > *{
+      flex:0 0 86%;scroll-snap-align:center;scroll-snap-stop:always}
+
+    /* the slider control: counter + arrows, built by main.js */
+    .sld-bar{display:flex;align-items:center;justify-content:flex-end;
+      gap:var(--s3);margin-top:var(--s3)}
     h1{font-size:2rem}h2{font-size:1.55rem}
 
     /* no snapping: it needs slides, and these are no longer slides */
@@ -558,7 +606,7 @@
     .split,.about-grid,.tracks,.grid3,.caps{grid-template-columns:1fr;gap:var(--s5)}
     #about .caps{grid-template-columns:1fr}
     .shot-body{min-height:8rem}
-    #work .hc-thumb{aspect-ratio:16/10}
+    #work .hc-thumb{aspect-ratio:2.6/1}   /* a strip, not a panel — the card was 396px */
     #work .hc p{display:block}
 
     /* the certificate strip wraps instead of running off the edge */
