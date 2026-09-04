@@ -62,7 +62,7 @@
     color:var(--hud);background:#0a1219;border:1px solid var(--hud-dim);border-top:0;
     clip-path:polygon(13px 0,calc(100% - 13px) 0,100% 100%,0 100%)}
   .plate i{width:5px;height:5px;background:var(--alert);border-radius:50%;
-    box-shadow:0 0 7px var(--alert);animation:breathe 2.4s ease-in-out infinite}
+    box-shadow:0 0 7px var(--alert);animation:pulse 3.8s cubic-bezier(.45,0,.55,1) infinite}
 
   /* ================= rail ================= */
   .rail{position:absolute;left:16px;top:50%;translate:0 -50%;z-index:8;--n:12px;
@@ -129,7 +129,6 @@
   .btn.ghost:hover{background:rgba(94,234,212,.10);color:var(--hud);
     box-shadow:inset 0 0 0 1px var(--hud);text-decoration:none}
   .split{display:grid;grid-template-columns:1fr .92fr;gap:var(--s7);align-items:center}
-  .split.wide-right{grid-template-columns:.85fr 1.15fr}
   .panel{--n:14px;padding:1px;background:var(--hud-dim)}
   .panel,.panel > .fill{clip-path:polygon(var(--n) 0,100% 0,100% calc(100% - var(--n)),calc(100% - var(--n)) 100%,0 100%,0 var(--n))}
   .panel > .fill{background:var(--panel2)}
@@ -145,8 +144,6 @@
     padding:3px 9px;color:var(--hud);background:rgba(94,234,212,.1);
     box-shadow:inset 0 0 0 1px rgba(94,234,212,.32);
     clip-path:polygon(6px 0,100% 0,100% calc(100% - 6px),calc(100% - 6px) 100%,0 100%,0 6px)}
-  .pill.done{color:var(--faint);background:transparent;box-shadow:inset 0 0 0 1px var(--line)}
-  .pill.pend{color:var(--alert);background:rgba(251,113,133,.1);box-shadow:inset 0 0 0 1px var(--alert-dim)}
   .label{font-family:"JetBrains Mono",monospace;font-size:.66rem;letter-spacing:.2em;
     text-transform:uppercase;color:var(--faint);margin:var(--s6) 0 var(--s4)}
   .label::before{content:"// "}
@@ -165,10 +162,6 @@
     clip-path:polygon(6px 0,100% 0,100% calc(100% - 6px),calc(100% - 6px) 100%,0 100%,0 6px)}
   .more{color:var(--hud);text-decoration:none;transition:color .18s;font-family:"JetBrains Mono",monospace;
     font-size:.72rem;letter-spacing:.1em;text-transform:uppercase}
-  .track{list-style:none;padding:0;margin:0}
-  .track li{display:flex;justify-content:space-between;align-items:center;gap:var(--s3);
-    padding:.8rem var(--s5);border-bottom:1px solid rgba(31,44,56,.7)}
-  .track li:last-child{border-bottom:0}
   .shot{--n:14px;padding:1px;background:var(--hud-dim);margin:0}
   .shot,.shot > .fill{clip-path:polygon(var(--n) 0,100% 0,100% calc(100% - var(--n)),calc(100% - var(--n)) 100%,0 100%,0 var(--n))}
   .shot > .fill{background:var(--panel)}
@@ -185,12 +178,6 @@
   .links a{font-family:"JetBrains Mono",monospace;font-size:.8rem;color:var(--hud);text-decoration:none}
   .links a:hover{color:var(--hover);text-decoration:underline;text-underline-offset:4px}
   .field{display:flex;flex-direction:column;gap:.45rem;margin-bottom:var(--s4)}
-  .field span{font-family:"JetBrains Mono",monospace;font-size:.64rem;letter-spacing:.18em;
-    text-transform:uppercase;color:var(--faint)}
-  .field i{--n:8px;display:block;height:38px;background:rgba(6,10,15,.9);
-    box-shadow:inset 0 0 0 1px var(--line);
-    clip-path:polygon(var(--n) 0,100% 0,100% calc(100% - var(--n)),calc(100% - var(--n)) 100%,0 100%,0 var(--n))}
-  .field i.tall{height:80px}
   .foot{display:flex;justify-content:space-between;gap:var(--s4);flex-wrap:wrap;
     color:var(--faint);font-family:"JetBrains Mono",monospace;font-size:.66rem;letter-spacing:.1em;
     margin-top:var(--s5);padding-top:var(--s4);border-top:1px solid var(--line)}
@@ -322,7 +309,6 @@
     clip-path:polygon(5px 0,100% 0,100% calc(100% - 5px),calc(100% - 5px) 100%,0 100%,0 5px);
     transition:box-shadow .18s,color .18s}
   .skills .v span:hover{color:var(--txt);box-shadow:inset 0 0 0 1px var(--hover-dim)}
-  .skills .v span.add{color:var(--faint);opacity:.75;font-style:italic}
 
   .tracks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s5);
     list-style:none;padding:0;margin:var(--s5) 0 0;align-items:stretch}
@@ -360,8 +346,15 @@
   .crs .st{width:6px;height:6px;border-radius:50%;background:var(--hud);
     box-shadow:0 0 5px var(--hud-glow);flex:none;align-self:center}
   .crs .st.now{background:var(--alert);box-shadow:0 0 7px var(--alert);
-    animation:blip 1.5s ease-in-out infinite}
-  @keyframes blip{50%{opacity:.35}}
+    animation:pulse 3.4s cubic-bezier(.45,0,.55,1) infinite;will-change:opacity}
+  /* A dot that only drops opacity reads as a blink, because its glow stays put
+     while the dot fades. Fading the two together — slowly, and not all the way —
+     reads as breathing. cubic-bezier(.45,0,.55,1) is a sine curve: no hard stop
+     at either end, which is what made the old 1.5s ease-in-out flicker. */
+  @keyframes pulse{
+    0%,100%{opacity:1;   box-shadow:0 0 7px var(--alert)}
+    50%    {opacity:.62; box-shadow:0 0 3px var(--alert-dim)}
+  }
 
   .certs{margin-top:auto;padding-top:.7rem;display:flex;gap:.4rem;flex-wrap:wrap;align-items:center}
   .certs .lbl{font-family:"JetBrains Mono",monospace;font-size:.55rem;letter-spacing:.16em;
@@ -448,6 +441,21 @@
     background:repeating-linear-gradient(45deg,rgba(94,234,212,.03) 0 7px,transparent 7px 14px)}
   .hc-thumb > span{font-family:"JetBrains Mono",monospace;font-size:.6rem;letter-spacing:.1em;
     color:var(--faint);text-align:center;line-height:1.85;z-index:1;padding:0 .6rem}
+  /* TBD node — the screenshot slot for a build that does not exist yet.
+     A HUD node: circuit traces feeding a segmented ring, drawn once as a
+     <symbol> and reused. currentColor, so it follows the slot's colour. */
+  .hc-thumb .tbd-ring,.hc-thumb .tbd{grid-area:1/1;align-self:center;justify-self:center}
+  .hc-thumb .tbd-ring{width:100%;max-width:19rem;height:auto;color:var(--hud);
+    opacity:.58;pointer-events:none}
+  .hc-thumb .tbd{position:relative;z-index:1;display:grid;place-items:center;
+    color:var(--mut);text-align:center}
+  .hc-thumb .tbd b{font-family:"Space Grotesk",system-ui,sans-serif;font-size:1.35rem;
+    font-weight:700;letter-spacing:.2em;text-indent:.2em;line-height:1;color:var(--hud)}
+  /* the caption hangs below the ring so TBD stays centred in the circle */
+  .hc-thumb .tbd i{position:absolute;top:calc(100% + 3.1rem);left:50%;translate:-50% 0;
+    font-family:"JetBrains Mono",monospace;font-style:normal;font-size:.46rem;
+    letter-spacing:.16em;text-transform:uppercase;color:var(--faint);line-height:1;white-space:nowrap}
+
   .scan{position:absolute;left:0;right:0;height:2px;top:-8%;z-index:1;opacity:0;
     background:linear-gradient(90deg,transparent,var(--st-hi),transparent)}
   .hc-wrap:hover .scan{opacity:.7;animation:scanline 1.6s ease-in-out infinite}
@@ -483,17 +491,6 @@
 
   /* scheduled = visibly dormant */
 
-  .topics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.5rem;list-style:none;padding:0;margin:0}
-  .topic{--n:9px;padding:1px;background:var(--line);transition:background-color .2s}
-  .topic:hover{background:var(--hover-dim)}
-  .topic,.topic > .fill{clip-path:polygon(var(--n) 0,100% 0,100% calc(100% - var(--n)),calc(100% - var(--n)) 100%,0 100%,0 var(--n))}
-  .topic > .fill{background:var(--panel2);padding:.5rem .65rem;display:flex;align-items:center;gap:.5rem;height:100%}
-  .topic .num{font-family:"JetBrains Mono",monospace;font-size:.58rem;color:var(--faint);letter-spacing:.08em}
-  .topic .nm{font-size:.75rem;color:var(--mut);line-height:1.35}
-  .topic .st{width:6px;height:6px;border-radius:50%;background:var(--line);margin-left:auto;flex:none}
-  .topic.done .st{background:var(--hud);box-shadow:0 0 5px var(--hud-glow)}
-  .topic.now .st{background:var(--alert);box-shadow:0 0 6px var(--alert);
-    animation:breathe 2.6s ease-in-out infinite}
 
   @media (max-width:70rem){
     :root{--gap:26px}
@@ -501,10 +498,9 @@
     .hatch.b,.hatch.c{display:none}
   }
   @media (max-width:66rem){
-    .split,.split.wide-right{grid-template-columns:1fr;gap:var(--s5)}
+    .split{grid-template-columns:1fr;gap:var(--s5)}
     .caps{grid-template-columns:repeat(2,minmax(0,1fr))}
     .grid3{grid-template-columns:1fr}
-    .topics{grid-template-columns:repeat(2,minmax(0,1fr))}
   }
   @media (max-width:60rem){
     :root{--rail:0px;--gap:12px;--n:22px}
@@ -538,5 +534,3 @@
   .field input:focus,.field textarea:focus{outline:none;border-color:var(--hud);
     box-shadow:0 0 0 2px var(--hud-dim)}
   .field input:user-invalid,.field textarea:user-invalid{border-color:var(--alert)}
-  .form-note{font-family:"JetBrains Mono",monospace;font-size:.6rem;letter-spacing:.1em;
-    color:var(--faint);margin:0 0 var(--s4)}

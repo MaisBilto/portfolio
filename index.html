@@ -24,6 +24,31 @@
 
 <!-- one corner, drawn once, mirrored four ways -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="tbd-ring" viewBox="0 0 260 150">
+    <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+      <!-- circuit traces feeding the node from both sides -->
+      <g stroke-width="1" opacity=".55">
+        <path d="M2 26h34l14 14h30M2 75h48M2 124h34l14-14h30"/>
+        <path d="M258 26h-34l-14 14h-30M258 75h-48M258 124h-34l-14-14h-30"/>
+        <path d="M20 47h22l10 10M240 47h-22l-10 10M20 103h22l10-10M240 103h-22l-10-10" opacity=".5"/>
+      </g>
+      <g fill="currentColor" stroke="none" opacity=".7">
+        <circle cx="2" cy="26" r="1.6"/><circle cx="2" cy="75" r="1.6"/><circle cx="2" cy="124" r="1.6"/>
+        <circle cx="258" cy="26" r="1.6"/><circle cx="258" cy="75" r="1.6"/><circle cx="258" cy="124" r="1.6"/>
+      </g>
+      <!-- the node -->
+      <circle cx="130" cy="75" r="47" stroke-width="3" stroke-dasharray="11 7" opacity=".38"/>
+      <circle cx="130" cy="75" r="41" stroke-width="1.4"/>
+      <circle cx="130" cy="75" r="35" stroke-width=".9" opacity=".5"/>
+      <!-- four bright arc segments, like the reference -->
+      <g stroke-width="3" opacity=".9" stroke-linecap="butt">
+        <path d="M130 28a47 47 0 0 1 30 11"/>
+        <path d="M130 122a47 47 0 0 1-30-11"/>
+        <path d="M177 75a47 47 0 0 1-11 30"/>
+        <path d="M83 75a47 47 0 0 1 11-30"/>
+      </g>
+    </g>
+  </symbol>
   <symbol id="rosette" viewBox="0 0 24 24">
     <path d="M 12.0 3.6 L 17.7 6.9 L 17.7 13.5 L 12.0 16.8 L 6.3 13.5 L 6.3 6.9 Z"/>
     <path d="m9.2 10.1 2 2.1 3.6-4"/>
@@ -83,7 +108,7 @@
               <p class="eyebrow" data-anim style="--i:0">Now Platform</p>
               <h1 data-anim style="--i:1">Mais Bilto</h1>
               <p class="role" data-anim style="--i:2">ServiceNow <b>System Administrator</b></p>
-              <p class="lede" data-anim style="--i:3">I build and configure on the Now Platform — custom applications, workflow design, and the reporting that sits on top of them.</p>
+              <p class="lede" data-anim style="--i:3">I design how work moves through a platform &mdash; which table owns it, who approves it, and what the report at the end should say.</p>
               <div class="acts" data-anim style="--i:4"><a class="btn" href="#work">View my work</a><a class="btn ghost" href="#contact">Get in touch</a></div>
             </div>
             <div class="panel" data-anim style="--i:5">
@@ -91,8 +116,8 @@
                 <div class="p-head"><span>USR_PROFILE · MAI0010001</span><span class="pill">AVAILABLE</span></div>
                 <div class="rrow"><dt>focus</dt><dd>ServiceNow administration</dd></div>
                 <div class="rrow"><dt>studying</dt><dd>CSA exam</dd></div>
-                <div class="rrow"><dt>background</dt><dd>CS · networking · security</dd></div>
-                <div class="rrow"><dt>instance</dt><dd>Personal developer instance</dd></div>
+                <div class="rrow"><dt>background</dt><dd>CS · networking · databases · software engineering</dd></div>
+                <div class="rrow"><dt>instance</dt><dd>Personal Developer Instance</dd></div>
               </dl>
             </div>
           </div>
@@ -107,7 +132,7 @@
               <h2 data-anim style="--i:0">About</h2>
               <p class="sub" data-anim style="--i:1">BACKGROUND &amp; CAPABILITY</p>
               <div class="prose">
-                <p data-anim style="--i:2">I'm a Computer Science graduate from Princess Nourah University, working toward a ServiceNow System Administrator role. My background is in networking, cybersecurity and data analysis — useful preparation for platform work, where the job is understanding how pieces fit together rather than mastering any single screen. Everything here is built on a personal developer instance.</p>
+                <p data-anim style="--i:2">I hold a degree of Bachelor of Science in Computer Science from Princess Nourah bint Abdulrahman University, working towards a ServiceNow System Administrator role. I have strong fundamentals in Python, SQL and JavaScript, as well as networking, cybersecurity, database design, data analysis and software engineering &mdash; useful preparation for platform work, where the job is understanding how the pieces fit together behind the screens. Every project listed here is built on a Personal Developer Instance.</p>
               </div>
             </div>
             <figure class="shot" data-anim style="--i:4">
@@ -121,7 +146,7 @@
             <div>
               <p class="label" data-anim style="--i:5">What I build</p>
               <ul class="caps">
-                <li data-anim style="--i:6"><div class="fill"><h3>Data model</h3><p>Custom tables extending Task, fields, and relationships.</p></div></li>
+                <li data-anim style="--i:6"><div class="fill"><h3>Data model</h3><p>Custom tables, fields, and relationships.</p></div></li>
                 <li data-anim style="--i:7"><div class="fill"><h3>Workflow</h3><p>Flow Designer, approvals, and notifications.</p></div></li>
                 <li data-anim style="--i:8"><div class="fill"><h3>Interfaces</h3><p>Forms, UI Policies, and UI Builder workspaces.</p></div></li>
                 <li data-anim style="--i:9"><div class="fill"><h3>Reporting</h3><p>Dashboards, metrics, and shared views.</p></div></li>
@@ -149,7 +174,7 @@
 
           <div class="grid3">
 
-            <div class="hc-wrap" data-status="active" data-progress="4" data-anim style="--i:2">
+            <div class="hc-wrap" data-status="active" data-progress="3" data-anim style="--i:2">
               <article class="hc">
                 <span class="spark"></span>
                 <span class="edge2"></span>
@@ -171,6 +196,28 @@
               </article>
             </div>
 
+            <div class="hc-wrap" data-status="complete" data-progress="6" data-anim style="--i:4">
+              <article class="hc v4">
+                <span class="spark"></span>
+                <span class="edge2"></span>
+                <div class="fill">
+                  <div class="hc-thumb">
+                    <span class="scan"></span>
+                    <span>[ your screenshot ]<br>KSA Tourism · destinations</span>
+                  </div>
+                  <div class="hc-body">
+                    <div class="hc-top"><span class="hc-id">PRJ 02</span><span class="pill">COMPLETE</span></div>
+                    <h3>KSA Tourism</h3>
+                    <p class="meta">graduation project · PNU</p>
+                    <p>An electronic tourist guide for visitors to Saudi Arabia — destination browsing with data-driven recommendations.</p>
+                    <ul class="tags"><li>android application</li><li>UX</li><li>database</li></ul>
+                    <div class="segbar"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+                    <a class="more" href="#">Read the case study <b>▸</b></a>
+                  </div>
+                </div>
+              </article>
+            </div>
+            
             <div class="hc-wrap" data-status="scheduled" data-progress="0" data-anim style="--i:3">
               <article class="hc v3">
                 <span class="spark"></span>
@@ -178,10 +225,10 @@
                 <div class="fill">
                   <div class="hc-thumb">
                     <span class="scan"></span>
-                    <span>[ your screenshot ]<br>MPMS · reporting view</span>
+                    <svg class="tbd-ring" viewBox="0 0 260 150" aria-hidden="true"><use href="#tbd-ring"/></svg><span class="tbd"><b>TBD</b></span>
                   </div>
                   <div class="hc-body">
-                    <div class="hc-top"><span class="hc-id">PRJ 02</span><span class="pill">SCHEDULED</span></div>
+                    <div class="hc-top"><span class="hc-id">PRJ 03</span><span class="pill">SCHEDULED</span></div>
                     <h3>MPMS</h3>
                     <p class="meta">internship · CCIS, PNU</p>
                     <p>A database system for running the Master&rsquo;s programme — reporting and statistical tracking of students and performance.</p>
@@ -194,28 +241,6 @@
               </article>
             </div>
 
-            <div class="hc-wrap" data-status="complete" data-progress="6" data-anim style="--i:4">
-              <article class="hc v4">
-                <span class="spark"></span>
-                <span class="edge2"></span>
-                <div class="fill">
-                  <div class="hc-thumb">
-                    <span class="scan"></span>
-                    <span>[ your screenshot ]<br>KSA Tourism · destinations</span>
-                  </div>
-                  <div class="hc-body">
-                    <div class="hc-top"><span class="hc-id">PRJ 03</span><span class="pill">COMPLETE</span></div>
-                    <h3>KSA Tourism</h3>
-                    <p class="meta">graduation project · PNU</p>
-                    <p>An electronic tourist guide for visitors to Saudi Arabia — destination browsing with data-driven recommendations.</p>
-                    <ul class="tags"><li>android application</li><li>UX</li><li>database</li></ul>
-                    <div class="segbar"><i></i><i></i><i></i><i></i><i></i><i></i></div>
-                    <a class="more" href="#">Read the case study <b>▸</b></a>
-                  </div>
-                </div>
-              </article>
-            </div>
-
             <div class="hc-wrap" data-status="scheduled" data-progress="0" data-anim style="--i:5">
               <article class="hc v2">
                 <span class="spark"></span>
@@ -223,7 +248,7 @@
                 <div class="fill">
                   <div class="hc-thumb">
                     <span class="scan"></span>
-                    <span>[ screenshot once built ]</span>
+                    <svg class="tbd-ring" viewBox="0 0 260 150" aria-hidden="true"><use href="#tbd-ring"/></svg><span class="tbd"><b>TBD</b></span>
                   </div>
                   <div class="hc-body">
                     <div class="hc-top"><span class="hc-id">PRJ 04</span><span class="pill">SCHEDULED</span></div>
@@ -268,7 +293,7 @@
                 <div class="fill">
                   <div class="tk-top"><span class="tk-id">TRK 02</span><span class="pill">COMPLETED</span></div>
                   <h3>Data &amp; Analytics</h3>
-                  <ul class="crs"><li><span class="nm">SQL and databases</span><span class="pv">Tuwaiq &middot; Experts Inst.</span><span class="st"></span></li><li><span class="nm">Python data stack &mdash; NumPy, Pandas, Matplotlib, Seaborn, EDA</span><span class="pv">Tuwaiq &middot; 5 courses, 12 hrs</span><span class="st"></span></li><li><span class="nm">Machine learning foundations</span><span class="pv">Tuwaiq &middot; DeepLearning.AI</span><span class="st"></span></li><li><span class="nm">Excel and Power BI</span><span class="pv">Emdad &middot; Experts Inst.</span><span class="st"></span></li></ul>
+                  <ul class="crs"><li><span class="nm">Machine learning foundations</span><span class="pv">Tuwaiq &middot; DeepLearning.AI &middot; 2025</span><span class="st"></span></li><li><span class="nm">Excel and Power BI</span><span class="pv">Emdad &middot; Experts Inst. &middot; 2025</span><span class="st"></span></li><li><span class="nm">SQL and databases</span><span class="pv">Tuwaiq &middot; Experts Inst. &middot; 2025</span><span class="st"></span></li><li><span class="nm">Python data stack &mdash; NumPy, Pandas, Matplotlib, Seaborn, EDA</span><span class="pv">Tuwaiq &middot; 5 courses &middot; 2024</span><span class="st"></span></li></ul>
                   <div class="certs"><span class="lbl">certificates</span><a class="cert" href="assets/img/certs/tuwaiq-sql-101.jpg" data-title="SQL 101 &mdash; Tuwaiq Academy &middot; 2 hrs &middot; 2024"><img src="assets/img/certs/tuwaiq-sql-101.jpg" alt="SQL 101 certificate of completion, Tuwaiq Academy, 2024" loading="lazy"></a><a class="cert" href="assets/img/certs/tuwaiq-sql-102.jpg" data-title="SQL 102 &mdash; Tuwaiq Academy &middot; 1 hr &middot; Oct 2024"><img src="assets/img/certs/tuwaiq-sql-102.jpg" alt="SQL 102 certificate of completion, Tuwaiq Academy, Oct 2024" loading="lazy"></a><a class="cert" href="assets/img/certs/tuwaiq-sql-103.jpg" data-title="SQL 103 &mdash; Tuwaiq Academy &middot; 2 hrs &middot; 2024"><img src="assets/img/certs/tuwaiq-sql-103.jpg" alt="SQL 103 certificate of completion, Tuwaiq Academy, 2024" loading="lazy"></a><a class="cert" href="assets/img/certs/experts-intro-sql.jpg" data-title="Introduction to SQL, 20 hours &mdash; Experts Training Institute" data-note="identity number redacted"><img src="assets/img/certs/experts-intro-sql.jpg" alt="Introduction to SQL certificate, Experts Training Institute" loading="lazy"></a><a class="cert" href="assets/img/certs/tuwaiq-numpy.jpg" data-title="Data analysis with NumPy &mdash; Tuwaiq Academy &middot; 3 hrs &middot; Oct 2024"><img src="assets/img/certs/tuwaiq-numpy.jpg" alt="Data analysis with NumPy certificate of completion, Tuwaiq Academy, Oct 2024" loading="lazy"></a><a class="cert" href="assets/img/certs/tuwaiq-pandas.jpg" data-title="Data analysis with Pandas &mdash; Tuwaiq Academy &middot; 2 hrs &middot; Nov 2024"><img src="assets/img/certs/tuwaiq-pandas.jpg" alt="Data analysis with Pandas certificate of completion, Tuwaiq Academy, Nov 2024" loading="lazy"></a><a class="cert" href="assets/img/certs/tuwaiq-matplotlib.jpg" data-title="Data visualisation with Matplotlib &mdash; Tuwaiq Academy &middot; 2 hrs &middot; Nov 2024"><img src="assets/img/certs/tuwaiq-matplotlib.jpg" alt="Data visualisation with Matplotlib certificate of completion, Tuwaiq Academy, Nov 2024" loading="lazy"></a><a class="cert" href="assets/img/certs/tuwaiq-seaborn.jpg" data-title="Data visualisation with Seaborn &mdash; Tuwaiq Academy &middot; 3 hrs &middot; Nov 2024"><img src="assets/img/certs/tuwaiq-seaborn.jpg" alt="Data visualisation with Seaborn certificate of completion, Tuwaiq Academy, Nov 2024" loading="lazy"></a><a class="cert" href="assets/img/certs/tuwaiq-eda.jpg" data-title="Exploratory data analysis (EDA) &mdash; Tuwaiq Academy &middot; 2 hrs &middot; Nov 2024"><img src="assets/img/certs/tuwaiq-eda.jpg" alt="Exploratory data analysis (EDA) certificate of completion, Tuwaiq Academy, Nov 2024" loading="lazy"></a><a class="cert" href="assets/img/certs/tuwaiq-ml-101.jpg" data-title="Machine Learning 101 &mdash; Tuwaiq Academy &middot; 2 hrs &middot; 2024"><img src="assets/img/certs/tuwaiq-ml-101.jpg" alt="Machine Learning 101 certificate of completion, Tuwaiq Academy, 2024" loading="lazy"></a><a class="cert" href="assets/img/certs/deeplearning-linear-algebra.jpg" data-title="Linear Algebra for Machine Learning and Data Science &mdash; DeepLearning.AI &middot; Dec 2025" data-verify="https://coursera.org/verify/XOO21MC4C697"><img src="assets/img/certs/deeplearning-linear-algebra.jpg" alt="Linear Algebra for Machine Learning and Data Science certificate, DeepLearning.AI, December 2025" loading="lazy"></a><a class="cert" href="assets/img/certs/emdad-excel-data-analysis.jpg" data-title="Data Analysis with Microsoft Excel, 30 hours &mdash; Emdad Al-Marifah" data-note="identity number redacted"><img src="assets/img/certs/emdad-excel-data-analysis.jpg" alt="Data analysis with Microsoft Excel certificate, Emdad Al-Marifah" loading="lazy"></a><a class="cert" href="assets/img/certs/emdad-powerbi.jpg" data-title="Data Analysis with Power BI, 20 hours &mdash; Emdad Al-Marifah" data-note="identity number redacted"><img src="assets/img/certs/emdad-powerbi.jpg" alt="Data analysis with Power BI certificate, Emdad Al-Marifah" loading="lazy"></a><a class="cert" href="assets/img/certs/experts-powerbi-excel.jpg" data-title="Power BI and Excel, 20 hours &mdash; Experts Training Institute" data-note="identity number redacted"><img src="assets/img/certs/experts-powerbi-excel.jpg" alt="Power BI and Excel certificate, Experts Training Institute" loading="lazy"></a></div>
                 </div>
               </article>
@@ -280,7 +305,7 @@
                 <div class="fill">
                   <div class="tk-top"><span class="tk-id">TRK 03</span><span class="pill">COMPLETED</span></div>
                   <h3>Software Engineering</h3>
-                  <ul class="crs"><li><span class="nm">Python programming</span><span class="pv">Tuwaiq &middot; Experts &middot; Michigan</span><span class="st"></span></li><li><span class="nm">Design Patterns</span><span class="pv">Univ. of Alberta &middot; 2023</span><span class="st"></span></li><li><span class="nm">Design Principles</span><span class="pv">UC San Diego &middot; 2023</span><span class="st"></span></li><li><span class="nm">Version control with Git</span><span class="pv">Tuwaiq Academy &middot; 2024</span><span class="st"></span></li></ul>
+                  <ul class="crs"><li><span class="nm">Python programming</span><span class="pv">Tuwaiq &middot; Experts &middot; Michigan &middot; 2025</span><span class="st"></span></li><li><span class="nm">Version control with Git</span><span class="pv">Tuwaiq Academy &middot; 2024</span><span class="st"></span></li><li><span class="nm">Design Principles</span><span class="pv">UC San Diego &middot; 2023</span><span class="st"></span></li><li><span class="nm">Design Patterns</span><span class="pv">Univ. of Alberta &middot; 2023</span><span class="st"></span></li></ul>
                   <div class="certs"><span class="lbl">certificates</span><a class="cert" href="assets/img/certs/tuwaiq-python-101.jpg" data-title="Python 101 &mdash; Tuwaiq Academy &middot; 2 hrs &middot; May 2024"><img src="assets/img/certs/tuwaiq-python-101.jpg" alt="Python 101 certificate of completion, Tuwaiq Academy, May 2024" loading="lazy"></a><a class="cert" href="assets/img/certs/tuwaiq-python-102.jpg" data-title="Python 102 &mdash; Tuwaiq Academy &middot; 3 hrs &middot; Jul 2024"><img src="assets/img/certs/tuwaiq-python-102.jpg" alt="Python 102 certificate of completion, Tuwaiq Academy, Jul 2024" loading="lazy"></a><a class="cert" href="assets/img/certs/tuwaiq-python-103.jpg" data-title="Python 103 &mdash; Tuwaiq Academy &middot; 3 hrs &middot; Sep 2024"><img src="assets/img/certs/tuwaiq-python-103.jpg" alt="Python 103 certificate of completion, Tuwaiq Academy, Sep 2024" loading="lazy"></a><a class="cert" href="assets/img/certs/tuwaiq-python-104.jpg" data-title="Python 104 &mdash; Tuwaiq Academy &middot; 1 hr &middot; Oct 2024"><img src="assets/img/certs/tuwaiq-python-104.jpg" alt="Python 104 certificate of completion, Tuwaiq Academy, Oct 2024" loading="lazy"></a><a class="cert" href="assets/img/certs/michigan-python-basics.jpg" data-title="Python Basics &mdash; University of Michigan &middot; Nov 2025" data-verify="https://coursera.org/verify/4CDJZG4QOWSE"><img src="assets/img/certs/michigan-python-basics.jpg" alt="Python Basics certificate, University of Michigan, November 2025" loading="lazy"></a><a class="cert" href="assets/img/certs/experts-python.jpg" data-title="Python Programming, 40 hours &mdash; Experts Training Institute" data-note="identity number redacted"><img src="assets/img/certs/experts-python.jpg" alt="Python Programming certificate, Experts Training Institute" loading="lazy"></a><a class="cert" href="assets/img/certs/alberta-design-patterns.jpg" data-title="Design Patterns &mdash; University of Alberta &middot; Jan 2023" data-verify="https://coursera.org/verify/N7XYZBL3B9BE"><img src="assets/img/certs/alberta-design-patterns.jpg" alt="Design Patterns certificate, University of Alberta, January 2023" loading="lazy"></a><a class="cert" href="assets/img/certs/ucsd-design-principles.jpg" data-title="Design Principles: an Introduction &mdash; UC San Diego &middot; Jan 2023" data-verify="https://coursera.org/verify/NU85SL5GM9AH"><img src="assets/img/certs/ucsd-design-principles.jpg" alt="Design Principles certificate, UC San Diego, January 2023" loading="lazy"></a><a class="cert" href="assets/img/certs/tuwaiq-git-101.jpg" data-title="Git 101 &mdash; Tuwaiq Academy &middot; 2 hrs &middot; Oct 2024"><img src="assets/img/certs/tuwaiq-git-101.jpg" alt="Git 101 certificate of completion, Tuwaiq Academy, Oct 2024" loading="lazy"></a></div>
                 </div>
               </article>
@@ -292,7 +317,7 @@
                 <div class="fill">
                   <div class="tk-top"><span class="tk-id">TRK 04</span><span class="pill">COMPLETED</span></div>
                   <h3>Security &amp; Governance</h3>
-                  <ul class="crs"><li><span class="nm">Networking and Cybersecurity</span><span class="pv">BARQ Academy &middot; 2025</span><span class="st"></span></li><li><span class="nm">Software Security</span><span class="pv">Univ. of Maryland &middot; 2022</span><span class="st"></span></li><li><span class="nm">Introduction to cybersecurity</span><span class="pv">Tuwaiq Academy &middot; 2025</span><span class="st"></span></li><li><span class="nm">COBIT 5 Foundation</span><span class="pv">Experts Inst. &middot; 2025</span><span class="st"></span></li></ul>
+                  <ul class="crs"><li><span class="nm">Networking and Cybersecurity</span><span class="pv">BARQ Academy &middot; 2025</span><span class="st"></span></li><li><span class="nm">Introduction to cybersecurity</span><span class="pv">Tuwaiq Academy &middot; 2025</span><span class="st"></span></li><li><span class="nm">Software Security</span><span class="pv">Univ. of Maryland &middot; 2022</span><span class="st"></span></li><li><span class="nm">COBIT 5 Foundation</span><span class="pv">Experts Inst. &middot; 2022</span><span class="st"></span></li></ul>
                   <div class="certs"><span class="lbl">certificates</span><a class="cert" href="assets/img/certs/barq-network-security.jpg" data-title="Network Fundamentals &amp; Security, 30 hours &mdash; BARQ Academy &middot; Oct 2025"><img src="assets/img/certs/barq-network-security.jpg" alt="Certificate of attendance, network fundamentals and security, BARQ Academy, October 2025" loading="lazy"></a><a class="cert" href="assets/img/certs/umd-software-security.jpg" data-title="Software Security &mdash; University of Maryland, College Park &middot; Nov 2022" data-verify="https://coursera.org/verify/HGNPZS8VYXL7"><img src="assets/img/certs/umd-software-security.jpg" alt="Software Security certificate, University of Maryland College Park, November 2022" loading="lazy"></a><a class="cert" href="assets/img/certs/tuwaiq-cybersecurity-intro.jpg" data-title="Introduction to Cybersecurity &mdash; Tuwaiq Academy &middot; 1 hr &middot; Feb 2025"><img src="assets/img/certs/tuwaiq-cybersecurity-intro.jpg" alt="Introduction to Cybersecurity certificate of completion, Tuwaiq Academy, Feb 2025" loading="lazy"></a><a class="cert" href="assets/img/certs/experts-cobit5.jpg" data-title="COBIT 5 Foundation, 16 hours &mdash; Experts Training Institute" data-note="identity number redacted"><img src="assets/img/certs/experts-cobit5.jpg" alt="COBIT 5 Foundation certificate, Experts Training Institute" loading="lazy"></a></div>
                 </div>
               </article>
@@ -336,7 +361,7 @@
               <button class="btn" type="submit">Send message</button>
             </form>
           </div>
-          <div class="foot" data-anim style="--i:4"><span>© 2026 MAIS BILTO</span><span>LINKEDIN · GITHUB</span></div>
+          <div class="foot" data-anim style="--i:4"><span>© 2026 MAIS BILTO</span></div>
         </div>
       </section>
 

@@ -44,11 +44,17 @@
 
   update();
 
+  /* CSS scroll-behavior does NOT override an explicit behavior in scrollTo, so
+     the stylesheet's prefers-reduced-motion block could not switch this off.
+     Ask the media query directly, and keep listening — the OS setting can change
+     while the page is open. */
+  var noMotion = matchMedia('(prefers-reduced-motion: reduce)');
+
   document.querySelectorAll('.rail a').forEach(function (a) {
     a.addEventListener('click', function (ev) {
       ev.preventDefault();
       var t = document.getElementById(a.dataset.to);
-      if (t) deck.scrollTo({ top: t.offsetTop, behavior: 'smooth' });
+      if (t) deck.scrollTo({ top: t.offsetTop, behavior: noMotion.matches ? 'auto' : 'smooth' });
     });
   });
 
