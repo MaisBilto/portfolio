@@ -1,0 +1,99 @@
+# Portfolio
+
+Private repository. Deployed to **[maisbilto.netlify.app](https://maisbilto.netlify.app)**
+on every push to `main`.
+
+Hand-written HTML, CSS and JavaScript. No framework, no dependencies, no build step —
+what is in this folder is what gets served.
+
+## Running it locally
+
+Serve the folder over HTTP rather than opening `index.html` from disk:
+
+```bash
+python -m http.server 8000
+```
+
+Then <http://localhost:8000>.
+
+The contact form will not work locally. It posts to Netlify Forms, which only exists
+on a deployed site, so a local submit fails and the form shows its rose error state —
+that is the correct behaviour, not a bug. It is also the only way to test the failure
+path without breaking anything.
+
+## Structure
+
+```
+index.html          the whole page — five sections in one document
+css/base.css        design tokens, reset, base elements
+css/main.css        layout and components
+js/main.js          scroll tracking, section observer, rail, certificate gallery,
+                    contact form
+assets/img/certs/   certificate images
+projects/           per-project case study pages
+```
+
+## Things that will bite you later
+
+**Layout rests on one assumption.** On desktop each section is exactly one viewport
+tall and scroll-snap moves between them. Below `60rem` wide, or under `30rem` tall,
+that cannot hold — snapping is switched off and sections stack at natural height.
+Anything that assumes "one section = one screen" has to work under both.
+
+**Sizing is fluid.** `html` has `font-size: clamp(13px, 1.15vh + 0.25vw + 1px, 22px)`
+and nearly everything is in `rem`, so the interface scales with the viewport rather
+than only reflowing. Note that `rem` inside a media query resolves against the browser's
+initial 16px, not against this — which is why there is no feedback loop.
+
+**Card state is driven by custom properties, not by colour rules.** `data-status` on
+`.hc-wrap` sets `--st`, `--st-hi`, `--st-glow`, `--seg`, `--beam`, `--thumb`, `--lift`,
+and everything downstream reads those. If a status stops working, look for a later rule
+that re-declares one of those properties directly — a duplicate selector further down
+the file silently wins, and it is invisible in both the diff and the browser.
+
+**Colour means something.** Rose is in progress, teal is complete, slate is scheduled.
+Hover brightens a card's *own* colour via `--st-hi`; it never borrows another status's.
+
+**`[hidden]` loses.** The UA rule `[hidden]{display:none}` is the weakest in the cascade,
+so any element you hide with `.hidden = true` also needs an explicit
+`.thing[hidden]{display:none}` if it has a `display` of its own. This has already bitten
+`.lb-nav` and `.sent`.
+
+**`<use>` has a shadow tree.** Document CSS cannot select inside it — only inherited
+properties like `color` cross the boundary. That is why `#corner` and `#rosette` are
+coloured with `currentColor`, and why the confirmation ring is inline SVG rather than a
+`<use>`: its two strokes are animated separately.
+
+**The visible certificate count is in two places.** `VISIBLE` in `js/main.js` must match
+`.certs .cert:nth-of-type(n+6)` in `main.css`.
+
+**Six certificates are redacted.** The TVTC-issued ones had a national ID number printed
+on them. Any new certificate from that source needs the same treatment before it goes in
+`assets/img/certs/`.
+
+**Reduced motion is handled in two places.** CSS for animations, and `matchMedia` in
+`main.js` for scrolling — a `behavior` passed to `scrollTo()` cannot be overridden by a
+stylesheet.
+
+**Verify layout changes by rendering, not by reasoning.** Check more than one viewport
+*width*, not just device pixel ratios — a 1px border lands differently on a fractional
+layout position, which is why the form fields use a 2px border. And when comparing
+before/after screenshots, render the same version twice first to see what two identical
+runs differ by.
+
+## Deploy
+
+Netlify, connected to this repo. Build command empty, publish directory `.`.
+
+Form detection is off by default in Netlify and has to be enabled per site — it scans
+the deployed HTML at build time, so enabling it only takes effect on the *next* build.
+Submissions land in Forms, and an email notification is configured.
+
+## Open items
+
+- [ ] `projects/infinity-loaner.html` is empty; three `href="#"` links in Work point at nothing
+- [ ] Aurora Fleet Program still has a placeholder description
+- [ ] Real PDI screenshots for Infinity Loaner and KSA Tourism
+- [ ] CV download button — the PDF carries a phone number and home city, decide first
+- [ ] Two ServiceNow AI course certificates not yet added
+- [ ] Test on a real phone, not just emulated viewports
