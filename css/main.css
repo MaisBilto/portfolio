@@ -609,7 +609,7 @@
   .sent{display:grid;place-content:center;justify-items:center;
     gap:var(--s4);text-align:center;color:var(--hud)}
 
-  .sent-ring{width:min(16rem,100%);height:auto;
+  .sent-ring{width:20rem;max-width:100%;height:auto;
     filter:drop-shadow(0 0 14px var(--hud-glow))}
 
   /* both animated strokes start fully retracted */
