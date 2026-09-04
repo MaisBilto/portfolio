@@ -614,8 +614,10 @@
   .sent-cap{margin:0;font-family:"JetBrains Mono",monospace;font-size:.74rem;
     letter-spacing:.18em;text-transform:uppercase;color:var(--mut)}
 
-  .sent-ring{width:34rem;max-width:82%;height:auto;
-    filter:drop-shadow(0 0 14px var(--hud-glow))}
+  /* The viewBox is the full 260x150 so the trace end-points are inside it; the
+     width is scaled up to keep the node the same size on screen. */
+  .sent-ring{width:42rem;max-width:92%;height:auto;
+    filter:drop-shadow(0 0 5px var(--hud-glow)) drop-shadow(0 0 20px var(--hud-dim))}
 
   /* both animated strokes start fully retracted */
   .sr-ring,.sr-check{stroke-dasharray:100;stroke-dashoffset:100}
