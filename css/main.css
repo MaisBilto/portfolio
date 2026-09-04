@@ -588,16 +588,11 @@
 
   /* ---------- send / confirmation ---------- */
 
-  /* Form and panel share ONE grid cell. The row is as tall as the taller of the
-     two, so swapping them cannot change the box height — and .split is
-     align-items:center, which would otherwise shift the whole left column. */
-  .send{display:grid;grid-template-rows:1fr auto;gap:var(--s3)}
-  .send > form,
-  .send > .sent{grid-area:1/1}
+  .send{display:block}
 
   /* Always rendered, usually empty. Reserving the line means the box does not
      grow when a message appears — no shift in a vertically centred column. */
-  .send-note{grid-row:2;margin:0;min-height:1.1rem;
+  .send-note{margin:var(--s3) 0 0;min-height:1.1rem;
     font-family:"JetBrains Mono",monospace;font-size:.68rem;
     letter-spacing:.16em;text-transform:uppercase;color:var(--hud)}
   .send-note.bad{color:var(--alert)}
@@ -606,10 +601,20 @@
      below. Without this the panel is visible on load. Same bug as .lb-nav. */
   .sent[hidden]{display:none}
 
-  .sent{display:grid;place-content:center;justify-items:center;
-    gap:var(--s4);text-align:center;color:var(--hud)}
+  /* The confirmation is a state of the whole section, not of the form: it lies
+     over #contact and the card's contents are hidden underneath. The frame,
+     rail and corner brackets live outside #contact, so they stay put. */
+  #contact{position:relative}
+  .sent{position:absolute;inset:0;z-index:4;display:grid;align-content:center;
+    justify-items:center;gap:var(--s5);padding:0 var(--s5);
+    text-align:center;color:var(--hud)}
+  #contact .card-inner{transition:opacity .25s}
+  #contact.busy .card-inner{opacity:0;visibility:hidden}
 
-  .sent-ring{width:20rem;max-width:100%;height:auto;
+  .sent-cap{margin:0;font-family:"JetBrains Mono",monospace;font-size:.74rem;
+    letter-spacing:.18em;text-transform:uppercase;color:var(--mut)}
+
+  .sent-ring{width:34rem;max-width:82%;height:auto;
     filter:drop-shadow(0 0 14px var(--hud-glow))}
 
   /* both animated strokes start fully retracted */
@@ -624,7 +629,6 @@
 
   .send > form{transition:opacity .25s}
   .send.sending > form{opacity:.45;pointer-events:none}
-  .send.done    > form{opacity:0;visibility:hidden}
 
   /* Your global reduced-motion rule is `*{animation:none!important}`. That kills
      the draw — but a draw-on animation's START state is "invisible", so the ring

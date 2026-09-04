@@ -129,7 +129,9 @@
     /* ---------- contact form: submit without leaving the page ---------- */
   var send = document.querySelector('.send'),
       form = send && send.querySelector('form'),
-      ring = send && send.querySelector('.sent'),
+      card = document.getElementById('contact'),
+      ring = document.querySelector('.sent'),
+      cap  = document.querySelector('.sent-cap'),
       note = send && send.querySelector('.send-note');
 
   if (form) {
@@ -180,13 +182,13 @@
 
       form.reset();
       showRing();
-      note.textContent = 'Message sent — I will reply to that address';
+      cap.textContent = 'Message sent — I will reply to that address';
     }
 
     function showRing() {
       clearTimeout(ringTimer);
       ring.hidden = false;
-      send.classList.add('done');
+      card.classList.add('busy');
       /* Unhide first, add .go on the next frame. Adding the class in the same
          frame the element becomes visible gives the browser no "before" to
          animate from, and the stroke just snaps to drawn. */
@@ -195,7 +197,10 @@
       ringTimer = setTimeout(function () {
         ring.classList.remove('go');
         ring.hidden = true;
-        send.classList.remove('done');
+        card.classList.remove('busy');
+        /* The persistent line is written when the section comes back, not while
+           it is hidden — a visibility:hidden ancestor makes it unreachable. */
+        note.textContent = 'Message sent — I will reply to that address';
       }, 3000);
     }
 

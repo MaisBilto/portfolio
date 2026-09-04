@@ -363,29 +363,30 @@
               <button class="btn" type="submit">Send message</button>
             </form>
 
-            <div class="sent" hidden aria-hidden="true">
-              <svg class="sent-ring" viewBox="26 10 208 130" aria-hidden="true">
-                <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                  <g stroke-width="1" opacity=".5">
-                    <path d="M2 26h34l14 14h30M2 75h48M2 124h34l14-14h30"/>
-                    <path d="M258 26h-34l-14 14h-30M258 75h-48M258 124h-34l-14-14h-30"/>
-                  </g>
-                  <g fill="currentColor" stroke="none" opacity=".7">
-                    <circle cx="2" cy="26" r="1.6"/><circle cx="2" cy="75" r="1.6"/><circle cx="2" cy="124" r="1.6"/>
-                    <circle cx="258" cy="26" r="1.6"/><circle cx="258" cy="75" r="1.6"/><circle cx="258" cy="124" r="1.6"/>
-                  </g>
-                  <circle cx="130" cy="75" r="47" stroke-width="3" stroke-dasharray="11 7" opacity=".3"/>
-                  <circle cx="130" cy="75" r="35" stroke-width=".9" opacity=".45"/>
-                  <circle class="sr-ring" cx="130" cy="75" r="41" stroke-width="2.4"
-                          pathLength="100" transform="rotate(-90 130 75)"/>
-                  <path class="sr-check" d="M116 75l9.5 9.5L145 65" stroke-width="4" pathLength="100"/>
-                </g>
-              </svg>
-            </div>
-            <p class="send-note" role="status"></p>
+            <p class="send-note" aria-hidden="true"></p>
             </div>
           </div>
           <div class="foot" data-anim style="--i:4"><span>© 2026 MAIS BILTO</span></div>
+        </div>
+        <div class="sent" role="status" hidden>
+          <svg class="sent-ring" viewBox="26 10 208 130" aria-hidden="true">
+            <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <g stroke-width="1" opacity=".5">
+                <path d="M2 26h34l14 14h30M2 75h48M2 124h34l14-14h30"/>
+                <path d="M258 26h-34l-14 14h-30M258 75h-48M258 124h-34l-14-14h-30"/>
+              </g>
+              <g fill="currentColor" stroke="none" opacity=".7">
+                <circle cx="2" cy="26" r="1.6"/><circle cx="2" cy="75" r="1.6"/><circle cx="2" cy="124" r="1.6"/>
+                <circle cx="258" cy="26" r="1.6"/><circle cx="258" cy="75" r="1.6"/><circle cx="258" cy="124" r="1.6"/>
+              </g>
+              <circle cx="130" cy="75" r="47" stroke-width="3" stroke-dasharray="11 7" opacity=".3"/>
+              <circle cx="130" cy="75" r="35" stroke-width=".9" opacity=".45"/>
+              <circle class="sr-ring" cx="130" cy="75" r="41" stroke-width="2.4"
+                      pathLength="100" transform="rotate(-90 130 75)"/>
+              <path class="sr-check" d="M116 75l9.5 9.5L145 65" stroke-width="4" pathLength="100"/>
+            </g>
+          </svg>
+          <p class="sent-cap"></p>
         </div>
       </section>
       
