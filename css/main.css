@@ -585,3 +585,50 @@
   .field input:focus,.field textarea:focus{outline:none;border-color:var(--hud);
     box-shadow:0 0 0 2px var(--hud-dim)}
   .field input:user-invalid,.field textarea:user-invalid{border-color:var(--alert)}
+
+  /* ---------- send / confirmation ---------- */
+
+  /* Form and panel share ONE grid cell. The row is as tall as the taller of the
+     two, so swapping them cannot change the box height — and .split is
+     align-items:center, which would otherwise shift the whole left column. */
+  .send{display:grid;grid-template-rows:1fr auto;gap:var(--s3)}
+  .send > form,
+  .send > .sent{grid-area:1/1}
+
+  /* Always rendered, usually empty. Reserving the line means the box does not
+     grow when a message appears — no shift in a vertically centred column. */
+  .send-note{grid-row:2;margin:0;min-height:1.1rem;
+    font-family:"JetBrains Mono",monospace;font-size:.68rem;
+    letter-spacing:.16em;text-transform:uppercase;color:var(--hud)}
+  .send-note.bad{color:var(--alert)}
+
+  /* [hidden] is the weakest rule in the cascade and .sent gets display:grid
+     below. Without this the panel is visible on load. Same bug as .lb-nav. */
+  .sent[hidden]{display:none}
+
+  .sent{display:grid;place-content:center;justify-items:center;
+    gap:var(--s4);text-align:center;color:var(--hud)}
+
+  .sent-ring{width:min(16rem,100%);height:auto;
+    filter:drop-shadow(0 0 14px var(--hud-glow))}
+
+  /* both animated strokes start fully retracted */
+  .sr-ring,.sr-check{stroke-dasharray:100;stroke-dashoffset:100}
+  .sent.go .sr-ring {animation:draw .75s cubic-bezier(.4,0,.2,1) forwards}
+  .sent.go .sr-check{animation:draw .3s ease-out .6s forwards}
+  @keyframes draw{to{stroke-dashoffset:0}}
+
+  /* failure — rose, the same word it means everywhere else on this page */
+  .sent.bad{color:var(--alert)}
+  .sent.bad .sent-ring{filter:drop-shadow(0 0 14px var(--alert-dim))}
+
+  .send > form{transition:opacity .25s}
+  .send.sending > form{opacity:.45;pointer-events:none}
+  .send.done    > form{opacity:0;visibility:hidden}
+
+  /* Your global reduced-motion rule is `*{animation:none!important}`. That kills
+     the draw — but a draw-on animation's START state is "invisible", so the ring
+     would never appear at all. Reset the offset so it renders complete. */
+  @media (prefers-reduced-motion:reduce){
+    .sr-ring,.sr-check{stroke-dashoffset:0}
+  }

@@ -126,4 +126,82 @@
     if (ev.key === 'ArrowLeft')  { ev.preventDefault(); show(at - 1); }
     if (ev.key === 'ArrowRight') { ev.preventDefault(); show(at + 1); }
   });
+    /* ---------- contact form: submit without leaving the page ---------- */
+  var send = document.querySelector('.send'),
+      form = send && send.querySelector('form'),
+      ring = send && send.querySelector('.sent'),
+      note = send && send.querySelector('.send-note');
+
+  if (form) {
+    var btn = form.querySelector('button[type="submit"]'),
+        label = btn.textContent,
+        ringTimer = null,
+        busy = false;
+
+    form.addEventListener('submit', function (ev) {
+      /* Only take the job if we can finish it. With no fetch we never call
+         preventDefault, the browser does its native POST, and the visitor lands
+         on Netlify's page — plain, but the message still arrives. */
+      if (!window.fetch) return;
+      ev.preventDefault();
+      if (busy) return;
+      busy = true;
+
+      send.classList.add('sending');
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+      note.textContent = '';
+      note.classList.remove('bad');
+
+      /* Netlify accepts a urlencoded POST to any path on the site. What tells it
+         which form this is, is the form-name field in the body — not the URL. */
+      fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(new FormData(form)).toString()
+      })
+      .then(function (r) { if (!r.ok) throw new Error(r.status); done(true); })
+      .catch(function () { done(false); });
+    });
+
+    function done(ok) {
+      busy = false;
+      send.classList.remove('sending');
+      btn.disabled = false;
+      btn.textContent = label;
+
+      if (!ok) {
+        /* Nothing is cleared. A failed send that also wipes what someone typed
+           is worse than having no form at all. */
+        note.classList.add('bad');
+        note.textContent = 'Could not send — try again, or use the links';
+        return;
+      }
+
+      form.reset();
+      showRing();
+      note.textContent = 'Message sent — I will reply to that address';
+    }
+
+    function showRing() {
+      clearTimeout(ringTimer);
+      ring.hidden = false;
+      send.classList.add('done');
+      /* Unhide first, add .go on the next frame. Adding the class in the same
+         frame the element becomes visible gives the browser no "before" to
+         animate from, and the stroke just snaps to drawn. */
+      requestAnimationFrame(function () { ring.classList.add('go'); });
+
+      ringTimer = setTimeout(function () {
+        ring.classList.remove('go');
+        ring.hidden = true;
+        send.classList.remove('done');
+      }, 3000);
+    }
+
+    /* The note stays until they start writing the next message. */
+    form.addEventListener('input', function () {
+      if (note.textContent) { note.textContent = ''; note.classList.remove('bad'); }
+    });
+  }
 })();
