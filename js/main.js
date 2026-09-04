@@ -8,13 +8,21 @@
 
   root.classList.add('js-anim');
 
+  /* Below this breakpoint the document is the scroll container; above it, .deck
+     is. Everything that reads or writes scroll position has to ask which. */
+  var mobile = matchMedia('(max-width:60rem),(max-height:30rem)');
+
   function update() {
     markCurrent();
     queued = false;
   }
-  deck.addEventListener('scroll', function () {
+  function onScroll() {
     if (!queued) { queued = true; requestAnimationFrame(update); }
-  }, { passive: true });
+  }
+  /* Listen on both. Only one of them ever fires, and which one depends on the
+     viewport — cheaper than tearing the listener down on every breakpoint change. */
+  deck.addEventListener('scroll', onScroll, { passive: true });
+  addEventListener('scroll', onScroll, { passive: true });
   addEventListener('resize', update);
 
   var links = {};
@@ -26,15 +34,21 @@
      in no guaranteed order, and the last one processed won. */
   var current = -1;
   function markCurrent() {
-    var h = deck.clientHeight;
-    if (!h || !cards.length) return;
+    if (!cards.length) return;
+    /* On a phone deck.clientHeight is the height of ALL the content, not of one
+       screen, so the reference has to be the viewport instead. */
+    var h    = mobile.matches ? innerHeight : deck.clientHeight;
+    var top0 = mobile.matches ? 0 : deck.getBoundingClientRect().top;
+    if (!h) return;
     /* Dividing scrollTop by the viewport height only works while every section
        is exactly one screen tall — true on desktop, false on a phone, where the
        sections stack to their natural height. Walking the cards' own offsetTop
        is correct under BOTH layouts: find the last card that starts above a
        line a third of the way down the screen. */
-    var line = deck.scrollTop + h * 0.34, i = 0;
-    for (var n = 0; n < cards.length; n++) if (cards[n].offsetTop <= line) i = n;
+    /* getBoundingClientRect is viewport-relative, which is true under both
+       layouts — offsetTop is relative to an offsetParent that changes. */
+    var line = top0 + h * 0.34, i = 0;
+    for (var n = 0; n < cards.length; n++) if (cards[n].getBoundingClientRect().top <= line) i = n;
     if (i === current) return;
     current = i;
     var id = cards[i].id;
@@ -43,13 +57,21 @@
   }
 
   /* the observer now does one job: run the entry animation when a card is on screen */
-  var io = new IntersectionObserver(function (entries) {
-    entries.forEach(function (e) { e.target.classList.toggle('in', e.isIntersecting); });
-    /* threshold:0.5 can never be reached by a section taller than the viewport,
-       so on a phone the entry animation would never fire and the content would
-       stay at opacity 0. Trigger on any overlap with the middle band instead. */
-  }, { root: deck, threshold: 0, rootMargin: '-12% 0px -12% 0px' });
-  cards.forEach(function (c) { io.observe(c); });
+  /* threshold:0.5 can never be reached by a section taller than the viewport,
+     so on a phone the entry animation would never fire and the content would
+     stay at opacity 0. Trigger on any overlap with the middle band instead. */
+  var io;
+  function observe() {
+    if (io) io.disconnect();
+    /* root:null means the viewport. When the document is the scroller, deck is
+       not a scroll container at all and using it as the root observes nothing. */
+    io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { e.target.classList.toggle('in', e.isIntersecting); });
+    }, { root: mobile.matches ? null : deck, threshold: 0, rootMargin: '-12% 0px -12% 0px' });
+    cards.forEach(function (c) { io.observe(c); });
+  }
+  observe();
+  mobile.addEventListener('change', function () { observe(); current = -1; update(); });
 
   update();
 
@@ -63,7 +85,13 @@
     a.addEventListener('click', function (ev) {
       ev.preventDefault();
       var t = document.getElementById(a.dataset.to);
-      if (t) deck.scrollTo({ top: t.offsetTop, behavior: noMotion.matches ? 'auto' : 'smooth' });
+      if (!t) return;
+      var how = noMotion.matches ? 'auto' : 'smooth';
+      if (mobile.matches) {
+        scrollTo({ top: t.getBoundingClientRect().top + scrollY - 8, behavior: how });
+      } else {
+        deck.scrollTo({ top: t.offsetTop, behavior: how });
+      }
     });
   });
 

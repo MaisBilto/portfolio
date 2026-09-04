@@ -520,6 +520,25 @@
       -webkit-backdrop-filter:blur(7px);backdrop-filter:blur(7px);
       box-shadow:0 8px 26px rgba(3,6,10,.8)}
     .prog,.plate,.hatch,.dots{display:none}
+
+    /* The DOCUMENT scrolls below this breakpoint, not an inner box.
+       A fixed .stage with an overflow container inside means the page itself
+       never moves: Safari never collapses its address bar, so ~100px of screen
+       is lost for good, and momentum and rubber-banding come from the wrong
+       element. Everything here goes back into normal flow. */
+    body{height:auto;overflow:visible}
+    .stage{position:static;inset:auto;margin:var(--gap)}
+    .frame{position:relative;inset:auto;overflow:visible}
+    .deck{position:static;inset:auto;overflow:visible;padding-left:0}
+    /* the rail was absolute inside .stage; with .stage in normal flow it has to
+       hold itself against the viewport instead */
+    .rail{position:fixed}
+
+    /* The decoration layer is fixed-size chrome designed for one screen holding
+       one section. Against a continuously scrolling page it stops being a frame
+       and becomes an overlay — corner brackets landing mid-paragraph, chamfer
+       diagonals cutting across sentences. The frame's own outline is enough. */
+    .deco{display:none}
     h1{font-size:2rem}h2{font-size:1.55rem}
 
     /* no snapping: it needs slides, and these are no longer slides */
