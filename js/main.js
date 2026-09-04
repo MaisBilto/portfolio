@@ -128,6 +128,13 @@
       count.innerHTML = '<b>' + pad(at + 1) + '</b> / ' + pad(n);
       prev.disabled = at === 0;
       next.disabled = at === n - 1;
+      /* Desktop Work uses these to build the coverflow. Harmless elsewhere:
+         nothing styles them outside that media query. */
+      for (var i = 0; i < n; i++) {
+        var c = strip.children[i];
+        c.classList.toggle('is-current', i === at);
+        c.classList.toggle('is-near', Math.abs(i - at) === 1);
+      }
     }
     function go(step) {
       at = Math.max(0, Math.min(n - 1, at + step));
@@ -139,6 +146,20 @@
     }
     prev.addEventListener('click', function () { go(-1); });
     next.addEventListener('click', function () { go(1); });
+
+    /* Clicking a card that is not the current one brings it forward instead of
+       following whatever link was under the pointer. Capture phase, so it runs
+       before the link does. */
+    strip.addEventListener('click', function (ev) {
+      for (var i = 0; i < n; i++) {
+        if (strip.children[i].contains(ev.target) && i !== at) {
+          ev.preventDefault();
+          ev.stopPropagation();
+          go(i - at);
+          return;
+        }
+      }
+    }, true);
 
     /* The counter is derived from where the strip actually IS, not from how
        many times the buttons were pressed — otherwise a swipe desynchronises
