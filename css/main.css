@@ -589,7 +589,9 @@
     #training .tracks::-webkit-scrollbar{display:none}
     #work .grid3 > *,
     #training .tracks > *{
-      flex:0 0 86%;scroll-snap-align:center;scroll-snap-stop:always}
+      /* 92%: the 8% left over is the peek. Push this to 100% and the row reads
+         as one fixed card — only the arrows would say otherwise. */
+      flex:0 0 92%;scroll-snap-align:center;scroll-snap-stop:always}
 
     /* the slider control: counter + arrows, built by main.js */
     .sld-bar{display:flex;align-items:center;justify-content:flex-end;
