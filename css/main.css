@@ -576,7 +576,14 @@
       display:flex;grid-template-columns:none;gap:var(--s4);
       overflow-x:auto;overscroll-behavior-x:contain;
       scroll-snap-type:x mandatory;
-      padding:2px 2px 14px;margin-inline:-2px;
+      /* Setting overflow-x:auto forces overflow-y to compute to auto too — one
+         axis cannot scroll while the other stays visible. So ANY vertical
+         overflow inside this row turns it into a vertical scroll container,
+         and a swipe over the cards scrolls that instead of the page. The card
+         glow (.hc-wrap::after) hangs 18px below the card, which was exactly
+         enough to do it. The padding contains it; the row now overflows in x
+         only. Check scrollHeight === clientHeight if you ever touch this. */
+      padding:10px 2px 34px;margin-inline:-2px;margin-bottom:calc(var(--s3) * -1);
       scrollbar-width:none}
     #work .grid3::-webkit-scrollbar,
     #training .tracks::-webkit-scrollbar{display:none}
