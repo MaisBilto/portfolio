@@ -71,19 +71,6 @@
 </svg>
 
 
-<div class="dots" aria-hidden="true">
-  <span class="dot" style="left:5.5%;top:16%;--d:8px;--t:5s;--dl:0s;--len:70px;--a:12deg"></span>
-  <span class="dot rose" style="left:11%;top:7%;--d:6px;--t:6.5s;--dl:-2s;--len:54px;--a:64deg"></span>
-  <span class="dot" style="left:27%;top:4.5%;--d:6px;--t:4.2s;--dl:-1s;--len:40px;--a:100deg"></span>
-  <span class="dot" style="left:52%;top:3%;--d:7px;--t:7s;--dl:-3.5s;--len:0px"></span>
-  <span class="dot" style="right:23%;top:5%;--d:6px;--t:5.6s;--dl:-1.5s;--len:46px;--a:118deg"></span>
-  <span class="dot rose" style="right:6%;top:13%;--d:8px;--t:4.8s;--dl:-2.5s;--len:66px;--a:196deg"></span>
-  <span class="dot" style="right:3.5%;top:44%;--d:7px;--t:6.2s;--dl:-4s;--len:58px;--a:186deg"></span>
-  <span class="dot" style="right:12%;bottom:8%;--d:6px;--t:5.2s;--dl:-0.5s;--len:52px;--a:236deg"></span>
-  <span class="dot" style="left:34%;bottom:4%;--d:7px;--t:6.8s;--dl:-3s;--len:44px;--a:288deg"></span>
-  <span class="dot rose" style="left:7%;bottom:17%;--d:6px;--t:4.4s;--dl:-1.8s;--len:60px;--a:330deg"></span>
-  <span class="dot" style="left:3%;top:58%;--d:7px;--t:5.9s;--dl:-2.2s;--len:56px;--a:6deg"></span>
-</div>
 
 <div class="stage">
 
@@ -114,13 +101,17 @@
               <div class="acts" data-anim style="--i:4"><a class="btn" href="#work">View my work</a><a class="btn ghost" href="#contact">Get in touch</a></div>
             </div>
             <div class="panel" data-anim style="--i:5">
-              <dl class="fill" style="margin:0">
+              <div class="fill">
                 <div class="p-head"><span>sys_user · MAI0010001</span><span class="pill">AVAILABLE</span></div>
-                <div class="rrow"><dt>focus</dt><dd>ServiceNow AI System Administration</dd></div>
-                <div class="rrow"><dt>studying</dt><dd>CSA exam</dd></div>
-                <div class="rrow"><dt>background</dt><dd>CS · networking · databases · software engineering</dd></div>
-                <div class="rrow"><dt>instance</dt><dd>Personal Developer Instance</dd></div>
-              </dl>
+                <!-- a <div> is only a valid child of <dl> when it wraps dt/dd pairs,
+                     so the header sits outside the list and the rows sit inside it -->
+                <dl class="rows">
+                  <div class="rrow"><dt>focus</dt><dd>ServiceNow AI System Administration</dd></div>
+                  <div class="rrow"><dt>studying</dt><dd>CSA exam</dd></div>
+                  <div class="rrow"><dt>background</dt><dd>CS · networking · databases · software engineering</dd></div>
+                  <div class="rrow"><dt>instance</dt><dd>Personal Developer Instance</dd></div>
+                </dl>
+              </div>
             </div>
           </div>
         </div>
@@ -178,7 +169,6 @@
 
             <div class="hc-wrap" data-status="active" data-progress="3" data-anim style="--i:2">
               <article class="hc">
-                <span class="spark"></span>
                 <span class="edge2"></span>
                 <div class="fill">
                   <div class="hc-thumb">
@@ -200,7 +190,6 @@
 
             <div class="hc-wrap" data-status="complete" data-progress="6" data-anim style="--i:4">
               <article class="hc v4">
-                <span class="spark"></span>
                 <span class="edge2"></span>
                 <div class="fill">
                   <div class="hc-thumb">
@@ -222,7 +211,6 @@
             
             <div class="hc-wrap" data-status="scheduled" data-progress="0" data-anim style="--i:3">
               <article class="hc v3">
-                <span class="spark"></span>
                 <span class="edge2"></span>
                 <div class="fill">
                   <div class="hc-thumb">
@@ -245,7 +233,6 @@
 
             <div class="hc-wrap" data-status="scheduled" data-progress="0" data-anim style="--i:5">
               <article class="hc v2">
-                <span class="spark"></span>
                 <span class="edge2"></span>
                 <div class="fill">
                   <div class="hc-thumb">
@@ -362,7 +349,7 @@
               <button class="btn" type="submit">Send message</button>
             </form>
 
-            <p class="send-note" aria-hidden="true"></p>
+            <p class="send-note" role="status"></p>
             </div>
           </div>
           <div class="foot" data-anim style="--i:4"><span>© 2026 MAIS BILTO</span></div>

@@ -64,6 +64,36 @@ properties like `color` cross the boundary. That is why `#corner` and `#rosette`
 coloured with `currentColor`, and why the confirmation ring is inline SVG rather than a
 `<use>`: its two strokes are animated separately.
 
+**A horizontal scroller is a vertical one too.** Setting `overflow-x: auto` forces
+`overflow-y` to compute to `auto` — CSS will not let one axis scroll while the other
+stays visible. So any vertical overflow inside a horizontal row turns it into a
+vertical scroll container that swallows the page scroll. The Work slider had exactly
+18px of it, from the card glow hanging below the card, and a swipe over the cards
+would not scroll the page. **Test: `scrollHeight` must equal `clientHeight` on every
+horizontal scroller.**
+
+**`clip-path` clips an outline and a box-shadow, not just the paint.** Every chamfered
+control here had no visible keyboard focus ring at all, because the global one is drawn
+outside the box. Focus styles on those elements have to be drawn on the inside.
+
+**A filled animation beats a normal declaration at any specificity.** Elements carrying
+`data-anim` run `rise` with `animation-fill-mode: forwards`, which holds `transform:none`
+and `opacity:1` afterwards. No selector will out-rank that; the animation has to be
+switched off for that element.
+
+**`scrollIntoView` scrolls every scrollable ancestor**, not just the one you meant. On a
+phone that includes the document, so it drags the page. Set `scrollLeft` on the element
+you actually want to move.
+
+**A percentage in `flex-basis` resolves against the content box** — after the container's
+own padding has narrowed it. Combining percentage padding with a percentage basis makes
+the two compound, and the item comes out about half the size you asked for.
+
+**`pointer-events: none` does not affect the tab order.** Hiding a card from the mouse
+leaves its links reachable by keyboard. Use `tabindex="-1"` on the descendants, not
+`inert` — `inert` also blocks clicks, and clicking an off-centre card is how it is
+brought forward.
+
 **The visible certificate count is in two places.** `VISIBLE` in `js/main.js` must match
 `.certs .cert:nth-of-type(n+6)` in `main.css`.
 

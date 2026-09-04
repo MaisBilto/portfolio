@@ -11,6 +11,12 @@
   /* Below this breakpoint the document is the scroll container; above it, .deck
      is. Everything that reads or writes scroll position has to ask which. */
   var mobile = matchMedia('(max-width:60rem),(max-height:30rem)');
+  /* The desktop coverflow, where off-centre cards are scaled to 22% opacity and
+     tucked behind their neighbours. pointer-events does not affect the tab
+     order, so those cards need `inert` or a keyboard user lands on links they
+     cannot see. Its own query, because the coverflow block starts a sixteenth
+     of a rem above where `mobile` stops. */
+  var flow = matchMedia('(min-width:60.0625rem) and (min-height:30.0625rem)');
 
   function update() {
     markCurrent();
@@ -72,6 +78,10 @@
   }
   observe();
   mobile.addEventListener('change', function () { observe(); current = -1; update(); });
+  /* Crossing into or out of the coverflow changes whether the off-centre cards
+     should be inert, so every slider has to redraw. */
+  var redraws = [];
+  flow.addEventListener('change', function () { redraws.forEach(function (f) { f(); }); });
 
   update();
 
@@ -108,6 +118,14 @@
 
   function pad(v) { return (v < 10 ? '0' : '') + v; }
 
+  function reachable(card, yes) {
+    var f = card.querySelectorAll('a[href],button,input,textarea,select');
+    for (var k = 0; k < f.length; k++) {
+      if (yes) f[k].removeAttribute('tabindex');
+      else f[k].setAttribute('tabindex', '-1');
+    }
+  }
+
   function slider(strip) {
     if (!strip || !strip.children.length) return;
     var n = strip.children.length, at = 0;
@@ -126,20 +144,37 @@
 
     function draw() {
       count.innerHTML = '<b>' + pad(at + 1) + '</b> / ' + pad(n);
-      prev.disabled = at === 0;
-      next.disabled = at === n - 1;
       /* Desktop Work uses these to build the coverflow. Harmless elsewhere:
          nothing styles them outside that media query. */
       for (var i = 0; i < n; i++) {
         var c = strip.children[i];
         c.classList.toggle('is-current', i === at);
         c.classList.toggle('is-near', Math.abs(i - at) === 1);
+        /* Take off-centre cards out of the TAB ORDER under the coverflow —
+           pointer-events:none hides them from the mouse but not the keyboard,
+           so without this you tab onto links sitting at 22% opacity behind
+           another card. Not `inert`: that also blocks clicks, and clicking a
+           side card is how you bring it forward. On a phone the neighbour is
+           genuinely on screen, so it stays reachable. */
+        reachable(c, !(flow.matches && i !== at));
       }
     }
     function go(step) {
-      at = Math.max(0, Math.min(n - 1, at + step));
-      strip.children[at].scrollIntoView({
-        inline: 'center', block: 'nearest',
+      /* Wrap around: next from the last card returns to the first. The modulo
+         is written with + n because JavaScript's % keeps the sign of the left
+         operand, so (0 - 1) % 4 is -1, not 3. */
+      at = (at + step + n) % n;
+      /* scrollIntoView scrolls EVERY scrollable ancestor. On a phone the
+         document is the scroller and a card is taller than the viewport, so
+         it dragged the page vertically as well; on desktop it could nudge the
+         snap-scrolled deck into another section. Move this strip and nothing
+         else. Client rects because offsetLeft is measured from an
+         offsetParent that is not this strip. */
+      var box  = strip.getBoundingClientRect();
+      var tgt  = strip.children[at].getBoundingClientRect();
+      var by   = (tgt.left + tgt.width / 2) - (box.left + box.width / 2);
+      strip.scrollTo({
+        left: strip.scrollLeft + by,
         behavior: noMotion.matches ? 'auto' : 'smooth'
       });
       draw();
@@ -155,7 +190,7 @@
         if (strip.children[i].contains(ev.target) && i !== at) {
           ev.preventDefault();
           ev.stopPropagation();
-          go(i - at);
+          go(i - at);   /* a delta inside the range, so the wrap never triggers */
           return;
         }
       }
@@ -184,6 +219,7 @@
     }, { passive: true });
 
     draw();
+    redraws.push(draw);
   }
 
   slider(document.querySelector('#work .grid3'));
@@ -238,6 +274,10 @@
       strip.appendChild(chip);
     }
   });
+
+  /* The +N chips are appended above, AFTER the sliders were built, so redraw
+     once now to put any newly created control in or out of the tab order. */
+  redraws.forEach(function (f) { f(); });
 
   document.getElementById('lb-prev').addEventListener('click', function(){ show(at - 1); });
   document.getElementById('lb-next').addEventListener('click', function(){ show(at + 1); });
@@ -296,6 +336,11 @@
       if (!ok) {
         /* Nothing is cleared. A failed send that also wipes what someone typed
            is worse than having no form at all. */
+        /* This is the ONLY signal a failed send produces, so it has to be
+           announced. aria-hidden goes off BEFORE the text is written. */
+        note.removeAttribute('aria-hidden');
+        /* the button was disabled, which blurred it */
+        if (document.activeElement === document.body) { btn.focus({ preventScroll: true }); }
         note.classList.add('bad');
         note.textContent = 'Could not send — try again, or use the links';
         return;
@@ -310,6 +355,11 @@
       clearTimeout(ringTimer);
       ring.hidden = false;
       card.classList.add('busy');
+      /* Disabling the submit button blurred it, and the section it lived in is
+         about to go visibility:hidden — so without this a keyboard user has no
+         focus position at all for three seconds. Park focus on the panel. */
+      ring.setAttribute('tabindex', '-1');
+      ring.focus({ preventScroll: true });
       /* Unhide first, add .go on the next frame. Adding the class in the same
          frame the element becomes visible gives the browser no "before" to
          animate from, and the stroke just snaps to drawn. */
@@ -317,10 +367,16 @@
 
       ringTimer = setTimeout(function () {
         ring.classList.remove('go');
+        var hadFocus = ring.contains(document.activeElement);
         ring.hidden = true;
         card.classList.remove('busy');
+        /* Hand focus back — but only if the visitor has not moved on. */
+        if (hadFocus) { btn.focus({ preventScroll: true }); }
         /* The persistent line is written when the section comes back, not while
            it is hidden — a visibility:hidden ancestor makes it unreachable. */
+        /* The ring already announced this one; hide the duplicate from
+           assistive tech, and hide it before the text lands. */
+        note.setAttribute('aria-hidden', 'true');
         note.textContent = 'Message sent — I will reply to that address';
       }, 3000);
     }

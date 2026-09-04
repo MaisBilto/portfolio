@@ -1,20 +1,5 @@
 /* main.css — layout and components. */
-
-  /* ================= floating dots ================= */
-  .dots{position:fixed;inset:0;z-index:0;pointer-events:none}
-  /*.dot{position:absolute;width:var(--d,7px);height:var(--d,7px);border-radius:50%;
-    background:var(--hud);box-shadow:0 0 8px 1px var(--hud-glow);
-    animation:breathe var(--t,4.5s) ease-in-out infinite;animation-delay:var(--dl,0s)}*/
-  .dot.rose{background:var(--alert);box-shadow:0 0 8px 1px var(--alert-dim)}
   /* connector line drawn from the dot toward the frame */
-  .dot::after{content:"";position:absolute;left:50%;top:50%;height:1px;
-    width:var(--len,0px);transform-origin:0 50%;transform:rotate(var(--a,0deg));
-    background:linear-gradient(90deg,var(--hud-dim),transparent);opacity:.75}
-  .dot.rose::after{background:linear-gradient(90deg,var(--alert-dim),transparent)}
-  @keyframes breathe{
-    0%,100%{opacity:.28;transform:scale(.8)}
-    50%    {opacity:1;transform:scale(1.25)}
-  }
 
   /* ================= stage ================= */
   .stage{position:fixed;inset:var(--gap);z-index:1}
@@ -135,6 +120,7 @@
   .p-head{display:flex;justify-content:space-between;align-items:center;gap:var(--s3);
     padding:.55rem var(--s4);border-bottom:1px solid var(--line);
     font-family:"JetBrains Mono",monospace;font-size:.64rem;letter-spacing:.14em;color:var(--faint)}
+  .rows{margin:0}
   .rrow{display:flex;justify-content:space-between;gap:var(--s4);padding:.6rem var(--s4);
     border-bottom:1px solid rgba(31,44,56,.7);font-size:.84rem}
   .rrow:last-child{border-bottom:0}
@@ -217,7 +203,6 @@
   [data-status="scheduled"] .soon{display:inline-flex}
 
   /* progress: one number, no per-segment classes */
-  .segbar i{background:var(--line)}
   [data-progress="1"] .segbar i:nth-child(-n+1),
   [data-progress="2"] .segbar i:nth-child(-n+2),
   [data-progress="3"] .segbar i:nth-child(-n+3),
@@ -230,20 +215,8 @@
      a big conic-gradient disc spins *behind* the fill; because the fill is
      opaque and inset by 1px, the only place the disc shows is the border ring,
      and the card's clip-path bends that ring around the chamfers for free. */
-  .spark{display:none;position:absolute;left:-75%;top:-75%;width:250%;height:250%;
-    z-index:0;pointer-events:none;
-    background:conic-gradient(from 0deg,
-      transparent 0 20%,
-      rgba(94,234,212,.35) 23%, #d8fff6 26%, rgba(94,234,212,.35) 29%,
-      transparent 32% 70%,
-      rgba(94,234,212,.3) 73%, #d8fff6 75.5%, rgba(94,234,212,.3) 78%,
-      transparent 81% 100%);
-    animation:spinedge 3.6s linear infinite}
-  @keyframes spinedge{to{transform:rotate(360deg)}}
-  /* .hc-wrap[data-status="active"] .spark{display:block}  <- orbit variant, off */
   .hc > .fill{position:relative;z-index:1}
   /* base ring goes quieter on the active card so the travelling light reads */
-  @media (prefers-reduced-motion:reduce){.spark{display:none!important}}
 
 
   .grid3{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--s5);align-items:stretch}
@@ -367,7 +340,6 @@
   .cert img{width:100%;height:100%;object-fit:cover;display:block;
     filter:grayscale(.2) brightness(.72) contrast(1.05);transition:filter .22s}
   /*.cert:hover img{filter:none}*/
-  .cert span{font-family:"JetBrains Mono",monospace;font-size:.44rem;letter-spacing:.08em;color:var(--faint)}
   .tk-wrap:hover .cert:not(.rest){box-shadow:inset 0 0 0 1px var(--hover-dim)}
   .cert:not(.rest):hover{transform:translateY(-2px);box-shadow:inset 0 0 0 1px var(--hover)}
   .certs .cert:nth-of-type(n+6){display:none}
@@ -452,9 +424,6 @@
   .hc-thumb .tbd b{font-family:"Space Grotesk",system-ui,sans-serif;font-size:1.35rem;
     font-weight:700;letter-spacing:.2em;text-indent:.2em;line-height:1;color:var(--hud)}
   /* the caption hangs below the ring so TBD stays centred in the circle */
-  .hc-thumb .tbd i{position:absolute;top:calc(100% + 3.1rem);left:50%;translate:-50% 0;
-    font-family:"JetBrains Mono",monospace;font-style:normal;font-size:.46rem;
-    letter-spacing:.16em;text-transform:uppercase;color:var(--faint);line-height:1;white-space:nowrap}
 
   .scan{position:absolute;left:0;right:0;height:2px;top:-8%;z-index:1;opacity:0;
     background:linear-gradient(90deg,transparent,var(--st-hi),transparent)}
@@ -476,7 +445,6 @@
   .segbar{display:flex;gap:3px;margin-top:.35rem}
   .segbar i{flex:1;height:5px;background:var(--line);
     clip-path:polygon(2px 0,100% 0,calc(100% - 2px) 100%,0 100%)}
-  .segbar i.on{background:var(--alert);box-shadow:0 0 6px var(--alert-dim)}
 
   .hc .more{margin-top:auto;padding-top:.6rem;font-size:.66rem;
     align-items:center;gap:.4rem}
@@ -522,8 +490,6 @@
     transition:color .18s,box-shadow .18s,background-color .18s;
     clip-path:polygon(var(--n) 0,100% 0,100% calc(100% - var(--n)),calc(100% - var(--n)) 100%,0 100%,0 var(--n))}
   .sld-btn:hover:not(:disabled){background:var(--hud);color:var(--on-hover)}
-  .sld-btn:disabled{color:var(--faint);box-shadow:inset 0 0 0 1px var(--line);
-    opacity:.55;cursor:default}
   .sld-btn svg{width:17px;height:17px}
   .sld-count{font-family:"JetBrains Mono",monospace;font-size:.66rem;letter-spacing:.18em;
     text-transform:uppercase;color:var(--faint);white-space:nowrap}
@@ -578,6 +544,10 @@
 
     /* A card that is not centred is a target for FOCUSING, not for following
        its link — main.js intercepts the click and brings it forward instead. */
+    /* Training cards are wider: they hold a list of courses with a provider and
+       year on each row, and only one is on screen at a time now. */
+    #training .tracks{--cw:min(46rem, 58vw)}
+
     #work .grid3 > :not(.is-current),
     #training .tracks > :not(.is-current){cursor:pointer}
     #work .grid3 > :not(.is-current) *,
@@ -597,7 +567,7 @@
     .rail .fill{flex-direction:row;background:var(--panel2);
       box-shadow:0 10px 30px rgba(3,6,10,.9)}
     .rail{bottom:calc(12px + env(safe-area-inset-bottom,0px))}   /* home indicator */
-    .prog,.plate,.hatch,.dots{display:none}
+    .prog,.plate,.hatch{display:none}
 
     /* The DOCUMENT scrolls below this breakpoint, not an inner box.
        A fixed .stage with an overflow container inside means the page itself
@@ -605,7 +575,9 @@
        is lost for good, and momentum and rubber-banding come from the wrong
        element. Everything here goes back into normal flow. */
     body{height:auto;overflow:visible}
-    .stage{position:static;inset:auto;margin:var(--gap)}
+    /* relative, not static: .deco is absolutely positioned inside .stage, and
+       this is what makes it span the whole document instead of the viewport. */
+    .stage{position:relative;inset:auto;margin:var(--gap)}
     .frame{position:relative;inset:auto;overflow:visible}
     .deck{position:static;inset:auto;overflow:visible;padding-left:0}
     /* the rail was absolute inside .stage; with .stage in normal flow it has to
@@ -620,7 +592,6 @@
        .deco spans the whole document rather than the viewport: the corner
        brackets land at the very top and bottom of the page and the edge lines
        run its full length. Pinned to the viewport they crossed paragraphs. */
-    .stage{position:relative}
     .deco{inset:-10px}
 
     /* Work and Training were 1868px and 1238px of vertical scrolling — four
@@ -697,7 +668,6 @@
   @media (prefers-reduced-motion:reduce){
     *{animation:none!important}html{scroll-behavior:auto}
     .js-anim [data-anim]{opacity:1;transform:none}
-    .dot{opacity:.7}
   }
 
   /* ---------- contact form ---------- */
@@ -759,8 +729,6 @@
   @keyframes draw{to{stroke-dashoffset:0}}
 
   /* failure — rose, the same word it means everywhere else on this page */
-  .sent.bad{color:var(--alert)}
-  .sent.bad .sent-ring{filter:drop-shadow(0 0 14px var(--alert-dim))}
 
   .send > form{transition:opacity .25s}
   .send.sending > form{opacity:.45;pointer-events:none}
@@ -771,3 +739,20 @@
   @media (prefers-reduced-motion:reduce){
     .sr-ring,.sr-check{stroke-dashoffset:0}
   }
+
+  /* ---------- focus rings on chamfered controls ---------- */
+  /* clip-path clips everything an element paints — including its outline and
+     its box-shadow. Every control here has a chamfer, so the global
+     :focus-visible ring (drawn at outline-offset:3px, i.e. OUTSIDE the box)
+     was clipped away completely: keyboard focus moved with no visible change.
+     Draw the ring on the inside instead, where the clip cannot reach it. */
+  .btn:focus-visible,
+  .rail a:focus-visible,
+  .sld-btn:focus-visible,
+  .cert:focus-visible,
+  .field input:focus-visible,
+  .field textarea:focus-visible{
+    outline:none;
+    box-shadow:inset 0 0 0 2px var(--hud), 0 0 0 1px var(--hud-dim)}
+  .field input:focus-visible,
+  .field textarea:focus-visible{border-color:var(--hud)}
