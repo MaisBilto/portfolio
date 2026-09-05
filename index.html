@@ -329,11 +329,16 @@
               </ul>
             </div>
             <div class="send" data-anim style="--i:3">
-            <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
-              <input type="hidden" name="form-name" value="contact">
-              <p class="visually-hidden">
-                <label>Leave this field empty: <input name="bot-field" tabindex="-1" autocomplete="off"></label>
-              </p>
+            <form name="contact" method="POST" action="https://api.web3forms.com/submit">
+              <!-- Web3Forms. The access key is a PUBLIC identifier tied to the
+                   destination inbox, not a secret: it is visible in this source
+                   to anyone. It cannot read submissions or change the account. -->
+              <input type="hidden" name="access_key" value="eaec72b1-3a66-4683-9c5b-c22a6c64acd1">
+              <input type="hidden" name="subject" value="Portfolio contact form">
+              <input type="hidden" name="from_name" value="maisbilto.pages.dev">
+              <!-- honeypot: display:none so no human can reach it, and a bot that
+                   ticks it gets the submission rejected -->
+              <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" aria-hidden="true">
               <div class="field">
                 <label for="f-name">Name</label>
                 <input id="f-name" name="name" type="text" autocomplete="name" required>

@@ -1,6 +1,6 @@
 # Portfolio
 
-Private repository. Deployed to **[maisbilto.netlify.app](https://maisbilto.netlify.app)**
+Private repository. Deployed to **[maisbilto.pages.dev](https://maisbilto.pages.dev)**
 on every push to `main`.
 
 Hand-written HTML, CSS and JavaScript. No framework, no dependencies, no build step —
@@ -16,10 +16,9 @@ python -m http.server 8000
 
 Then <http://localhost:8000>.
 
-The contact form will not work locally. It posts to Netlify Forms, which only exists
-on a deployed site, so a local submit fails and the form shows its rose error state —
-that is the correct behaviour, not a bug. It is also the only way to test the failure
-path without breaking anything.
+The contact form DOES work locally — it posts to Web3Forms' API, not to this server.
+To exercise the failure path instead, block the request in devtools or go offline; the
+form should keep every character you typed and show its rose error line.
 
 ## Structure
 
@@ -113,11 +112,18 @@ runs differ by.
 
 ## Deploy
 
-Netlify, connected to this repo. Build command empty, publish directory `.`.
+**Cloudflare Pages**, connected to this repo. Framework preset `None`, build command
+empty, build output directory `/`. Every push to `main` deploys; 500 builds a month.
 
-Form detection is off by default in Netlify and has to be enabled per site — it scans
-the deployed HTML at build time, so enabling it only takes effect on the *next* build.
-Submissions land in Forms, and an email notification is configured.
+Moved off Netlify on 2026-09-05. Netlify charges **15 credits per production deploy**
+against a 300/month free allowance — 20 deploys a month — and a single day of iterating
+used all of them. Deploy previews there were free; production deploys were not.
+
+**The contact form is Web3Forms**, not Netlify Forms, which only works on Netlify.
+The form posts to `https://api.web3forms.com/submit` with an `access_key` in the body.
+That key is a public identifier, visible in the page source; it routes mail to the
+destination inbox and cannot read submissions or change the account. The honeypot field
+is `botcheck` and must stay `display:none`. Free tier is 250 submissions a month.
 
 ## Open items
 

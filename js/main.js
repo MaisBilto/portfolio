@@ -303,8 +303,9 @@
 
     form.addEventListener('submit', function (ev) {
       /* Only take the job if we can finish it. With no fetch we never call
-         preventDefault, the browser does its native POST, and the visitor lands
-         on Netlify's page — plain, but the message still arrives. */
+         preventDefault, the browser does its native POST to the form's action,
+         and the visitor lands on Web3Forms' own success page — plain, but the
+         message still arrives. */
       if (!window.fetch) return;
       ev.preventDefault();
       if (busy) return;
@@ -316,14 +317,25 @@
       note.textContent = '';
       note.classList.remove('bad');
 
-      /* Netlify accepts a urlencoded POST to any path on the site. What tells it
-         which form this is, is the form-name field in the body — not the URL. */
-      fetch('/', {
+      /* Posts to the endpoint in the form's own action attribute, so the URL
+         lives in one place — the HTML — and this code never has to know it.
+         The access_key in the body is what routes it to the right inbox. */
+      fetch(form.action, {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: new URLSearchParams(new FormData(form)).toString()
       })
-      .then(function (r) { if (!r.ok) throw new Error(r.status); done(true); })
+      .then(function (r) {
+        /* fetch only rejects on network failure — a 400 or a 429 is a
+           successful fetch carrying a bad status, so check it explicitly. */
+        if (!r.ok) throw new Error(r.status);
+        return r.json();
+      })
+      .then(function (d) {
+        /* and the API can answer 200 with success:false, so check that too */
+        if (!d || d.success !== true) throw new Error('rejected');
+        done(true);
+      })
       .catch(function () { done(false); });
     });
 
