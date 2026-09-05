@@ -63,6 +63,17 @@ properties like `color` cross the boundary. That is why `#corner` and `#rosette`
 coloured with `currentColor`, and why the confirmation ring is inline SVG rather than a
 `<use>`: its two strokes are animated separately.
 
+**An inline SVG with only a `viewBox` has no intrinsic size.** A `viewBox` defines a
+coordinate system, not dimensions, so such an element falls back to filling its container.
+That is invisible while CSS is applied and catastrophic in the moment before it is: on a
+reload the rail's home icon rendered at 1264×1264 and covered the whole viewport. Every
+inline `<svg>` here now carries explicit `width`/`height` attributes matching its `viewBox`.
+Attributes are the weakest source in the cascade, so CSS still sizes them normally.
+
+**There is a critical inline `<style>` in `<head>`.** Background, text colour, link colour
+and the off-screen skip link, duplicated from `base.css`, so the first paint is never raw
+HTML. If you change those values in `base.css`, change them there too — nothing enforces it.
+
 **A horizontal scroller is a vertical one too.** Setting `overflow-x: auto` forces
 `overflow-y` to compute to `auto` — CSS will not let one axis scroll while the other
 stays visible. So any vertical overflow inside a horizontal row turns it into a
