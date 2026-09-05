@@ -756,3 +756,10 @@
     box-shadow:inset 0 0 0 2px var(--hud), 0 0 0 1px var(--hud-dim)}
   .field input:focus-visible,
   .field textarea:focus-visible{border-color:var(--hud)}
+
+  /* ---------- first-paint gate release ----------
+     Must stay the LAST rule in the last stylesheet the page loads. index.html
+     hides body from an inline <style> until this line applies, so the browser
+     never paints a half-styled page. Same specificity as the hide rule, later
+     in the cascade, so it wins. */
+  .pre body{visibility:visible}

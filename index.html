@@ -19,7 +19,24 @@
        font-family:Inter,"Segoe UI",system-ui,sans-serif}
   a{color:#5eead4;text-decoration:none}
   .skip-link{position:absolute;top:-100%;left:1rem}
+
+  /* First-paint gate. Chrome will paint this document before main.css has
+     applied — measured at 300ms on a hard reload — which showed the page as
+     raw HTML. Hiding body here and revealing it in the LAST rule of main.css
+     makes "visible" and "styled" the same moment. */
+  .pre body{visibility:hidden}
 </style>
+<script>
+  /* The gate is added by script, so a visitor with JavaScript off is never
+     gated: no script, no class, nothing hidden. The timeout is the second
+     guard — if main.css fails to load, the page reveals itself unstyled
+     rather than staying blank forever. */
+  (function(){
+    var r = document.documentElement;
+    r.className += (r.className ? ' ' : '') + 'pre';
+    setTimeout(function(){ r.classList.remove('pre'); }, 1500);
+  })();
+</script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

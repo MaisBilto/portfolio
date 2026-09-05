@@ -74,6 +74,14 @@ Attributes are the weakest source in the cascade, so CSS still sizes them normal
 and the off-screen skip link, duplicated from `base.css`, so the first paint is never raw
 HTML. If you change those values in `base.css`, change them there too — nothing enforces it.
 
+**`.pre body{visibility:visible}` must stay the LAST rule in `main.css`.** Chrome paints
+this document before `main.css` applies — measured at 300ms on a hard reload — which showed
+the page as an unstyled dump. So an inline `<style>` hides `body` and that final rule
+reveals it, making "visible" and "styled" the same moment. Two guards keep a failed
+stylesheet from leaving a blank page: the `pre` class is added by an inline script, so a
+visitor with JavaScript off is never gated at all, and a 1500ms timeout removes the class
+regardless. If you add a stylesheet after `main.css`, the release rule has to move into it.
+
 **A horizontal scroller is a vertical one too.** Setting `overflow-x: auto` forces
 `overflow-y` to compute to `auto` — CSS will not let one axis scroll while the other
 stays visible. So any vertical overflow inside a horizontal row turns it into a
