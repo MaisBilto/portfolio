@@ -1,4 +1,4 @@
-/* main.js — scroll progress, section observer, rail, certificate gallery. */
+/* main.js — scroll progress, section observer, rail, image gallery. */
 (function () {
   var root = document.documentElement,
       deck = document.getElementById('deck'),
@@ -245,8 +245,8 @@
     document.getElementById('lb-prev').hidden = !many;
     document.getElementById('lb-next').hidden = !many;
   }
-  function openGallery(strip, i) {
-    gallery = Array.prototype.slice.call(strip.querySelectorAll('a.cert'));
+  function openGallery(root, i, sel) {
+    gallery = Array.prototype.slice.call(root.querySelectorAll(sel || 'a.cert'));
     show(i);
     if (!lb.open) lb.showModal();
   }
@@ -278,6 +278,17 @@
   /* The +N chips are appended above, AFTER the sliders were built, so redraw
      once now to put any newly created control in or out of the tab order. */
   redraws.forEach(function (f) { f(); });
+
+  /* project screenshots share the same dialog. The gallery is the whole
+     document rather than one strip, so prev/next walks every screenshot on
+     the page instead of trapping you inside a single card. */
+  var shots = document.querySelectorAll('a.shot-link');
+  shots.forEach(function (a, i) {
+    a.addEventListener('click', function (ev) {
+      ev.preventDefault();
+      openGallery(document, i, 'a.shot-link');
+    });
+  });
 
   document.getElementById('lb-prev').addEventListener('click', function(){ show(at - 1); });
   document.getElementById('lb-next').addEventListener('click', function(){ show(at + 1); });
