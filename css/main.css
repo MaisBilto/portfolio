@@ -778,12 +778,13 @@
      Every number here is countable from a certificate. The counts live in the
      markup as --cw / --sn / --v and the arithmetic lives here, so editing the
      data never means editing a length. */
-  .record{margin-top:var(--s4)}
-  /* Three columns, not stacked rows. Stacking cost about 200px and pushed
-     "What I build" out of the viewport — every other section fits without
-     internal scrolling and About has to as well. */
-  .record-body{display:grid;grid-template-columns:minmax(13rem,.8fr) minmax(10rem,.8fr) 1.5fr;
-    gap:var(--s4) var(--s5);padding:var(--s4) var(--s5);align-items:start}
+  .record{margin-top:0}
+  /* One column: the panel is a rail, not a band. Four rows — tiles,
+     trajectory, hours, note — and only the trajectory takes 1fr, so any height
+     the panel gains goes into the chart rather than spreading between blocks. */
+  .record-body{display:grid;flex:1;grid-template-columns:1fr;
+    grid-template-rows:auto 1fr auto auto;gap:var(--s3);
+    padding:var(--s3) var(--s3) var(--s4);align-items:start}
   .charts{display:contents}
 
   /* The 1px gap already shows --line as the dividers between tiles; 1px of
@@ -793,10 +794,10 @@
      would paint over it. */
   .tiles{list-style:none;margin:0;padding:1px;display:grid;gap:1px;
     grid-template-columns:1fr 1fr;background:var(--line)}
-  .tiles li{background:var(--panel2);padding:var(--s3) var(--s3) calc(var(--s3) * 1.1);
+  .tiles li{background:var(--panel2);padding:calc(var(--s3) * .8);
     display:flex;flex-direction:column;gap:.15rem}
   .tiles b{font-family:"Space Grotesk",system-ui,sans-serif;font-weight:700;
-    font-size:1.25rem;line-height:1;color:var(--hud);
+    font-size:1.15rem;line-height:1;color:var(--hud);
     text-shadow:0 0 14px var(--hud-dim)}
   .tiles span{font-family:"JetBrains Mono",monospace;font-size:.6rem;
     letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
@@ -823,7 +824,7 @@
   /* trajectory — stacked columns, one per year */
   .trail{list-style:none;margin:0;padding:0;display:grid;
     grid-template-columns:repeat(5,1fr);gap:var(--s3);align-items:end;
-    height:5.4rem}
+    height:auto;flex:1;min-height:5.4rem}
   .trail li{display:flex;flex-direction:column;justify-content:flex-end;
     height:100%;gap:.4rem}
   .trail .col{display:flex;flex-direction:column;justify-content:flex-end;
@@ -838,11 +839,13 @@
 
   /* hours — horizontal bars */
   .hrs{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;
-    gap:.45rem}
-  .hrs li{display:grid;grid-template-columns:9.5rem 1fr 2.6rem;
+    gap:.5rem}
+  .hrs li{display:grid;grid-template-columns:7.5rem 1fr 2.4rem;
     align-items:center;gap:var(--s3)}
-  .hrs .k{font-size:.72rem;color:var(--mut);line-height:1.3}
-  .hrs .bar{height:10px;background:var(--panel2);
+  .hrs .k{font-size:.68rem;color:var(--mut);line-height:1.3}
+  /* --panel2 is the plate colour under the bars now, so the track drops a
+     step to stay visible against its own container. */
+  .hrs .bar{height:9px;background:var(--panel);
     box-shadow:inset 0 0 0 1px var(--line)}
   .hrs .bar i{display:block;height:100%;width:calc(var(--v) / var(--max) * 100%);
     background:var(--hud);opacity:.75;box-shadow:0 0 10px var(--hud-dim)}
@@ -850,15 +853,9 @@
     color:var(--hud);text-align:right}
   .hrs .n em{font-style:normal;color:var(--faint);font-size:.62rem}
 
-  .record-note{grid-column:1 / -1;margin:0;font-size:.66rem;line-height:1.55;color:var(--faint)}
+  .record-note{grid-column:1 / -1;margin:0;font-size:.6rem;line-height:1.5;color:var(--faint)}
   .record-note em{font-style:italic;color:var(--mut)}
   .record-note a{white-space:nowrap}
-
-  @media (max-width:60rem), (max-height:30rem){
-    .tiles{grid-template-columns:repeat(2,1fr)}
-    .record-body{grid-template-columns:1fr;gap:var(--s5)}
-    .hrs li{grid-template-columns:8rem 1fr 2.4rem}
-  }
 
   /* ---------- screenshots ----------
      A .shot-body holding an image drops its padding and centring: the capture
@@ -885,7 +882,12 @@
      shows through the gutter as stripes, so a slot holding one gets a flat
      panel instead. The TBD and placeholder cards keep the texture. */
   .hc-thumb.has-img{background:var(--panel2)}
-  .hc-thumb .shot-link{position:absolute;inset:9px;width:auto;height:auto;
+  .hc-thumb .shot-link{position:absolute;inset:9px;width:auto;height:auto}
+  /* Opt-in, not automatic. inset:9px already clears the card's own clip-path
+     (its diagonal runs through x+y=18 from .hc; the corner lands at 20), so the
+     chamfer is purely a look — it suits a capture whose own edges are dark and
+     eats into one whose edges are light. Add `chamfer` per thumbnail. */
+  .hc-thumb.chamfer .shot-link{
     clip-path:polygon(12px 0,calc(100% - 22px) 0,100% 18px,100% 100%,0 100%,0 12px)}
   .hc-thumb .shot-link img{height:100%;object-fit:cover}
   .shot-link:hover{filter:saturate(1.1) brightness(1.06)}
@@ -966,14 +968,7 @@
   .about-main > .about-grid{margin-top:var(--s3)}
   .about-main > .prose{margin-bottom:var(--s5)}
 
-  .record{margin-top:0}
   .record > .fill{display:flex;flex-direction:column}
-  /* four rows: tiles, trajectory, hours, note. Only the trajectory takes 1fr,
-     so any height the panel gains goes into the columns rather than spreading
-     as dead space between blocks. */
-  .record-body{flex:1;grid-template-columns:1fr;
-    grid-template-rows:auto 1fr auto auto;gap:var(--s3);
-    padding:var(--s3) var(--s3) var(--s4)}
   .record-body > section:first-of-type{display:flex;flex-direction:column}
   /* Each chart sits on its own plate. Plain rectangles, not chamfered: the
      chamfer is drawn with clip-path, and clip-path cuts an inset ring off at
@@ -981,18 +976,6 @@
      the same reason, so this stays consistent. */
   .ch{background:var(--panel2);box-shadow:inset 0 0 0 1px var(--line);
     padding:calc(var(--s3) * .8) var(--s3) var(--s3)}
-  /* the bar track was --panel2, which is now the plate colour underneath it;
-     drop it a step so the track still reads against its own container */
-  .hrs .bar{background:var(--panel);box-shadow:inset 0 0 0 1px var(--line)}
-  .tiles{grid-template-columns:1fr 1fr}
-  .tiles li{padding:calc(var(--s3) * .8)}
-  .tiles b{font-size:1.15rem}
-  .trail{height:auto;flex:1;min-height:5.4rem}
-  .hrs{gap:.5rem}
-  .hrs li{grid-template-columns:7.5rem 1fr 2.4rem}
-  .hrs .k{font-size:.68rem}
-  .hrs .bar{height:9px}
-  .record-note{font-size:.6rem;line-height:1.5}
 
   @media (max-width:60rem), (max-height:30rem){
     /* Stacked, the panel would fall below the capability cards because it is a
