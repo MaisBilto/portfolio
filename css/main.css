@@ -870,6 +870,24 @@
   .shot-link{display:block;line-height:0;cursor:zoom-in;
     transition:filter .25s, opacity .25s}
   .shot-link img{width:100%;height:auto;display:block}
+  /* In a card thumbnail the slot has a fixed aspect ratio, so the image fills
+     it and crops rather than setting its own height. The .scan sweep sits at
+     z-index 1 and has to stay above the picture. */
+  /* absolute fill rather than a grid item: the slot's height comes from
+     aspect-ratio, which competes with min-height, and a percentage height on a
+     grid item resolved inconsistently between the two breakpoints. .hc-thumb is
+     position:relative, so inset:0 is exact at any ratio. */
+  /* Inset past .edge2, which sits at 7px with a 1px ring: at inset:0 the image
+     ran under that line and its square corner was sliced by the card's own
+     chamfer. The clip-path repeats the card's top-two corners one step smaller
+     so the picture follows the frame instead of fighting it. */
+  /* The 45-degree hatch is the texture for an EMPTY slot. Behind a picture it
+     shows through the gutter as stripes, so a slot holding one gets a flat
+     panel instead. The TBD and placeholder cards keep the texture. */
+  .hc-thumb.has-img{background:var(--panel2)}
+  .hc-thumb .shot-link{position:absolute;inset:9px;width:auto;height:auto;
+    clip-path:polygon(12px 0,calc(100% - 22px) 0,100% 18px,100% 100%,0 100%,0 12px)}
+  .hc-thumb .shot-link img{height:100%;object-fit:cover}
   .shot-link:hover{filter:saturate(1.1) brightness(1.06)}
   .shot-link:focus-visible{outline:none;box-shadow:inset 0 0 0 2px var(--hud)}
   @media (prefers-reduced-motion:reduce){ .shot-link{transition:none} }
