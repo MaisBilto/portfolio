@@ -7,4 +7,4 @@ desktop.ini
 .vscode/
 
 #Dependencies, if we ever add build tooling
-node_modules/
+node_modules/_parked-shot-figure.html

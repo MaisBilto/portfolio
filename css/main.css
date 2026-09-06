@@ -76,7 +76,11 @@
     scroll-snap-type:y mandatory;padding-left:var(--rail)}
   .card{position:relative;height:100%;scroll-snap-align:start;scroll-snap-stop:always;
     display:flex;align-items:center;padding:var(--s7) var(--s7) var(--s7) var(--s5);overflow:hidden}
-  .card-inner{width:100%;max-width:min(64rem,64vw);margin-inline:auto;max-height:100%;overflow-y:auto}
+  /* rem is capped at 22px by the html clamp, so on a large monitor the rem
+     term binds and the vw term never does. Both have to move together. */
+  .card-inner{width:100%;max-width:min(74rem,76vw);margin-inline:auto;max-height:100%;overflow-y:auto}
+
+
   .card-tag{position:absolute;top:26px;right:58px;z-index:3;
     font-family:"JetBrains Mono",monospace;font-size:.64rem;letter-spacing:.2em;color:var(--faint)}
 
@@ -114,6 +118,10 @@
   .btn.ghost:hover{background:rgba(94,234,212,.10);color:var(--hud);
     box-shadow:inset 0 0 0 1px var(--hud);text-decoration:none}
   .split{display:grid;grid-template-columns:1fr .92fr;gap:var(--s7);align-items:center}
+  /* the hero balances two blocks of similar height, so centring reads well
+     there. Contact pairs a two-line paragraph with a tall form, and centring
+     left the paragraph floating in the middle of it. */
+  #contact .split{align-items:start}
   .panel{--n:14px;padding:1px;background:var(--hud-dim)}
   .panel,.panel > .fill{clip-path:polygon(var(--n) 0,100% 0,100% calc(100% - var(--n)),calc(100% - var(--n)) 100%,0 100%,0 var(--n))}
   .panel > .fill{background:var(--panel2)}
@@ -148,9 +156,9 @@
     clip-path:polygon(6px 0,100% 0,100% calc(100% - 6px),calc(100% - 6px) 100%,0 100%,0 6px)}
   .more{color:var(--hud);text-decoration:none;transition:color .18s;font-family:"JetBrains Mono",monospace;
     font-size:.72rem;letter-spacing:.1em;text-transform:uppercase}
-  .shot{--n:14px;padding:1px;background:var(--hud-dim);margin:0}
-  .shot,.shot > .fill{clip-path:polygon(var(--n) 0,100% 0,100% calc(100% - var(--n)),calc(100% - var(--n)) 100%,0 100%,0 var(--n))}
-  .shot > .fill{background:var(--panel)}
+  .shot,.record{--n:14px;padding:1px;background:var(--hud-dim);margin:0}
+  .shot,.shot > .fill,.record,.record > .fill{clip-path:polygon(var(--n) 0,100% 0,100% calc(100% - var(--n)),calc(100% - var(--n)) 100%,0 100%,0 var(--n))}
+  .shot > .fill,.record > .fill{background:var(--panel)}
   .shot-bar{display:flex;align-items:center;gap:7px;padding:.5rem var(--s4);
     border-bottom:1px solid var(--line);font-family:"JetBrains Mono",monospace;
     font-size:.62rem;letter-spacing:.12em;color:var(--faint)}
@@ -222,7 +230,7 @@
   .grid3{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--s5);align-items:stretch}
 
   /* work fits its screen: nothing stretches, the thumb has a real aspect ratio */
-  #work .card-inner{max-width:min(96rem,84vw);overflow:visible}
+  #work .card-inner{max-width:min(104rem,88vw);overflow:visible}
   #work .hc-thumb{flex:none;aspect-ratio:16/9;min-height:0}
   #work .hc-body{flex:none}
   @media (max-height:820px){ #work .hc-thumb{aspect-ratio:16/9} #work .hc p{display:none} }
@@ -266,11 +274,18 @@
   .hc-wrap:not([data-status="active"]):hover .hc.v4::after{bottom:14%}
 
   /* ---------------- training tracks ---------------- */
-  #training .card-inner{max-width:min(76rem,72vw);overflow:visible}
+  #training .card-inner{max-width:min(86rem,80vw);overflow:visible}
   /* ---------- about: capabilities + skills, side by side ---------- */
-  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--s5);
-    margin-top:var(--s4);align-items:start}
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--s4);
+    margin-top:var(--s3);align-items:start}
+  /* About carries the learning record above these, so the capability cards
+     run tighter here than in the hero. */
   #about .caps{grid-template-columns:repeat(2,minmax(0,1fr))}
+  #about .caps li > .fill{padding:var(--s3) var(--s4)}
+  #about .caps p{font-size:.75rem;line-height:1.45}
+  /* the panel wants the full width; running prose does not — past roughly 95
+     characters a line is hard to track back from. */
+  #about .prose{gap:var(--s3);max-width:88ch}
   .skills{display:flex;flex-direction:column;gap:.55rem;margin:0;padding:0;list-style:none}
   .skills > li{display:grid;grid-template-columns:5.4rem 1fr;gap:.6rem;align-items:baseline}
   .skills .k{font-family:"JetBrains Mono",monospace;font-size:.58rem;letter-spacing:.16em;
@@ -637,6 +652,8 @@
     #work .card-inner,
     #training .card-inner,
     #about .card-inner{max-width:100%;max-height:none;overflow:visible}
+    #work .card-inner > h2, #work .card-inner > .sub,
+    #training .card-inner > h2, #training .card-inner > .sub{max-width:none}
     .card-tag{position:static;display:block;margin-bottom:var(--s3)}
 
     /* one column everywhere */
@@ -756,6 +773,203 @@
     box-shadow:inset 0 0 0 2px var(--hud), 0 0 0 1px var(--hud-dim)}
   .field input:focus-visible,
   .field textarea:focus-visible{border-color:var(--hud)}
+
+  /* ---------- learning record panel ----------
+     Every number here is countable from a certificate. The counts live in the
+     markup as --cw / --sn / --v and the arithmetic lives here, so editing the
+     data never means editing a length. */
+  .record{margin-top:var(--s4)}
+  /* Three columns, not stacked rows. Stacking cost about 200px and pushed
+     "What I build" out of the viewport — every other section fits without
+     internal scrolling and About has to as well. */
+  .record-body{display:grid;grid-template-columns:minmax(13rem,.8fr) minmax(10rem,.8fr) 1.5fr;
+    gap:var(--s4) var(--s5);padding:var(--s4) var(--s5);align-items:start}
+  .charts{display:contents}
+
+  .tiles{list-style:none;margin:0;padding:0;display:grid;gap:1px;
+    grid-template-columns:1fr 1fr;background:var(--line)}
+  .tiles li{background:var(--panel2);padding:var(--s3) var(--s3) calc(var(--s3) * 1.1);
+    display:flex;flex-direction:column;gap:.15rem}
+  .tiles b{font-family:"Space Grotesk",system-ui,sans-serif;font-weight:700;
+    font-size:1.25rem;line-height:1;color:var(--hud);
+    text-shadow:0 0 14px var(--hud-dim)}
+  .tiles span{font-family:"JetBrains Mono",monospace;font-size:.6rem;
+    letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+
+  .ch-t{margin:0 0 var(--s4);font-family:"JetBrains Mono",monospace;
+    font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--faint)}
+  /* The key sits under the columns, not beside the heading: at 1366px the
+     heading row is only about 10rem wide and the key ran into the next
+     column's title. */
+  .key{display:flex;align-items:center;gap:.35rem;margin:.55rem 0 0;
+    font-family:"JetBrains Mono",monospace;font-size:.55rem;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--faint)}
+  .key i{width:8px;height:8px;flex:none;display:inline-block}
+  .cw{background:var(--faint);opacity:.55}
+  .sn{background:var(--hud);box-shadow:0 0 8px var(--hud-dim)}
+  .key .sn{margin-left:.5rem}
+
+  /* trajectory — stacked columns, one per year */
+  .trail{list-style:none;margin:0;padding:0;display:grid;
+    grid-template-columns:repeat(5,1fr);gap:var(--s3);align-items:end;
+    height:5.4rem}
+  .trail li{display:flex;flex-direction:column;justify-content:flex-end;
+    height:100%;gap:.4rem}
+  .trail .col{display:flex;flex-direction:column;justify-content:flex-end;
+    flex:1;gap:2px}
+  /* height as a share of the tallest stack. calc() on a unitless custom
+     property works because both sides are numbers before the % is applied. */
+  .trail i{display:block;width:100%}
+  .trail .cw{height:calc(var(--cw) / var(--max) * 100%)}
+  .trail .sn{height:calc(var(--sn) / var(--max) * 100%)}
+  .trail .yr{font-family:"JetBrains Mono",monospace;font-size:.58rem;
+    letter-spacing:.08em;color:var(--faint);text-align:center}
+
+  /* hours — horizontal bars */
+  .hrs{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;
+    gap:.45rem}
+  .hrs li{display:grid;grid-template-columns:9.5rem 1fr 2.6rem;
+    align-items:center;gap:var(--s3)}
+  .hrs .k{font-size:.72rem;color:var(--mut);line-height:1.3}
+  .hrs .bar{height:10px;background:var(--panel2);
+    box-shadow:inset 0 0 0 1px var(--line)}
+  .hrs .bar i{display:block;height:100%;width:calc(var(--v) / var(--max) * 100%);
+    background:var(--hud);opacity:.75;box-shadow:0 0 10px var(--hud-dim)}
+  .hrs .n{font-family:"JetBrains Mono",monospace;font-size:.7rem;
+    color:var(--hud);text-align:right}
+  .hrs .n em{font-style:normal;color:var(--faint);font-size:.62rem}
+
+  .record-note{grid-column:1 / -1;margin:0;font-size:.66rem;line-height:1.55;color:var(--faint)}
+  .record-note em{font-style:italic;color:var(--mut)}
+  .record-note a{white-space:nowrap}
+
+  @media (max-width:60rem), (max-height:30rem){
+    .tiles{grid-template-columns:repeat(2,1fr)}
+    .record-body{grid-template-columns:1fr;gap:var(--s5)}
+    .hrs li{grid-template-columns:8rem 1fr 2.4rem}
+  }
+
+  /* ---------- screenshots ----------
+     A .shot-body holding an image drops its padding and centring: the capture
+     should meet the frame, not float inside it. The parent .shot has a
+     clip-path, which clips a descendant's outline as well as its paint, so
+     the focus ring here is drawn on the inside like every other chamfered
+     control on the page. */
+  .shot-body.img{padding:0;min-height:0;display:block}
+  .shot-link{display:block;line-height:0;cursor:zoom-in;
+    transition:filter .25s, opacity .25s}
+  .shot-link img{width:100%;height:auto;display:block}
+  .shot-link:hover{filter:saturate(1.1) brightness(1.06)}
+  .shot-link:focus-visible{outline:none;box-shadow:inset 0 0 0 2px var(--hud)}
+  @media (prefers-reduced-motion:reduce){ .shot-link{transition:none} }
+
+  /* ---------- section headings ----------
+     Two things at once, and they have to be solved together.
+
+     VERTICAL: .card centred its whole content, so About's heading sat at 110px
+     and Work's at 254px. .card-inner is now a flex column with auto margins
+     above the content and below the last child; the leftover space splits
+     evenly, pinning the heading to the top. In a full section the leftover is
+     zero and the margins collapse, so a dense section is unaffected.
+
+     HORIZONTAL: the heading hangs into the left gutter. It cannot simply be
+     pulled left — .card-inner is a scroll container (max-height + overflow-y),
+     overflow-y:auto forces overflow-x to auto, and anything left of the content
+     box is clipped rather than scrolled to. So the container is widened by
+     2 x --shift and given that much padding on both sides: the body column
+     lands exactly where it did, and the heading has real room inside the box to
+     sit --shift further left.
+
+     Every heading ends up at the same x, whatever the section's own width:
+     the containers are all centred, so the centring term cancels. */
+  @media (min-width:60.0625rem) and (min-height:30.0625rem){
+    .card{align-items:stretch}
+    #home{align-items:center}                  /* the hero stays fully centred */
+
+    .card-inner{
+      --col:min(74rem,76vw);
+      /* derived from the space that is actually there, so it grows on a wide
+         monitor and reaches zero before it can reach the rail on a small one */
+      --shift:clamp(0rem, (100vw - var(--col) - var(--rail) - 5rem) / 5, 9rem);
+      display:flex;flex-direction:column;
+      max-width:calc(var(--col) + 2 * var(--shift));
+      padding-inline:var(--shift)}
+    #work .card-inner{max-width:calc(min(104rem,88vw) + 2 * var(--shift))}
+    #training .card-inner{max-width:calc(min(86rem,80vw) + 2 * var(--shift))}
+    #about .card-inner{max-width:calc(var(--col) + 2 * var(--shift))}
+
+    /* About is excluded: its subtitle now lives in the left column, so an auto
+       margin here would push the subtitle away from the heading. Its slack all
+       goes to the bottom instead, via the :last-child rule below. */
+    .card-inner > h2 + .sub + *{margin-top:auto}
+    .card-inner > :last-child{margin-bottom:auto}
+
+    /* 100% here is .card-inner's content box, which differs per section; the
+       centring term absorbs that difference so every heading lands together. */
+    .card-inner > h2,
+    .card-inner > .sub{width:100%;max-width:var(--col);margin-right:auto;
+      margin-left:calc((100% - var(--col)) / 2 - var(--shift))}
+    #about .about-main > .sub{margin-left:calc(var(--shift) * -1)}
+  }
+
+  /* ---------- About: learning record as a right-hand rail ----------
+     The panel is a column, not a band. Its grid row starts on the subtitle's
+     line, which is why the subtitle sits inside .about-main rather than beside
+     the heading — grid alignment does the work and there is no magic offset to
+     drift out of date when the type scale changes.
+
+     The hours row stays on ONE line here. A 380px column minus a 7.5rem label
+     and a 2.4rem value still leaves about 200px of bar, which is enough to
+     compare 82 against 18; stacking the bar under its label cost 70px of height
+     the section did not have. */
+  /* stretch, not start: the panel now runs to the same depth as the left
+     column instead of stopping short of it. The extra height goes into the
+     trajectory chart rather than into padding — see the 1fr row below. */
+  .about-split{display:grid;grid-template-columns:1fr 22rem;gap:var(--s6);
+    align-items:stretch}
+  .about-main{display:flex;flex-direction:column}
+  /* The two blocks stack rather than sitting side by side. Beside each other
+     they left the left column about 140px shorter than the panel at 1440 and
+     230px shorter at 2560 — a visible hole under the cards. Stacked, the column
+     runs to the panel's depth and the cards get the full width, which suits a
+     two-line description better than a half-width box did. */
+  #about .about-grid{grid-template-columns:1fr}
+  .about-main > .about-grid{margin-top:var(--s3)}
+  .about-main > .prose{margin-bottom:var(--s5)}
+
+  .record{margin-top:0}
+  .record > .fill{display:flex;flex-direction:column}
+  /* four rows: tiles, trajectory, hours, note. Only the trajectory takes 1fr,
+     so any height the panel gains goes into the columns rather than spreading
+     as dead space between blocks. */
+  .record-body{flex:1;grid-template-columns:1fr;
+    grid-template-rows:auto 1fr auto auto;gap:var(--s4);
+    padding:var(--s4)}
+  .record-body > section:first-of-type{display:flex;flex-direction:column}
+  .tiles{grid-template-columns:1fr 1fr}
+  .tiles li{padding:calc(var(--s3) * .8)}
+  .tiles b{font-size:1.15rem}
+  .trail{height:auto;flex:1;min-height:6rem}
+  .hrs{gap:.5rem}
+  .hrs li{grid-template-columns:7.5rem 1fr 2.4rem}
+  .hrs .k{font-size:.68rem}
+  .hrs .bar{height:9px}
+  .record-note{font-size:.6rem;line-height:1.5}
+
+  @media (max-width:60rem), (max-height:30rem){
+    /* Stacked, the panel would fall below the capability cards because it is a
+       sibling of .about-main rather than inside it. display:contents dissolves
+       that wrapper so all four blocks order freely, and the panel keeps its
+       place right after the paragraph. */
+    .about-split{display:flex;flex-direction:column;gap:var(--s5)}
+    .about-main{display:contents}
+    .about-main > .sub{order:1}
+    .about-main > .prose{order:2;margin-bottom:0}
+    .record{order:3}
+    .about-main > .about-grid{order:4;margin-top:0}
+    .hrs li{grid-template-columns:8rem 1fr 2.4rem}
+  }
 
   /* ---------- first-paint gate release ----------
      Must stay the LAST rule in the last stylesheet the page loads. index.html
