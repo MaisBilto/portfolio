@@ -786,7 +786,12 @@
     gap:var(--s4) var(--s5);padding:var(--s4) var(--s5);align-items:start}
   .charts{display:contents}
 
-  .tiles{list-style:none;margin:0;padding:0;display:grid;gap:1px;
+  /* The 1px gap already shows --line as the dividers between tiles; 1px of
+     padding lets the same background out to the edges, so the block gets the
+     hairline ring the chart plates have without a border changing its metrics.
+     An inset box-shadow would not work here — the tiles fill to the edge and
+     would paint over it. */
+  .tiles{list-style:none;margin:0;padding:1px;display:grid;gap:1px;
     grid-template-columns:1fr 1fr;background:var(--line)}
   .tiles li{background:var(--panel2);padding:var(--s3) var(--s3) calc(var(--s3) * 1.1);
     display:flex;flex-direction:column;gap:.15rem}
@@ -802,13 +807,18 @@
   /* The key sits under the columns, not beside the heading: at 1366px the
      heading row is only about 10rem wide and the key ran into the next
      column's title. */
-  .key{display:flex;align-items:center;gap:.35rem;margin:.55rem 0 0;
+  .key{display:flex;align-items:center;gap:.5rem;margin:.6rem 0 0;
     font-family:"JetBrains Mono",monospace;font-size:.55rem;letter-spacing:.1em;
     text-transform:uppercase;color:var(--faint)}
-  .key i{width:8px;height:8px;flex:none;display:inline-block}
+  /* Round the swatch HERE, not on .cw/.sn: those two classes also paint the
+     trajectory columns, and a border-radius there would round the bars. */
+  .key i{width:8.5px;height:8.5px;border-radius:50%;flex:none;display:inline-block}
   .cw{background:var(--faint);opacity:.55}
   .sn{background:var(--hud);box-shadow:0 0 8px var(--hud-dim)}
-  .key .sn{margin-left:.5rem}
+  /* gap handles swatch-to-label; this adds the wider break BETWEEN the pairs,
+     so the two entries read as two groups rather than four items in a row. */
+  .key .sn{margin-left:1.1rem; margin-right: 0.2rem}
+  .key .cw{margin-right: 0.2rem}
 
   /* trajectory — stacked columns, one per year */
   .trail{list-style:none;margin:0;padding:0;display:grid;
@@ -944,13 +954,22 @@
      so any height the panel gains goes into the columns rather than spreading
      as dead space between blocks. */
   .record-body{flex:1;grid-template-columns:1fr;
-    grid-template-rows:auto 1fr auto auto;gap:var(--s4);
-    padding:var(--s4)}
+    grid-template-rows:auto 1fr auto auto;gap:var(--s3);
+    padding:var(--s3) var(--s3) var(--s4)}
   .record-body > section:first-of-type{display:flex;flex-direction:column}
+  /* Each chart sits on its own plate. Plain rectangles, not chamfered: the
+     chamfer is drawn with clip-path, and clip-path cuts an inset ring off at
+     the diagonal, leaving an open corner. .tiles li is a plain rectangle for
+     the same reason, so this stays consistent. */
+  .ch{background:var(--panel2);box-shadow:inset 0 0 0 1px var(--line);
+    padding:calc(var(--s3) * .8) var(--s3) var(--s3)}
+  /* the bar track was --panel2, which is now the plate colour underneath it;
+     drop it a step so the track still reads against its own container */
+  .hrs .bar{background:var(--panel);box-shadow:inset 0 0 0 1px var(--line)}
   .tiles{grid-template-columns:1fr 1fr}
   .tiles li{padding:calc(var(--s3) * .8)}
   .tiles b{font-size:1.15rem}
-  .trail{height:auto;flex:1;min-height:6rem}
+  .trail{height:auto;flex:1;min-height:5.4rem}
   .hrs{gap:.5rem}
   .hrs li{grid-template-columns:7.5rem 1fr 2.4rem}
   .hrs .k{font-size:.68rem}
