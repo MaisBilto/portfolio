@@ -371,7 +371,7 @@
 
       form.reset();
       showRing();
-      cap.textContent = 'Message sent — I will reply to that address';
+      cap.textContent = 'Message sent — Mais will reply to that address';
     }
 
     function showRing() {
