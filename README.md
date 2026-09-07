@@ -1,6 +1,6 @@
 # Portfolio
 
-Private repository. Deployed to **[maisbilto.pages.dev](https://maisbilto.pages.dev)**
+Private repository. Deployed to **[maisbilto.me](https://www.maisbilto.me/)**
 on every push to `main`.
 
 Hand-written HTML, CSS and JavaScript. No framework, no dependencies, no build step —
@@ -51,7 +51,7 @@ that re-declares one of those properties directly — a duplicate selector furth
 the file silently wins, and it is invisible in both the diff and the browser.
 
 **Colour means something.** Rose is in progress, teal is complete, slate is scheduled.
-Hover brightens a card's *own* colour via `--st-hi`; it never borrows another status's.
+Hover brightens a card's _own_ colour via `--st-hi`; it never borrows another status's.
 
 **`[hidden]` loses.** The UA rule `[hidden]{display:none}` is the weakest in the cascade,
 so any element you hide with `.hidden = true` also needs an explicit
@@ -124,7 +124,7 @@ on them. Any new certificate from that source needs the same treatment before it
 stylesheet.
 
 **Verify layout changes by rendering, not by reasoning.** Check more than one viewport
-*width*, not just device pixel ratios — a 1px border lands differently on a fractional
+_width_, not just device pixel ratios — a 1px border lands differently on a fractional
 layout position, which is why the form fields use a 2px border. And when comparing
 before/after screenshots, render the same version twice first to see what two identical
 runs differ by.
