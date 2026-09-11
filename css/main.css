@@ -935,12 +935,25 @@
       /* derived from the space that is actually there, so it grows on a wide
          monitor and reaches zero before it can reach the rail on a small one */
       --shift:clamp(0rem, (100vw - var(--col) - var(--rail) - 5rem) / 5, 9rem);
+      /* Slack, so the hung heading never lands exactly ON the clip edge.
+         Without it the padding was --shift and the hang was --shift, which
+         cancel: in About and Contact --col IS the section's own width, so the
+         centring term below is zero and the heading came to rest at precisely
+         the padding-box edge — nought pixels of room. Chromium tolerates
+         sitting on the boundary; Firefox clips, and ate the A of About, the C
+         of Contact and the O of OPEN TO ROLES. Work and Training were spared
+         only because their wider max-width left the centring term positive
+         (measured: 177px and 132px of accidental slack).
+         The padding and the max-widths grow together, so the body column and
+         every heading stay exactly where they were on screen. */
+      --edge:12px;
+      --pad:calc(var(--shift) + var(--edge));
       display:flex;flex-direction:column;
-      max-width:calc(var(--col) + 2 * var(--shift));
-      padding-inline:var(--shift)}
-    #work .card-inner{max-width:calc(min(104rem,88vw) + 2 * var(--shift))}
-    #training .card-inner{max-width:calc(min(86rem,80vw) + 2 * var(--shift))}
-    #about .card-inner{max-width:calc(var(--col) + 2 * var(--shift))}
+      max-width:calc(var(--col) + 2 * var(--pad));
+      padding-inline:var(--pad)}
+    #work .card-inner{max-width:calc(min(104rem,88vw) + 2 * var(--pad))}
+    #training .card-inner{max-width:calc(min(86rem,80vw) + 2 * var(--pad))}
+    #about .card-inner{max-width:calc(var(--col) + 2 * var(--pad))}
 
     /* About is excluded: its subtitle now lives in the left column, so an auto
        margin here would push the subtitle away from the heading. Its slack all
