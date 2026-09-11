@@ -781,7 +781,13 @@
   /* One column: the panel is a rail, not a band. Four rows — tiles,
      trajectory, hours, note — and only the trajectory takes 1fr, so any height
      the panel gains goes into the chart rather than spreading between blocks. */
-  .record-body{display:grid;flex:1;grid-template-columns:1fr;
+  /* No flex:1 here. The .fill above already stretches and paints --panel, so
+     the body does not have to fill the figure to keep the frame covered — and
+     when it did, the 1fr row swallowed every spare pixel. At a laptop height
+     that is a few pixels; at 2100px of viewport it was a 1500px hole with the
+     hours plate pushed off the bottom. Let the rows size to their content and
+     let the slack collect below them as plain panel. */
+  .record-body{display:grid;grid-template-columns:1fr;
     grid-template-rows:auto 1fr auto auto;gap:var(--s3);
     padding:var(--s3) var(--s3) var(--s4);align-items:start}
   .charts{display:contents}
@@ -967,8 +973,15 @@
   .about-main > .about-grid{margin-top:var(--s3)}
   .about-main > .prose{margin-bottom:var(--s5)}
 
-  .record > .fill{display:flex;flex-direction:column}
-  .record-body > section:first-of-type{display:flex;flex-direction:column}
+  /* .record is a figure, so .fill sizes to its content. The figure itself is a
+     grid item under align-items:stretch and takes the row's full height, and
+     the figure's background IS the 1px hairline frame — so every pixel .fill
+     does not cover paints as a slab of --hud-dim. On a laptop the row is about
+     as tall as the content and nothing shows; at 2100px of viewport height it
+     was 1280px of bare teal. Make the fill stretch instead of giving it a
+     height: a height is a guess that is wrong at every other viewport. */
+  .record{display:flex;flex-direction:column}
+  .record > .fill{display:flex;flex-direction:column;flex:1}
   /* Each chart sits on its own plate. Plain rectangles, not chamfered: the
      chamfer is drawn with clip-path, and clip-path cuts an inset ring off at
      the diagonal, leaving an open corner. .tiles li is a plain rectangle for
