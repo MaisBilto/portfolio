@@ -962,10 +962,21 @@
     .card-inner > :last-child{margin-bottom:auto}
 
     /* 100% here is .card-inner's content box, which differs per section; the
-       centring term absorbs that difference so every heading lands together. */
+       centring term absorbs that difference so every heading lands together.
+
+       The max() is a floor on how far left the heading may hang: never more
+       than --shift, which is exactly the padding set aside for it, leaving
+       --edge of clearance. The centring term assumes .card-inner actually
+       reaches its max-width. When the viewport is tall and narrow — desktop
+       site on a phone — it does not: at 1280x2100 the content box comes out
+       927px against a --col of 973px, so the term goes NEGATIVE and dragged
+       every heading past the clip edge (-10.8px, all four sections alike).
+       Where the container does reach its max-width the first term is never the
+       larger one, so this changes nothing that already worked. */
     .card-inner > h2,
     .card-inner > .sub{width:100%;max-width:var(--col);margin-right:auto;
-      margin-left:calc((100% - var(--col)) / 2 - var(--shift))}
+      margin-left:max(calc(var(--shift) * -1),
+                      calc((100% - var(--col)) / 2 - var(--shift)))}
     #about .about-main > .sub{margin-left:calc(var(--shift) * -1)}
   }
 
