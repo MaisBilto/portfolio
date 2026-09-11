@@ -200,25 +200,45 @@
        many times the buttons were pressed — otherwise a swipe desynchronises
        it and the arrows start lying. Same reason the rail reads scroll
        position instead of observer events. */
+    /* Client rects, not offsetLeft: offsetLeft is measured from the
+       offsetParent, which is not this strip, so mixing it with scrollLeft
+       puts the two numbers in different coordinate systems. */
+    function nearest() {
+      var box = strip.getBoundingClientRect();
+      var mid = box.left + box.width / 2, best = 0, near = Infinity;
+      for (var i = 0; i < n; i++) {
+        var r = strip.children[i].getBoundingClientRect();
+        var d = Math.abs(r.left + r.width / 2 - mid);
+        if (d < near) { near = d; best = i; }
+      }
+      return best;
+    }
+    function sync() { at = nearest(); draw(); }
+
     var settle;
     strip.addEventListener('scroll', function () {
       clearTimeout(settle);
       settle = setTimeout(function () {
-        /* Client rects, not offsetLeft: offsetLeft is measured from the
-           offsetParent, which is not this strip, so mixing it with scrollLeft
-           puts the two numbers in different coordinate systems. */
-        var box = strip.getBoundingClientRect();
-        var mid = box.left + box.width / 2, best = 0, near = Infinity;
-        for (var i = 0; i < n; i++) {
-          var r = strip.children[i].getBoundingClientRect();
-          var d = Math.abs(r.left + r.width / 2 - mid);
-          if (d < near) { near = d; best = i; }
-        }
+        var best = nearest();
         if (best !== at) { at = best; draw(); }
       }, 90);
     }, { passive: true });
 
-    draw();
+    /* sync(), not draw(). `at` used to start at 0 on the assumption that a
+       fresh page means a strip scrolled to the left — and a browser that
+       restores scroll positions on reload breaks that assumption before this
+       code ever runs. Firefox restores strip.scrollLeft while the slider is
+       still being built, and no scroll event reaches the listener above
+       because the listener does not exist yet. The counter then read 01 / 04
+       while card 3 sat in the middle, and since the desktop coverflow puts
+       every card that is not .is-current at opacity .22, the one card at full
+       brightness was the one scrolled off-screen: the whole row looked dead.
+       Reading the position is no more expensive than assuming it. */
+    sync();
+    /* Restoration can also land after this script, depending on the browser.
+       Re-reading once the page has fully loaded costs nothing and covers the
+       other ordering. */
+    addEventListener('load', sync);
     redraws.push(draw);
   }
 
