@@ -963,6 +963,17 @@
      trajectory chart rather than into padding — see the 1fr row below. */
   .about-split{display:grid;grid-template-columns:1fr 22rem;gap:var(--s6);
     align-items:stretch}
+  /* start, not stretch — but ONLY while this is a two-column grid. Stretching
+     made the panel as tall as the prose column, and the panel has less to say
+     than the prose does, so the surplus showed as empty panel inside the
+     hairline frame: a hole, not margin. Two columns of honest, different
+     heights look deliberate; one padded out to match the other does not.
+     Scoped, because below the breakpoint .about-split becomes a flex COLUMN
+     and align-items there controls the horizontal axis — setting start
+     unscoped shrank the panel from 705px to 670px at 768x600. */
+  @media (min-width:60.0625rem) and (min-height:30.0625rem){
+    .about-split{align-items:start}
+  }
   .about-main{display:flex;flex-direction:column}
   /* The two blocks stack rather than sitting side by side. Beside each other
      they left the left column about 140px shorter than the panel at 1440 and
