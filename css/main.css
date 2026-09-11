@@ -379,7 +379,15 @@
   a.cert:hover::after{opacity:1}
 
   /* ---- certificate lightbox (native <dialog>) ---- */
-  .lb{position:relative;border:0;padding:0;background:transparent;max-width:min(92vw,56rem);
+  /* fixed, not relative. A relative dialog sits in normal flow, and this one is
+     the second-to-last element in the body — so when showModal() scrolled it
+     into view it scrolled the page to the END of the document and closing left
+     you there (measured: 2372 -> 3 -> 0). inset:0 with auto margins centres it
+     in the VIEWPORT instead, which is where a modal belongs; fixed still
+     establishes the containing block that .lb-nav and .lb-x position against,
+     so nothing below has to change. */
+  .lb{position:fixed;inset:0;margin:auto;
+    border:0;padding:0;background:transparent;max-width:min(92vw,56rem);
     max-height:92vh;color:var(--txt);overflow:visible}
   .lb::backdrop{background:rgba(3,6,10,.86);backdrop-filter:blur(3px)}
   .lb-frame{position:relative;padding:1px;background:var(--hud-dim)}

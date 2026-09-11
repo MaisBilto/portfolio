@@ -245,10 +245,36 @@
     document.getElementById('lb-prev').hidden = !many;
     document.getElementById('lb-next').hidden = !many;
   }
+  /* showModal() scrolls the dialog into view, and it decides where to scroll
+     from the dialog's position in normal flow — not from where CSS puts it once
+     it is modal. The stylesheet now pins .lb to the viewport, so the scroll is
+     pure loss: it moved the page and left it there after close. Put the scroll
+     position back.
+
+     Two details, both learned the hard way:
+     - html has scroll-behavior:smooth, so showModal's scroll is an ANIMATION
+       still running when we restore. Restoring once only blended with it and
+       left 75-123px of drift. Switch smooth off for the operation.
+     - the animation can outlive the current frame, so the position is set
+       again on the next one before smooth is switched back on.
+     Which element scrolls depends on the layout, same as everywhere else. */
+  function openModal() {
+    var r = document.documentElement, prev = r.style.scrollBehavior;
+    var el = mobile.matches ? document.scrollingElement : deck;
+    var y = el.scrollTop, x = el.scrollLeft;
+    r.style.scrollBehavior = 'auto';
+    lb.showModal();
+    el.scrollTo({ top: y, left: x, behavior: 'auto' });
+    requestAnimationFrame(function () {
+      el.scrollTo({ top: y, left: x, behavior: 'auto' });
+      r.style.scrollBehavior = prev;
+    });
+  }
+
   function openGallery(root, i, sel) {
     gallery = Array.prototype.slice.call(root.querySelectorAll(sel || 'a.cert'));
     show(i);
-    if (!lb.open) lb.showModal();
+    if (!lb.open) openModal();
   }
 
   /* how many thumbnails a strip shows before it collapses into a +N chip.
