@@ -194,7 +194,27 @@
                 <img src="../assets/img/work/tracker-form.webp" alt="The Loaner Tracker form: loan reason Travel makes Return date mandatory, a blue message says the device already has one active loan, and a red message says the return date cannot be in the past" loading="lazy"></a>
             </div></figure>
             <figure class="shot wide" data-anim style="--i:4"><div class="fill">
-              <div class="shot-bar"><em>&#9656;</em>SCRIPT INCLUDE &middot; LoanerAjaxUtils &middot; CLIENT-CALLABLE</div>
+              <div class="shot-bar"><em>&#9656;</em>CLIENT &middot; CLIENT SCRIPT &middot; onChange ON DEVICE</div>
+<pre class="cs-code"><code><span class="k">function</span> onChange(control, oldValue, newValue, isLoading, isTemplate) {
+    g_form.hideFieldMsg(<span class="s">'device'</span>, <span class="k">true</span>);            <span class="c">// clear the last warning first</span>
+    <span class="k">if</span> (isLoading || newValue === <span class="s">''</span>) {
+        <span class="k">return</span>;
+    }
+
+    <span class="k">var</span> ga = <span class="k">new</span> <span class="k">GlideAjax</span>(<span class="s">'x_2103288_loaner_0.LoanerAjaxUtils'</span>);
+    ga.addParam(<span class="s">'sysparm_name'</span>, <span class="s">'getActiveLoanCount'</span>);
+    ga.addParam(<span class="s">'sysparm_device_id'</span>, newValue);
+    ga.addParam(<span class="s">'sysparm_current_id'</span>, g_form.getUniqueValue());
+    ga.getXMLAnswer(<span class="k">function</span>(answer) {             <span class="c">// runs when the server replies</span>
+        <span class="k">if</span> (parseInt(answer, 10) &gt; 0) {
+            g_form.showFieldMsg(<span class="s">'device'</span>,
+                <span class="s">'This device already has '</span> + answer + <span class="s">' active loan(s).'</span>, <span class="s">'info'</span>);
+        }
+    });
+}</code></pre>
+            </div></figure>
+            <figure class="shot wide" data-anim style="--i:5"><div class="fill">
+              <div class="shot-bar"><em>&#9656;</em>SERVER &middot; SCRIPT INCLUDE &middot; LoanerAjaxUtils &middot; CLIENT-CALLABLE</div>
 <pre class="cs-code"><code><span class="k">var</span> LoanerAjaxUtils = Class.create();
 LoanerAjaxUtils.prototype = Object.extendsObject(global.<span class="k">AbstractAjaxProcessor</span>, {
 
@@ -268,7 +288,7 @@ LoanerAjaxUtils.prototype = Object.extendsObject(global.<span class="k">Abstract
           <ul class="cs-next" data-anim style="--i:2">
             <li><p>The closed-request ACL blocks edits but not deletes. A matching delete rule would close that gap.</p></li>
             <li><p>State is not on the Infinity Loaner form, so a fulfiller has to use the board or the list to see it.</p></li>
-            <li><p>In Loaner Tracker the requester picks the device. In a real process the fulfiller would assign one from stock, and the &ldquo;already on loan&rdquo; check would protect them instead.</p></li>
+            <li><p>In Loaner Tracker the requester picks the device, and the form only warns when that device is tied to another open request. A real process would track each device&rsquo;s own status (In stock, On loan, In repair), update it when a loan starts and ends, and let the fulfiller assign only devices that are in stock.</p></li>
             <li><p>Most of Build 1 sits in the Default update set; only the last change was captured in a named one. Next time, a named update set from the first change.</p></li>
           </ul>
           <div class="acts" data-anim style="--i:3" ><a class="btn ghost" href="../index.html#work">&#9666; Back to work</a><a class="btn" href="../index.html#contact">Get in touch</a></div>

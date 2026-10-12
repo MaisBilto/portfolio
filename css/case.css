@@ -70,7 +70,10 @@
   /* ---------- code panel ---------- */
   body.cs .cs-code{margin:0;padding:var(--s4);overflow-x:auto;
     font-family:"JetBrains Mono",monospace;font-size:.72rem;line-height:1.7;color:var(--mut);
-    background:var(--panel2);tab-size:4}
+    background:var(--panel2);tab-size:4;
+    /* JetBrains Mono joins != into a single glyph; in code that reads as a
+       different operator, so ligatures are off here */
+    font-variant-ligatures:none}
   body.cs .cs-code code{background:none;padding:0;font-size:inherit;color:inherit}
   body.cs .cs-code .k{color:var(--hud)}          /* keywords and API names */
   body.cs .cs-code .s{color:var(--alert-hi)}     /* strings */
