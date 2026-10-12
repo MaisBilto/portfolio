@@ -246,30 +246,15 @@
   .hc{position:relative;padding:1px;flex:1;
     transition:background-color .22s,transform .22s,filter .22s}
   .hc-wrap:hover .hc{filter:drop-shadow(0 0 11px var(--st-glow))}
+  /* One frame for every card on the site (projects and training tracks), the
+     same one a case-study figure uses:
+     a single 1px ring, chamfered top-left and bottom-right. The four cards
+     used to have four different outlines plus a second inner ring (.edge2);
+     the status colour on the ring is now the only thing that tells them apart. */
   .hc,.hc > .fill{
-    clip-path:polygon(18px 0,calc(100% - 32px) 0,100% 28px,100% 100%,32px 100%,0 calc(100% - 28px),0 18px)}
-  .hc.v2,.hc.v2 > .fill{
-    clip-path:polygon(0 0,calc(100% - 18px) 0,100% 18px,100% calc(100% - 30px),calc(100% - 30px) 100%,0 100%)}
-  .hc.v3,.hc.v3 > .fill{
-    clip-path:polygon(26px 0,100% 0,100% calc(100% - 18px),calc(100% - 18px) 100%,0 100%,0 26px)}
+    clip-path:polygon(14px 0,100% 0,100% calc(100% - 14px),calc(100% - 14px) 100%,0 100%,0 14px)}
   .hc > .fill{background:var(--panel2);height:100%;display:flex;flex-direction:column}
 
-  /* second outline: a 1px ring 7px inside the first, same chamfered shape.
-     clip-path can't carry a border, so the ring is cut out of a solid block
-     with two masks composited to leave only the 1px padding band. */
-  .edge2{position:absolute;inset:7px;z-index:3;pointer-events:none;
-    background:var(--st);opacity:.45;padding:1px;
-    -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
-            mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
-    -webkit-mask-composite:xor;mask-composite:exclude;
-    transition:opacity .22s}
-  .hc-wrap:hover .edge2{opacity:.8}
-  .hc .edge2{clip-path:polygon(14px 0,calc(100% - 28px) 0,100% 24px,100% 100%,28px 100%,0 calc(100% - 24px),0 14px)}
-  .hc.v2 .edge2{clip-path:polygon(0 0,calc(100% - 14px) 0,100% 14px,100% calc(100% - 26px),calc(100% - 26px) 100%,0 100%)}
-  .hc.v3 .edge2{clip-path:polygon(22px 0,100% 0,100% calc(100% - 14px),calc(100% - 14px) 100%,0 100%,0 22px)}
-  .hc.v4,.hc.v4 > .fill{
-    clip-path:polygon(0 0,100% 0,100% calc(100% - 26px),calc(100% - 26px) 100%,20px 100%,0 calc(100% - 20px))}
-  .hc.v4 .edge2{clip-path:polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,16px 100%,0 calc(100% - 16px))}
   .hc.v4::after{left:auto;right:0;top:auto;bottom:20%;height:26%}
   .hc-wrap:not([data-status="active"]):hover .hc.v4::after{bottom:14%}
 
@@ -308,10 +293,9 @@
     transition:background-color .22s,transform .22s,filter .22s}
   .tk-wrap:hover .tk{background:var(--st-hi);transform:translateY(-3px);
     filter:drop-shadow(0 0 10px var(--st-glow))}
-  .tk,.tk > .fill{clip-path:polygon(20px 0,100% 0,100% calc(100% - 20px),calc(100% - 20px) 100%,0 100%,0 20px)}
+  .tk,.tk > .fill{clip-path:polygon(14px 0,100% 0,100% calc(100% - 14px),calc(100% - 14px) 100%,0 100%,0 14px)}
   .tk > .fill{background:var(--panel2);padding:.85rem 1rem 1rem;display:flex;flex-direction:column;
     gap:.45rem;height:100%}
-  .tk .edge2{clip-path:polygon(16px 0,100% 0,100% calc(100% - 16px),calc(100% - 16px) 100%,0 100%,0 16px)}
   .tk::after{content:"";position:absolute;width:4px;background:var(--st);
     box-shadow:0 0 9px var(--st-glow);z-index:2;left:0;top:28%;height:22%;
     transition:height .25s,top .25s}
@@ -321,9 +305,13 @@
   @media (prefers-reduced-motion:reduce){
     .tk-wrap[data-status="active"] .tk::after{animation:none;top:28%;height:22%}}
 
+  /* the same dark caption bar as the project cards. The negative margin
+     cancels .fill's padding so the bar runs edge to edge. */
   .tk-top{display:flex;align-items:center;justify-content:space-between;gap:.5rem;
-    padding-bottom:.45rem;border-bottom:1px solid var(--line)}
-  .tk-id{font-family:"JetBrains Mono",monospace;font-size:.58rem;letter-spacing:.18em;color:var(--faint)}
+    margin:-.85rem -1rem .1rem;padding:.5rem 1rem;
+    border-bottom:1px solid var(--line);background:var(--panel)}
+  .tk-id{font-family:"JetBrains Mono",monospace;font-size:.62rem;letter-spacing:.14em;color:var(--faint)}
+  .tk-id::before{content:"\25B8  ";color:var(--hud);opacity:.85}
   .tk h3{margin:.1rem 0 .1rem;font-family:"Space Grotesk",system-ui,sans-serif;
     font-size:.98rem;letter-spacing:-.01em}
   .crs{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.32rem}
@@ -455,9 +443,13 @@
 
   /* body */
   .hc-body{padding:.85rem 1rem 1.05rem;display:flex;flex-direction:column;gap:.45rem;flex:1}
+  /* header strip: the same caption bar a case-study figure carries, holding
+     the project number and its state. Same colours too: the darker --panel
+     behind it and a teal marker, so it reads as a bar above the card body. */
   .hc-top{display:flex;align-items:center;justify-content:space-between;gap:.5rem;
-    padding-bottom:.45rem;border-bottom:1px solid var(--line)}
-  .hc-id{font-family:"JetBrains Mono",monospace;font-size:.58rem;letter-spacing:.18em;color:var(--faint)}
+    padding:.5rem 1rem;border-bottom:1px solid var(--line);background:var(--panel)}
+  .hc-id{font-family:"JetBrains Mono",monospace;font-size:.62rem;letter-spacing:.14em;color:var(--faint)}
+  .hc-id::before{content:"\25B8  ";color:var(--hud);opacity:.85}
   .hc h3{margin:.15rem 0 0;font-family:"Space Grotesk",system-ui,sans-serif;font-size:1.02rem;letter-spacing:-.01em}
   .hc .meta{font-size:.63rem;margin:0}
   .hc p{font-size:.77rem;line-height:1.5}
@@ -887,10 +879,7 @@
      aspect-ratio, which competes with min-height, and a percentage height on a
      grid item resolved inconsistently between the two breakpoints. .hc-thumb is
      position:relative, so inset:0 is exact at any ratio. */
-  /* Inset past .edge2, which sits at 7px with a 1px ring: at inset:0 the image
-     ran under that line and its square corner was sliced by the card's own
-     chamfer. The clip-path repeats the card's top-two corners one step smaller
-     so the picture follows the frame instead of fighting it. */
+  /* A 9px gutter round the picture, the same one a case-study figure has. */
   /* The 45-degree hatch is the texture for an EMPTY slot. Behind a picture it
      shows through the gutter as stripes, so a slot holding one gets a flat
      panel instead. The TBD and placeholder cards keep the texture. */

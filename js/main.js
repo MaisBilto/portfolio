@@ -55,6 +55,12 @@
        layouts — offsetTop is relative to an offsetParent that changes. */
     var line = top0 + h * 0.34, i = 0;
     for (var n = 0; n < cards.length; n++) if (cards[n].getBoundingClientRect().top <= line) i = n;
+    /* A last section shorter than the screen can never scroll its top up to
+       that line: the page runs out first. On the homepage every section is one
+       screen tall, so it never came up; on a case study the last one is short.
+       Once the scroll has reached the end, the last section is the current one. */
+    var el = mobile.matches ? document.scrollingElement : deck;
+    if (el.scrollTop + el.clientHeight >= el.scrollHeight - 2) i = cards.length - 1;
     if (i === current) return;
     current = i;
     var id = cards[i].id;

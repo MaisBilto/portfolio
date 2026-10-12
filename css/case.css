@@ -1,0 +1,103 @@
+/* case.css — case-study pages (projects/*.html).
+
+   Loaded BEFORE main.css on purpose: main.css must stay the last stylesheet,
+   because its final rule is what reveals the page (the first-paint gate).
+   Every rule here is scoped under body.cs, so it out-ranks main.css's
+   single-class rules no matter which file comes later. */
+
+  /* ---------- layout: a reading page, not a slide deck ----------
+     The homepage snaps one full screen per section. A case study is long-form,
+     so the sections grow to their content and the deck scrolls freely. Same
+     frame, same rail, same scroll handler in main.js. */
+  body.cs .deck{scroll-snap-type:none}
+  body.cs .card{height:auto;min-height:0;display:block;overflow:visible;
+    scroll-snap-align:none;scroll-snap-stop:normal;
+    padding:var(--s7) var(--s7) var(--s7) var(--s5)}
+  body.cs .card + .card{border-top:1px solid var(--line)}
+  body.cs .card-inner{max-width:min(64rem,74vw);max-height:none;overflow:visible}
+
+  /* the opening section still fills the first screen, like the homepage hero */
+  body.cs .cs-hero{min-height:100%;display:flex;align-items:center}
+
+  /* ---------- type ---------- */
+  /* sits under the hero buttons: a quiet way out, not the first thing read */
+  body.cs .cs-back{display:inline-block;margin-top:var(--s5);
+    font-family:"JetBrains Mono",monospace;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase}
+  body.cs .prose p{max-width:68ch}
+  body.cs .prose strong{color:var(--txt);font-weight:500}
+  body.cs h3.cs-h{margin:var(--s6) 0 var(--s3);font-family:"Space Grotesk",system-ui,sans-serif;
+    font-size:1.05rem;letter-spacing:-.01em}
+  /* code is data, so it is monospace — the house rule */
+  body.cs code{font-family:"JetBrains Mono",monospace;font-size:.86em;color:var(--txt);
+    background:rgba(94,234,212,.07);padding:.05em .35em}
+
+  /* ---------- two-build summary ---------- */
+  body.cs .cs-pair{grid-template-columns:repeat(2,minmax(0,1fr));margin-top:var(--s5)}
+  body.cs .cs-pair h3{font-size:1rem}
+  body.cs .cs-pair .tk-id{display:block;margin-bottom:.35rem}
+  body.cs .cs-pair a{font-family:"JetBrains Mono",monospace;font-size:.68rem;letter-spacing:.1em;
+    text-transform:uppercase;display:inline-block;margin-top:.6rem}
+
+  /* ---------- what was built: label + a sentence or two ---------- */
+  body.cs .cs-items{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:var(--s5) var(--s6);margin:var(--s5) 0 0}
+  body.cs .cs-items .label{margin:0 0 .35rem}
+  body.cs .cs-items p{font-size:.86rem;line-height:1.6}
+
+  /* ---------- screenshots ---------- */
+  body.cs .cs-figs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:var(--s5);margin-top:var(--s6)}
+  body.cs .cs-figs .wide{grid-column:1 / -1}
+  /* a grid item will not shrink below its content's width by default, and the
+     code panel's longest line is wider than a phone: let it shrink and the
+     <pre> scrolls sideways inside its own frame instead of widening the page */
+  body.cs .cs-figs > *,
+  body.cs .cs-items > *{min-width:0}
+  /* Two figures share a row, and a grid row is as tall as its tallest item.
+     The shorter one used to stretch with nothing inside to fill it, so the
+     frame's teal ring colour showed through as a slab under the picture.
+     Now the panel stretches with the figure and the picture centres in it,
+     at its own proportions: nothing is cropped or scaled up. */
+  body.cs .cs-figs .shot{display:flex;flex-direction:column}
+  body.cs .cs-figs .shot > .fill{flex:1;display:flex;flex-direction:column}
+  body.cs .cs-figs .shot-link{flex:1;display:flex;align-items:center;
+    padding:9px;background:var(--panel2)}
+  body.cs .cs-figs .shot-link img{width:100%;height:auto}
+
+  /* ---------- code panel ---------- */
+  body.cs .cs-code{margin:0;padding:var(--s4);overflow-x:auto;
+    font-family:"JetBrains Mono",monospace;font-size:.72rem;line-height:1.7;color:var(--mut);
+    background:var(--panel2);tab-size:4}
+  body.cs .cs-code code{background:none;padding:0;font-size:inherit;color:inherit}
+  body.cs .cs-code .k{color:var(--hud)}          /* keywords and API names */
+  body.cs .cs-code .s{color:var(--alert-hi)}     /* strings */
+  body.cs .cs-code .c{color:var(--faint)}        /* comments */
+
+  /* ---------- debugging stories: record panels ----------
+     The homepage record rows are short field/value pairs, right-aligned. These
+     values are sentences, so the label gets a fixed column and the value reads
+     left to right. */
+  body.cs .cs-bugs{display:grid;grid-template-columns:1fr;gap:var(--s5);margin-top:var(--s5)}
+  body.cs .cs-bugs .rrow{display:grid;grid-template-columns:5.5rem 1fr;gap:var(--s4)}
+  body.cs .cs-bugs .rrow dd{text-align:left;color:var(--mut);font-size:.86rem;line-height:1.6}
+  body.cs .cs-bugs .rrow:last-child dd{color:var(--txt)}
+  body.cs .cs-bugs h3{margin:0;font-family:"Space Grotesk",system-ui,sans-serif;font-size:.98rem;
+    color:var(--txt);letter-spacing:-.01em}
+
+  /* ---------- next steps ---------- */
+  body.cs .cs-next{list-style:none;padding:0;margin:var(--s5) 0 0;display:flex;flex-direction:column;gap:var(--s3)}
+  body.cs .cs-next li{position:relative;padding-left:1.4rem;max-width:68ch}
+  body.cs #next .acts{margin-top:var(--s6)}
+  body.cs .cs-next li::before{content:"▸";position:absolute;left:0;color:var(--hud);opacity:.8}
+
+  /* ---------- phone and short screens: the document scrolls ---------- */
+  @media (max-width:60rem), (max-height:30rem){
+    body.cs .card{padding:var(--s7) var(--s5) var(--s6)}
+    body.cs .card:last-child{padding-bottom:96px}       /* clear the floating rail */
+    body.cs .card-inner{max-width:100%}
+    body.cs .cs-hero{min-height:0;display:block}
+    body.cs .cs-pair,
+    body.cs .cs-items,
+    body.cs .cs-figs{grid-template-columns:1fr}
+    body.cs .cs-bugs .rrow{grid-template-columns:1fr;gap:.2rem}
+  }

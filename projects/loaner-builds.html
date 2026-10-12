@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Two Loaner Builds — Mais Bilto</title>
+<meta name="description" content="Case study: a device loaner process built twice on a ServiceNow Personal Developer Instance, once as an administrator (CSA blueprint) and once as a scoped app (CAD blueprint).">
+<meta name="color-scheme" content="dark">
+
+<meta property="og:title" content="Two Loaner Builds — Mais Bilto">
+<meta property="og:description" content="One device loaner process, built twice on ServiceNow: admin configuration and a scoped app.">
+<meta property="og:type" content="article">
+
+<!-- Same first-paint gate as index.html: body stays hidden until the LAST rule
+     of main.css applies, so main.css must stay the last stylesheet below. -->
+<style>
+  body{margin:0;background:#060a0f;color:#e4eaf1;
+       font-family:Inter,"Segoe UI",system-ui,sans-serif}
+  a{color:#5eead4;text-decoration:none}
+  .skip-link{position:absolute;top:-100%;left:1rem}
+  .pre body{visibility:hidden}
+</style>
+<script>
+  (function(){
+    var r = document.documentElement;
+    r.className += (r.className ? ' ' : '') + 'pre';
+    setTimeout(function(){ r.classList.remove('pre'); }, 1500);
+  })();
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="../css/base.css">
+<link rel="stylesheet" href="../css/case.css">
+<link rel="stylesheet" href="../css/main.css">
+</head>
+<body class="cs">
+<a class="skip-link" href="#deck">Skip to content</a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="corner" viewBox="0 0 190 150">
+    <path d="M190 14 H 50 L 14 50 V 150" fill="none" stroke="#5eead4" stroke-width="1.6"/>
+    <path d="M190 5 H 46 L 5 46 V 150" fill="none" stroke="rgba(94,234,212,.34)" stroke-width="1"/>
+    <path d="M31 31 L 20 20" stroke="rgba(94,234,212,.55)" stroke-width="1"/>
+    <path d="M14 74 H 5" stroke="rgba(94,234,212,.5)" stroke-width="1"/>
+    <path d="M14 92 H 5" stroke="rgba(94,234,212,.5)" stroke-width="1"/>
+    <path d="M108 14 V 5" stroke="rgba(94,234,212,.5)" stroke-width="1"/>
+    <path d="M120 14 V 5" stroke="rgba(94,234,212,.5)" stroke-width="1"/>
+    <rect x="10.5" y="46.5" width="7" height="7" fill="#060a0f" stroke="#5eead4" stroke-width="1.2"/>
+    <rect x="60" y="10.5" width="26" height="7" fill="#060a0f" stroke="rgba(94,234,212,.45)" stroke-width="1"/>
+    <path d="M14 118 H 32 L 40 126" fill="none" stroke="rgba(94,234,212,.4)" stroke-width="1"/>
+  </symbol>
+</svg>
+
+
+<div class="stage">
+
+  <div class="frame">
+    <nav class="rail" aria-label="Sections">
+     <div class="fill">
+      <a href="#top" data-to="top" class="on" aria-label="Summary"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M9 12h7M9 16h5"/></svg></a>
+      <a href="#problem" data-to="problem" aria-label="The problem"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3.5"/></svg></a>
+      <a href="#admin" data-to="admin" aria-label="Build 1, admin"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg></a>
+      <a href="#dev" data-to="dev" aria-label="Build 2, developer"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m8 7-5 5 5 5M16 7l5 5-5 5M13.5 5l-3 14"/></svg></a>
+      <a href="#debug" data-to="debug" aria-label="Debugging"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="8" width="10" height="12" rx="5"/><path d="M9.5 8V6.5a2.5 2.5 0 0 1 5 0V8M3 13h4M17 13h4M4 19l3-2M20 19l-3-2M4 7l3 2M20 7l-3 2"/></svg></a>
+      <a href="#next" data-to="next" aria-label="What's next"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
+     </div>
+    </nav>
+
+    <div class="prog" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i><i></i><b>SECTION</b></div>
+
+    <main class="deck hidescroll" id="deck">
+
+      <!-- ===== 00 · summary ===== -->
+      <section class="card cs-hero" id="top">
+        <span class="card-tag">CASE · 00 · SUMMARY</span>
+        <div class="card-inner">
+          <div class="split">
+            <div>
+              <p class="eyebrow" data-anim style="--i:0">Case study</p>
+              <h1 data-anim style="--i:1">Two loaner builds</h1>
+              <p class="lede" data-anim style="--i:2">One business process, built twice on ServiceNow: first the way a System Administrator configures it, then the way a developer scripts it. Each build follows the blueprint of an exam I&rsquo;m preparing for.</p>
+              <div class="acts" data-anim style="--i:3"><a class="btn" href="#admin">Build 1 &middot; admin</a><a class="btn ghost" href="#dev">Build 2 &middot; developer</a></div>
+              <a class="cs-back" href="../index.html#work" data-anim style="--i:4">&#9666; Back to work</a>
+            </div>
+            <div class="panel" data-anim style="--i:5">
+              <div class="fill">
+                <div class="p-head"><span>case &middot; LNR / LTR</span><span class="pill">TRAINING BUILD</span></div>
+                <dl class="rows">
+                  <div class="rrow"><dt>platform</dt><dd>ServiceNow &middot; Personal Developer Instance</dd></div>
+                  <div class="rrow"><dt>builds</dt><dd>Infinity Loaner &middot; Loaner Tracker</dd></div>
+                  <div class="rrow"><dt>blueprints</dt><dd>CSA &middot; CAD</dd></div>
+                  <div class="rrow"><dt>role</dt><dd>Solo: design, build, test</dd></div>
+                  <div class="rrow"><dt>year</dt><dd>2026</dd></div>
+                </dl>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== 01 · the problem ===== -->
+      <section class="card" id="problem">
+        <span class="card-tag">CASE · 01 · PROBLEM</span>
+        <div class="card-inner">
+          <h2 data-anim style="--i:0">The problem</h2>
+          <p class="sub" data-anim style="--i:1">TEMPORARY DEVICES, TRACKED</p>
+          <div class="prose" data-anim style="--i:2">
+            <p>Employees sometimes need a temporary device: their laptop is in for repair, they are travelling, or they have just joined and their equipment has not arrived. The request has to be approved, a device has to be found and handed over, and someone has to notice when it is not returned.</p>
+            <p>I built that process twice. The first build uses the platform&rsquo;s configuration tools, the way an administrator would. The second is a scoped application where the rules live in scripts, the way a developer would build it.</p>
+          </div>
+          <ul class="caps cs-pair">
+            <li data-anim style="--i:3"><div class="fill">
+              <span class="tk-id">BUILD 01 &middot; CSA</span>
+              <h3>Infinity Loaner Program</h3>
+              <p>A custom table, a catalog request form, an approval flow, a fulfilment board, a dashboard and access controls.</p>
+              <a href="#admin">Read build 1 &#9656;</a>
+            </div></li>
+            <li data-anim style="--i:4"><div class="fill">
+              <span class="tk-id">BUILD 02 &middot; CAD</span>
+              <h3>Loaner Tracker</h3>
+              <p>A scoped app with its own roles, scripted ACLs, client and server validation, GlideAjax and an outbound REST call.</p>
+              <a href="#dev">Read build 2 &#9656;</a>
+            </div></li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ===== 02 · build 1 · admin ===== -->
+      <section class="card" id="admin">
+        <span class="card-tag">CASE · 02 · BUILD 1</span>
+        <div class="card-inner">
+          <h2 data-anim style="--i:0">Infinity Loaner Program</h2>
+          <p class="sub" data-anim style="--i:1">BUILD 01 &middot; ADMIN &middot; CSA BLUEPRINT &middot; GLOBAL SCOPE</p>
+
+          <div class="cs-items" data-anim style="--i:2">
+            <div><p class="label">Data model</p><p>A Loaner Request table (<code>u_loaner_request</code>) that extends Task, with its own <code>LNR</code> numbering. Number is read-only on this table only, through a dictionary override, so Task and its other child tables are untouched.</p></div>
+            <div><p class="label">Request form</p><p>A catalog record producer, <em>Request a Loaner Device</em>. A catalog client script limits the device models to the ones allowed for the request type: Standard gets the Infinity HHD, Executive gets the HHD Pro.</p></div>
+            <div><p class="label">Approval</p><p>A Workflow Studio flow runs when a request is created: it asks for approval, then moves the request to Work in Progress, or to Closed Incomplete if it is rejected.</p></div>
+            <div><p class="label">Fulfilment</p><p>A Visual Task Board with one lane per state; dragging a card updates the record. Notifications go out when a request is created and when it is assigned.</p></div>
+            <div><p class="label">Reporting</p><p>An operations dashboard with totals, overdue loans, and requests by priority, device model, state and assignee.</p></div>
+            <div><p class="label">Security</p><p>Requesters can read only the requests they opened. Only <code>itil</code> users can change the device model, and a Deny-Unless ACL locks a request once it is closed.</p></div>
+            <div><p class="label">Device data</p><p>The device inventory comes in from a CSV through an import set and transform map. It coalesces on serial number, so a re-import updates existing devices instead of duplicating them.</p></div>
+            <div><p class="label">CMDB</p><p>A device CI is related to the Email service it depends on, so the dependency view shows what a missing device affects.</p></div>
+          </div>
+
+          <div class="cs-figs">
+            <figure class="shot" data-anim style="--i:3"><div class="fill">
+              <div class="shot-bar"><em>&#9656;</em>REQUEST FORM &middot; SERVICE PORTAL</div>
+              <a class="shot-link" href="../assets/img/work/loaner-order-form.webp" data-title="Request a Loaner Device &middot; catalog form" data-note="Standard request: only the Infinity HHD is offered">
+                <img src="../assets/img/work/loaner-order-form.webp" alt="The Request a Loaner Device form in the Service Portal, with request type Standard, device model Infinity HHD and a reason for the request" loading="lazy"></a>
+            </div></figure>
+            <figure class="shot" data-anim style="--i:4"><div class="fill">
+              <div class="shot-bar"><em>&#9656;</em>APPROVAL FLOW &middot; WORKFLOW STUDIO</div>
+              <a class="shot-link" href="../assets/img/work/loaner-approval-flow.webp" data-title="Loaner Request Approval &middot; flow" data-note="Approved: Work in Progress. Otherwise: Closed Incomplete">
+                <img src="../assets/img/work/loaner-approval-flow.webp" alt="A Workflow Studio flow: trigger on Loaner Request created, ask for approval, then an if branch that updates the record either way" loading="lazy"></a>
+            </div></figure>
+            <figure class="shot wide" data-anim style="--i:5"><div class="fill">
+              <div class="shot-bar"><em>&#9656;</em>FULFILMENT &middot; VISUAL TASK BOARD</div>
+              <a class="shot-link" href="../assets/img/work/loaner-board.webp" data-title="Infinity Loaner Program Board" data-note="One lane per state; LNR numbers on every card">
+                <img src="../assets/img/work/loaner-board.webp" alt="A Visual Task Board with lanes Pending, Open, Work in Progress, Closed Complete, Closed Incomplete and Closed Skipped, holding loaner request cards with LNR numbers" loading="lazy"></a>
+            </div></figure>
+            <figure class="shot wide" data-anim style="--i:6"><div class="fill">
+              <div class="shot-bar"><em>&#9656;</em>REPORTING &middot; OPERATIONS DASHBOARD</div>
+              <a class="shot-link" href="../assets/img/work/loaner-dashboard.webp" data-title="Infinity Loaner Operations &middot; dashboard" data-note="ServiceNow Personal Developer Instance">
+                <img src="../assets/img/work/loaner-dashboard.webp" alt="A ServiceNow dashboard for the Infinity Loaner programme: total requests and overdue counts, and charts of requests by priority, device model, state, return month and assignee" loading="lazy"></a>
+            </div></figure>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== 03 · build 2 · developer ===== -->
+      <section class="card" id="dev">
+        <span class="card-tag">CASE · 03 · BUILD 2</span>
+        <div class="card-inner">
+          <h2 data-anim style="--i:0">Loaner Tracker</h2>
+          <p class="sub" data-anim style="--i:1">BUILD 02 &middot; DEVELOPER &middot; CAD BLUEPRINT &middot; SCOPED APP</p>
+
+          <div class="cs-items" data-anim style="--i:2">
+            <div><p class="label">Scoped app</p><p>Its own scope and a Loaner Request table that extends Task, numbered <code>LTR</code>, with a Device reference to the CMDB, a loan reason and a return date.</p></div>
+            <div><p class="label">Roles</p><p>A chain of three roles: admin contains user, which contains requester. I tested every rule with a user who holds only the user role.</p></div>
+            <div><p class="label">Access controls</p><p>Requesters can create, read and edit; only admins can delete. A scripted write ACL allows the record&rsquo;s owner or an app admin, and field ACLs open the description fields to requesters.</p></div>
+            <div><p class="label">Validation</p><p>A UI policy makes the return date mandatory for travel loans. A client script rejects past dates as you type, and a before business rule enforces the same rule on the server.</p></div>
+            <div><p class="label">GlideAjax</p><p>When a device is picked, the form calls a client-callable Script Include. It counts the device&rsquo;s active loans with GlideAggregate and the form warns if the device is already out.</p></div>
+            <div><p class="label">Automation</p><p>A flow, <em>Prioritize travel loans</em>, runs when a request is created with Travel as the loan reason and raises it to Priority 2 &ndash; High, running as the system user. The app also has a CSV import that coalesces on number, and an outbound REST message tested against a demo API.</p></div>
+          </div>
+
+          <div class="cs-figs">
+            <figure class="shot wide" data-anim style="--i:3"><div class="fill">
+              <div class="shot-bar"><em>&#9656;</em>THE FORM &middot; THREE RULES AT ONCE</div>
+              <a class="shot-link" href="../assets/img/work/tracker-form.webp" data-title="Loaner Tracker &middot; request form" data-note="UI policy, GlideAjax warning and the past-date check on one form">
+                <img src="../assets/img/work/tracker-form.webp" alt="The Loaner Tracker form: loan reason Travel makes Return date mandatory, a blue message says the device already has one active loan, and a red message says the return date cannot be in the past" loading="lazy"></a>
+            </div></figure>
+            <figure class="shot wide" data-anim style="--i:4"><div class="fill">
+              <div class="shot-bar"><em>&#9656;</em>SCRIPT INCLUDE &middot; LoanerAjaxUtils &middot; CLIENT-CALLABLE</div>
+<pre class="cs-code"><code><span class="k">var</span> LoanerAjaxUtils = Class.create();
+LoanerAjaxUtils.prototype = Object.extendsObject(global.<span class="k">AbstractAjaxProcessor</span>, {
+
+    getActiveLoanCount: <span class="k">function</span>() {
+        <span class="k">var</span> deviceId  = <span class="k">this</span>.getParameter(<span class="s">'sysparm_device_id'</span>);
+        <span class="k">var</span> currentId = <span class="k">this</span>.getParameter(<span class="s">'sysparm_current_id'</span>);
+
+        <span class="k">var</span> ga = <span class="k">new</span> <span class="k">GlideAggregate</span>(<span class="s">'x_2103288_loaner_0_loaner_request'</span>);
+        ga.addQuery(<span class="s">'device'</span>, deviceId);
+        ga.addQuery(<span class="s">'active'</span>, <span class="k">true</span>);
+        ga.addQuery(<span class="s">'sys_id'</span>, <span class="s">'!='</span>, currentId);   <span class="c">// an edited loan must not count itself</span>
+        ga.addAggregate(<span class="s">'COUNT'</span>);
+        ga.query();
+        <span class="k">return</span> ga.next() ? ga.getAggregate(<span class="s">'COUNT'</span>) : <span class="s">'0'</span>;
+    },
+
+    type: <span class="s">'LoanerAjaxUtils'</span>
+});</code></pre>
+            </div></figure>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== 04 · debugging ===== -->
+      <section class="card" id="debug">
+        <span class="card-tag">CASE · 04 · DEBUGGING</span>
+        <div class="card-inner">
+          <h2 data-anim style="--i:0">Three things that broke</h2>
+          <p class="sub" data-anim style="--i:1">SYMPTOM &middot; CAUSE &middot; FIX &middot; LESSON</p>
+
+          <div class="cs-bugs">
+            <article class="panel" data-anim style="--i:2"><div class="fill">
+              <div class="p-head"><span>BUG 01 &middot; BUILD 1</span><span class="pill">FIXED</span></div>
+              <dl class="rows">
+                <div class="rrow"><dt>symptom</dt><dd><h3>The renumber that said it worked</h3>A background script renumbered 23 old requests and reported 23 updates, but every record still started with <code>TASK</code>.</dd></div>
+                <div class="rrow"><dt>cause</dt><dd><code>getNextObjNumberPadded()</code> on the record took its number from the parent table&rsquo;s counter, not the Loaner Request one.</dd></div>
+                <div class="rrow"><dt>fix</dt><dd>Named the counter explicitly with <code>new NumberManager('u_loaner_request')</code>, tested on one record with <code>setLimit(1)</code>, then ran the rest.</dd></div>
+                <div class="rrow"><dt>lesson</dt><dd>Check the result, not the row count.</dd></div>
+              </dl>
+            </div></article>
+
+            <article class="panel" data-anim style="--i:3"><div class="fill">
+              <div class="p-head"><span>BUG 02 &middot; BUILD 2</span><span class="pill">FIXED</span></div>
+              <dl class="rows">
+                <div class="rrow"><dt>symptom</dt><dd><h3>The date check you could walk around</h3>A past return date was blocked on the form, but the same value saved without complaint when edited from the list.</dd></div>
+                <div class="rrow"><dt>cause</dt><dd>Client scripts only run on the form. List editing never loads them.</dd></div>
+                <div class="rrow"><dt>fix</dt><dd>A before business rule with the same check, so the server rejects the save whichever way it arrives.</dd></div>
+                <div class="rrow"><dt>lesson</dt><dd>Client checks are feedback; the rule itself belongs on the server.</dd></div>
+              </dl>
+            </div></article>
+
+            <article class="panel" data-anim style="--i:4"><div class="fill">
+              <div class="p-head"><span>BUG 03 &middot; BUILD 2</span><span class="pill">FIXED</span></div>
+              <dl class="rows">
+                <div class="rrow"><dt>symptom</dt><dd><h3>Fields a requester could not edit</h3>Requesters could write to their own requests, yet Description stayed read-only.</dd></div>
+                <div class="rrow"><dt>cause</dt><dd>The table extends Task, so it inherits Task&rsquo;s field ACLs, and <code>task.description</code> requires <code>itil</code>.</dd></div>
+                <div class="rrow"><dt>fix</dt><dd>Field ACLs on the app&rsquo;s own table for description and short description.</dd></div>
+                <div class="rrow"><dt>lesson</dt><dd>Extending a table inherits its security, not just its fields.</dd></div>
+              </dl>
+            </div></article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== 05 · next ===== -->
+      <section class="card" id="next">
+        <span class="card-tag">CASE · 05 · NEXT</span>
+        <div class="card-inner">
+          <h2 data-anim style="--i:0">What I&rsquo;d do next</h2>
+          <p class="sub" data-anim style="--i:1">KNOWN GAPS</p>
+          <ul class="cs-next" data-anim style="--i:2">
+            <li><p>The closed-request ACL blocks edits but not deletes. A matching delete rule would close that gap.</p></li>
+            <li><p>State is not on the Infinity Loaner form, so a fulfiller has to use the board or the list to see it.</p></li>
+            <li><p>In Loaner Tracker the requester picks the device. In a real process the fulfiller would assign one from stock, and the &ldquo;already on loan&rdquo; check would protect them instead.</p></li>
+            <li><p>Most of Build 1 sits in the Default update set; only the last change was captured in a named one. Next time, a named update set from the first change.</p></li>
+          </ul>
+          <div class="acts" data-anim style="--i:3" ><a class="btn ghost" href="../index.html#work">&#9666; Back to work</a><a class="btn" href="../index.html#contact">Get in touch</a></div>
+          <div class="foot" data-anim style="--i:4"><span>&copy; 2026 MAIS BILTO</span><span>BUILT ON A PERSONAL DEVELOPER INSTANCE</span></div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <div class="deco" aria-hidden="true">
+    <svg class="cnr tl" width="190" height="150"><use href="#corner"/></svg>
+    <svg class="cnr tr" width="190" height="150"><use href="#corner"/></svg>
+    <svg class="cnr bl" width="190" height="150"><use href="#corner"/></svg>
+    <svg class="cnr br" width="190" height="150"><use href="#corner"/></svg>
+
+    <span class="ln h t"></span><span class="ln h b"></span>
+    <span class="ln v l"></span><span class="ln v r"></span>
+    <span class="ln h t out"></span><span class="ln h b out"></span>
+    <span class="ln v l out"></span><span class="ln v r out"></span>
+
+    <span class="hatch a"></span><span class="hatch b"></span>
+    <span class="hatch c"></span><span class="hatch d"></span>
+
+    <div class="plate"><i></i>MAIS.BILTO // CASE STUDY</div>
+  </div>
+
+</div>
+
+<dialog class="lb" id="lb" aria-label="Image viewer">
+  <button class="lb-x" id="lb-x" aria-label="Close">&#10005;</button>
+  <button class="lb-nav prev" id="lb-prev" aria-label="Previous">&#10094;</button>
+  <button class="lb-nav next" id="lb-next" aria-label="Next">&#10095;</button>
+  <div class="lb-frame">
+    <div class="fill">
+      <img id="lb-img" alt="">
+      <div class="lb-meta"><span id="lb-title"></span><span class="lb-count" id="lb-count"></span><span id="lb-note" class="lb-note"></span><a id="lb-verify" target="_blank" rel="noopener">Verify &#9656;</a></div>
+    </div>
+  </div>
+</dialog>
+
+<script src="../js/main.js" defer></script>
+</body>
+</html>
