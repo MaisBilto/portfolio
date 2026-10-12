@@ -14,7 +14,10 @@
     scroll-snap-align:none;scroll-snap-stop:normal;
     padding:var(--s7) var(--s7) var(--s7) var(--s5)}
   body.cs .card + .card{border-top:1px solid var(--line)}
-  body.cs .card-inner{max-width:min(64rem,74vw);max-height:none;overflow:visible}
+  body.cs .card-inner{max-height:none;overflow:visible}
+  /* the reading sections run narrower than the homepage; the opening section
+     keeps the homepage's width so the two heroes line up exactly */
+  body.cs .card:not(.cs-hero) .card-inner{max-width:min(64rem,74vw)}
 
   /* the opening section still fills the first screen, like the homepage hero */
   body.cs .cs-hero{min-height:100%;display:flex;align-items:center}
