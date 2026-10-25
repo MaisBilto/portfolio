@@ -227,7 +227,7 @@
   /* base ring goes quieter on the active card so the travelling light reads */
 
 
-  .grid3{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--s5);align-items:stretch}
+  .grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s5);align-items:stretch}
 
   /* work fits its screen: nothing stretches, the thumb has a real aspect ratio */
   #work .card-inner{max-width:min(104rem,88vw);overflow:visible}
