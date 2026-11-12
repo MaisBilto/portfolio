@@ -140,6 +140,16 @@
   p{color:var(--mut);margin:0}
   .lede{max-width:50ch;margin-bottom:var(--s5)}
   .prose{display:flex;flex-direction:column;gap:var(--s4)}
+  /* Motto under the intro. The quotation marks are in the markup because the
+     line is quoted, not written for this page. Inter italic, not mono: on this
+     site monospace means data. */
+  .motto{max-width:50ch;margin:0 0 var(--s5);padding-inline-start:.85rem;
+    border-inline-start:2px solid var(--hud-dim);font-style:italic;
+    font-size:.95rem;line-height:1.5;color:var(--txt)}
+  /* Who said it and where: upright and fainter than the line itself. */
+  .motto .by{display:block;margin-top:.2rem;font-style:normal;font-size:.78rem;
+    color:var(--faint)}
+  .motto .by::before{content:"\2014\00a0"}
   .acts{display:flex;gap:var(--s3);flex-wrap:wrap}
   .btn{--n:9px;display:inline-block;font-family:"JetBrains Mono",monospace;font-size:.72rem;
     letter-spacing:.1em;text-transform:uppercase;font-weight:500;padding:.65rem 1.25rem;
