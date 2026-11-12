@@ -97,6 +97,42 @@
     letter-spacing:-.03em;line-height:1.04;margin:0 0 .45rem}
   h2{font-family:"Space Grotesk",system-ui,sans-serif;font-size:2.1rem;font-weight:700;
     letter-spacing:-.025em;margin:0 0 .3rem}
+  /* Certified mark beside the name: a scalloped seal with a tick in its
+     centre. The geometry is this page's own (ten scallops generated around one
+     centre), not traced from an icon set. Sized in em, so it follows the h1 through every breakpoint. .nw keeps
+     it on the same line as the surname. The label shows on hover; the same text
+     is in aria-label for screen readers. */
+  h1 .nw{white-space:nowrap}
+  .cert-mark{position:relative;display:inline-block;width:.64em;height:.64em;
+    margin-inline-start:.24em;vertical-align:.01em}
+  /* Two stacked drop-shadows: a tight one that reads as the edge lighting up
+     and a wide one that reads as the halo. One shadow alone was too faint to
+     notice against the dark panel. The glow breathes with the ring. */
+  .cert-mark svg{display:block;width:100%;height:100%;overflow:visible;
+    filter:drop-shadow(0 0 3px var(--hud)) drop-shadow(0 0 11px var(--hud-glow));
+    animation:certglow 2.8s cubic-bezier(.45,0,.55,1) infinite}
+  .cert-mark .ring{fill:none;stroke:var(--hud);stroke-width:1.2;opacity:.7;
+    animation:certring 2.8s cubic-bezier(.45,0,.55,1) infinite}
+  .cert-mark .core{fill:var(--hud)}
+  .cert-mark .tick{fill:none;stroke:#07100f;stroke-width:2.1;
+    stroke-linecap:round;stroke-linejoin:round}
+  /* The label exists only where it can be hovered and has room: an invisible
+     absolutely-positioned box still widens the page, and at 320px it did. */
+  @media (hover:hover) and (min-width:480px){
+    .cert-mark::after{content:attr(data-tip);position:absolute;top:50%;
+      inset-inline-start:calc(100% + .7rem);transform:translate(-4px,-50%);
+      font-family:"JetBrains Mono",monospace;font-size:.6rem;font-weight:500;
+      line-height:1;letter-spacing:.14em;white-space:nowrap;color:var(--hud);
+      padding:.4rem .55rem;background:#0a1219;box-shadow:inset 0 0 0 1px var(--hud-dim);
+      opacity:0;pointer-events:none;transition:opacity .18s,transform .18s}
+    .cert-mark:hover::after{opacity:1;transform:translate(0,-50%)}}
+  @keyframes certring{0%,100%{opacity:.5}50%{opacity:1}}
+  @keyframes certglow{
+    0%,100%{filter:drop-shadow(0 0 2px var(--hud-glow)) drop-shadow(0 0 7px var(--hud-dim))}
+    50%{filter:drop-shadow(0 0 5px var(--hud)) drop-shadow(0 0 18px var(--hud))}}
+  @media (prefers-reduced-motion:reduce){
+    .cert-mark svg,.cert-mark .ring{animation:none}
+    .cert-mark::after{transition:none}}
   .sub{font-family:"JetBrains Mono",monospace;font-size:.7rem;color:var(--faint);
     letter-spacing:.16em;margin:0 0 var(--s5)}
   .role{font-size:1.15rem;color:var(--mut);margin:0 0 var(--s4)}
@@ -323,6 +359,9 @@
     box-shadow:0 0 5px var(--hud-glow);flex:none;align-self:center}
   .crs .st.now{background:var(--alert);box-shadow:0 0 7px var(--alert);
     animation:pulse 3.4s cubic-bezier(.45,0,.55,1) infinite;will-change:opacity}
+  /* Planned, not started: a hollow ring, so it can't be read as done (teal)
+     or active (rose). */
+  .crs .st.next{background:transparent;box-shadow:inset 0 0 0 1px var(--faint)}
   /* A dot that only drops opacity reads as a blink, because its glow stays put
      while the dot fades. Fading the two together — slowly, and not all the way —
      reads as breathing. cubic-bezier(.45,0,.55,1) is a sine curve: no hard stop
